@@ -4,13 +4,16 @@ import numpy as np
 import random
 import json
 
+import logging
+logger = logging.getLogger(__name__)
+
 import torch
 
-from models.gcn_contactmaps import gcn_contactmap
-from models.gat_contactmaps import gat_contactmap
 from models.t2pmhc_gcn import train_gcn
 from models.t2pmhc_gat import train_gat
-from helper_functions.tcr_phla_helpers import plot_loss_auc, plot_predictions_labels, save_metrics, str_to_bool
+
+from utils.helpers import str_to_bool
+
 import sys
 
 
@@ -55,6 +58,7 @@ def read_in_samplesheet(samplesheet):
     numpy.ndarray
         Array of PDB file paths extracted from the sample sheet.
     """
+    logging.info("reading samplesheet")
     samplesheet = pd.read_csv(samplesheet, sep="\t")
     try:
         pdb_files = samplesheet["pdb_file_path"].values
@@ -76,10 +80,13 @@ def main():
     parser.add_argument('--run_name', type=str, required=True, help="Name of the run under which graphs and model will be saved")
     parser.add_argument('--hyperparameters', type=str, required=True, help="path to json file containing the hyperparameters")
     parser.add_argument('--samplesheet', type=str, required=True, help='Path to metadata')
-    parser.add_argument('--saved_graphs', type=str, required=False, help="Path to saved graphs")
+    parser.add_argument('--saved_graphs', type=str, required=True, help="Path to saved graphs")
     parser.add_argument('--save_model', type=str, required=True, help='Directory to save model in')
     
     args = parser.parse_args()
+
+    # init logging
+    logging.basicConfig(level=logging.INFO, format='%(message)s', handlers=[logging.StreamHandler(sys.stdout)])
 
     # possible modes
     modes = ["t2pmhc_gcn", "t2pmhc_gat"]
@@ -90,39 +97,23 @@ def main():
     # get pdb files
     pdb_files = read_in_samplesheet(args.samplesheet)
 
-    # check for angström
-    if args.mode in modes:
-        if args.angstrom_thrsd is None:
-            parser.error(f"angstrom_thrsd is required to calculate Contact Map")
-
-    # check for storing graphs
-    if args.store_graphs:
-        store_graphs = str_to_bool(args.store_graphs)
-    else:
-        store_graphs = True
-
-    # check for saved graphs
-    if args.saved_graphs is None:
-        saved_graphs = ""
-    else:
-        saved_graphs = args.saved_graphs
 
     if args.mode == "t2pmhc_gcn":
+        logging.info("training t2pmhc-gcn")
         train_gcn(args.samplesheet,
-                  pdb_files,
-                  args.name,
+                  args.run_name,
                   hyperparams,
-                  saved_graphs,
-                  args.save_model
+                  args.saved_graphs,
+                  args.save_model,
                   )
 
     elif args.mode == "t2pmhc_gat":
+        logging.info("training t2pmhc-gat")
         train_gat(args.samplesheet,
-                  pdb_files,
-                  args.name,
+                  args.run_name,
                   hyperparams,
-                  saved_graphs,
-                  args.save_model
+                  args.saved_graphs,
+                  args.save_model,
                   )
         
     else:

@@ -49,8 +49,10 @@ ATCHLEY_FACTORS = {
 
 
 # tcrblosum for AA types
-def get_aa_type_tcrblosum(aa):
-    tcrblosum = pd.read_csv("../../data/tcrblosum/tcrBLOSUM_all.tsv", sep="\t", index_col=0)
+def read_in_tcrblosum(file_path):
+    return pd.read_csv(file_path, sep="\t", index_col=0)
+
+def get_aa_type_tcrblosum(aa, tcrblosum):
     return tcrblosum.loc[aa].tolist()
 
 
