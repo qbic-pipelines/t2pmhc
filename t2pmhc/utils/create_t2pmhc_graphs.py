@@ -3,8 +3,6 @@
 import os
 import pandas as pd
 import numpy as np
-import logging
-logger = logging.getLogger(__name__)
 
 from Bio.SeqUtils import seq1
 
@@ -26,36 +24,15 @@ from utils.features import (
                         create_complex_list,
                         annotate_residue_with_complex_info,
                         get_sequence_coord,
-                        annotate_sequence
+                        annotate_sequence,
                         )
 
-from utils.helpers import calculate_contact_map
+from utils.helpers import calculate_contact_map, read_in_samplesheet
 
 
 # read in tcrblosum
 TCRBLOSUM = read_in_tcrblosum("data/tcrblosum/tcrBLOSUM_all.tsv")
 
-def read_in_samplesheet(samplesheet):
-    """
-    Read in a tab-separated sample sheet and extract PDB file paths.
-    
-    Parameters
-    ----------
-    samplesheet : str
-        Path to the tab-separated sample sheet file containing a 'pdb_file_path' column.
-        
-    Returns
-    -------
-    numpy.ndarray
-        Array of PDB file paths extracted from the sample sheet.
-    """
-    samplesheet = pd.read_csv(samplesheet, sep="\t")
-    try:
-        pdb_files = samplesheet["pdb_file_path"].values
-    except KeyError:
-        print("Error: 'pdb_file_path' column not found in samplesheet")
-        sys.exit(1)
-    return pdb_files
 
 # ==================================================================================================
 #                                           GCN
@@ -167,11 +144,11 @@ def gcn_create_graphs(pdb_files, metadata, threshold, graphs_path):
 
         print(f"Processed {i + batch_size} / {len(pdb_files)} files")
 
-        # save the graphs
-        print(f"saving test graphs to {graphs_path}")
-        if not os.path.exists(os.path.dirname(graphs_path)):
-            os.makedirs(os.path.dirname(graphs_path))
-        torch.save(dataset, graphs_path)
+    # save the graphs
+    print(f"saving test graphs to {graphs_path}")
+    if not os.path.exists(os.path.dirname(graphs_path)):
+        os.makedirs(os.path.dirname(graphs_path))
+    torch.save(dataset, graphs_path)
 
     return dataset, len(dataset)
 
@@ -299,10 +276,12 @@ def create_graphs(mode, samplesheet, out):
 
     # create graphs
     if mode == "t2pmhc-gat":
-        logging.info("Creating Graphs -- t2pmhc-gat")
+        #logging.info("Creating Graphs -- t2pmhc-gat")
+        print("Creating Graphs -- t2pmhc-gat")
         gat_create_graphs(pdb_files=pdb_files, metadata=metadata, threshold=10, graphs_path=out)
     elif mode == "t2pmhc-gcn":
-        logging.info("Creating Graphs -- t2pmhc-gcn")
+        #logging.info("Creating Graphs -- t2pmhc-gcn")
+        print("Creating Graphs -- t2pmhc-gcn")
         gcn_create_graphs(pdb_files=pdb_files, metadata=metadata, threshold=10, graphs_path=out)
 
 

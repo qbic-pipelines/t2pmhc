@@ -28,6 +28,43 @@ warnings.filterwarnings("ignore", category=FutureWarning, message="The behavior 
 
 
 # ============================================================================= #
+#                             MODEL FUNCTIONS                                   #
+# ============================================================================= #
+
+def read_hyperparams(json_path):
+    if not json_path.endswith(".json"):
+        print("Hyperparameters must be in json format")
+    
+    with open(json_path, "r") as f:
+        hyperparams = json.load(f)
+
+    return hyperparams
+
+
+def read_in_samplesheet(samplesheet):
+    """
+    Read in a tab-separated sample sheet and extract PDB file paths.
+    
+    Parameters
+    ----------
+    samplesheet : str
+        Path to the tab-separated sample sheet file containing a 'pdb_file_path' column.
+        
+    Returns
+    -------
+    numpy.ndarray
+        Array of PDB file paths extracted from the sample sheet.
+    """
+    print("reading samplesheet")
+    samplesheet = pd.read_csv(samplesheet, sep="\t")
+    try:
+        pdb_files = samplesheet["pdb_file_path"].values
+    except KeyError:
+        print("Error: 'pdb_file_path' column not found in samplesheet")
+        sys.exit(1)
+    return pdb_files
+
+# ============================================================================= #
 #                          Structure Representation                             #
 # ============================================================================= #
 
@@ -345,7 +382,7 @@ def save_last_model(model, model_path, name):
     print("Saved final model.")
 
 
-def save_last_scalers(pae_node_scaler, pae_tcrpmhc_node_scaler, distance_scaler, pae_edge_scaler, hydro_scaler, name, mode):
+def save_last_scalers(pae_node_scaler, pae_tcrpmhc_node_scaler, distance_scaler, pae_edge_scaler, hydro_scaler, name, mode, model_path):
     """
     Saves the provided scaler objects to disk using joblib.
     This function serializes and stores two scaler objects, typically used for preprocessing data,
@@ -355,15 +392,18 @@ def save_last_scalers(pae_node_scaler, pae_tcrpmhc_node_scaler, distance_scaler,
         pae_tcrphmc_scaler: The scaler object for the TCR-PMHC PAE data to be saved.
         name (str): The base name to use for the saved scaler files.
     """
+    model_path = f"{model_path}/scalers"
+    if not os.path.exists(model_path):
+        os.makedirs(model_path)
     if mode == "GAT":
-        joblib.dump(pae_node_scaler, f"../../data/scalers/{name}_pae_node_FULL.pkl")
-        joblib.dump(pae_tcrpmhc_node_scaler, f"../../data/scalers/{name}_pae_node_TCRPMHC.pkl")
-        joblib.dump(distance_scaler, f"../../data/scalers/{name}_distance.pkl")
-        joblib.dump(pae_edge_scaler, f"../../data/scalers/{name}_pae_edge_FULL.pkl")
-        joblib.dump(hydro_scaler, f"../../data/scalers/{name}_hydro.pkl")
+        joblib.dump(pae_node_scaler, f"{model_path}/{name}_pae_node_FULL.pkl")
+        joblib.dump(pae_tcrpmhc_node_scaler, f"{model_path}/{name}_pae_node_TCRPMHC.pkl")
+        joblib.dump(distance_scaler, f"{model_path}/{name}_distance.pkl")
+        joblib.dump(pae_edge_scaler, f"{model_path}/{name}_pae_edge_FULL.pkl")
+        joblib.dump(hydro_scaler, f"{model_path}/{name}_hydro.pkl")
     elif mode == "GCN":
-        joblib.dump(pae_node_scaler, f"../../data/scalers/{name}_pae_node_FULL.pkl")
-        joblib.dump(pae_tcrpmhc_node_scaler, f"../../data/scalers/{name}_pae_node_TCRPMHC.pkl")
-        joblib.dump(distance_scaler, f"../../data/scalers/{name}_distance.pkl")
-        joblib.dump(hydro_scaler, f"../../data/scalers/{name}_hydro.pkl")
+        joblib.dump(pae_node_scaler, f"{model_path}/{name}_pae_node_FULL.pkl")
+        joblib.dump(pae_tcrpmhc_node_scaler, f"{model_path}/{name}_pae_node_TCRPMHC.pkl")
+        joblib.dump(distance_scaler, f"{model_path}/{name}_distance.pkl")
+        joblib.dump(hydro_scaler, f"{model_path}/{name}_hydro.pkl")
     print("Saved PAE scalers")

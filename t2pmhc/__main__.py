@@ -10,7 +10,11 @@ import torch
 from models.t2pmhc_gcn import train_gcn
 from models.t2pmhc_gat import train_gat
 
+from predict.predict_binding import predict_binding
+
 from utils.create_t2pmhc_graphs import create_graphs
+
+from utils.helpers import read_hyperparams
 
 import rich_click as click
 
@@ -45,45 +49,6 @@ logger.addHandler(ch)
 logger.setLevel(logging.INFO)
 logger.propagate = False
 
-# ============================================================================= #
-#                             MODEL FUNCTIONS                                   #
-# ============================================================================= #
-
-def read_hyperparams(json_path):
-    if not json_path.endswith(".json"):
-        print("Hyperparameters must be in json format")
-    
-    with open(json_path, "r") as f:
-        hyperparams = json.load(f)
-
-    return hyperparams
-
-
-def read_in_samplesheet(samplesheet):
-    """
-    Read in a tab-separated sample sheet and extract PDB file paths.
-    
-    Parameters
-    ----------
-    samplesheet : str
-        Path to the tab-separated sample sheet file containing a 'pdb_file_path' column.
-        
-    Returns
-    -------
-    numpy.ndarray
-        Array of PDB file paths extracted from the sample sheet.
-    """
-    logging.info("reading samplesheet")
-    samplesheet = pd.read_csv(samplesheet, sep="\t")
-    try:
-        pdb_files = samplesheet["pdb_file_path"].values
-    except KeyError:
-        print("Error: 'pdb_file_path' column not found in samplesheet")
-        sys.exit(1)
-    return pdb_files
-
-        
-
 
 # ============================================================================= #
 #                               MAIN FUNCTION                                   #
@@ -108,6 +73,7 @@ def t2pmhc_cli():
     t2pmhc: A Structure-Informed Graph Neural Network for Predicting TCR-pMHC Binding 
     """
 
+# train gcn
 @t2pmhc_cli.command()
 @click.option(
     '--run_name',
@@ -162,7 +128,7 @@ def train_t2pmhc_gcn(samplesheet, run_name, hyperparameters, saved_graphs, save_
     
     logger.info(".................. done ..................")
 
-
+# train gat
 @t2pmhc_cli.command()
 @click.option(
     '--run_name',
@@ -217,6 +183,7 @@ def train_t2pmhc_gat(samplesheet, run_name, hyperparameters, saved_graphs, save_
     logger.info(".................. done ..................")
 
 
+# create graphs
 @t2pmhc_cli.command()
 @click.option(
     '--mode',
@@ -240,6 +207,9 @@ def train_t2pmhc_gat(samplesheet, run_name, hyperparameters, saved_graphs, save_
 )
 
 def create_t2pmhc_graphs(mode, samplesheet, out):
+    """
+    Build t2pmhc graphs from pdb files
+    """
 
     logging.info(f"Building {mode} graphs")
     create_graphs(mode,
@@ -248,6 +218,115 @@ def create_t2pmhc_graphs(mode, samplesheet, out):
                 )       
 
     logger.info(".................. done ..................")
+
+# predict binding
+@t2pmhc_cli.command()
+@click.option(
+    '--mode',
+    type=str,
+    required=True,
+    help="Model to use for binding prediction [t2pmhc-gcn, t2pmhc-gat]"
+)
+
+@click.option(
+    '--samplesheet',
+    type=str,
+    required=True,
+    help="Path to t2pmhc samplesheet"
+)
+
+@click.option(
+    '--saved_graphs',
+    type=str,
+    required=True,
+    help="Path to saved test graphs"
+)
+
+@click.option(
+    '--out',
+    type=str,
+    required=True,
+    help="Path to store t2pmhc result tsv"
+)
+
+@click.option(
+    '--hyperparams',
+    default="",
+    type=str,
+    required=False,
+    help="Path to hyperparams json"
+)
+
+@click.option(
+    '--model',
+    default="",
+    type=str,
+    required=False,
+    help="t2pmhc model to use for prediction"
+)
+
+@click.option(
+    '--pae_scaler_structure',
+    default="",
+    type=str,
+    required=False,
+    help="Path to PAE scaler file of the whole structure"
+)
+
+@click.option(
+    '--pae_scaler_tcrpmhc',
+    default="",
+    type=str,
+    required=False,
+    help="Path to PAE scaler file of the TCR-pMHC complex"
+)
+
+@click.option(
+    '--hydro_scaler',
+    default="",
+    type=str,
+    required=False,
+    help="Path to hydro scaler. Only required for GAT"
+)
+
+@click.option(
+    '--distance_scaler',
+    default="",
+    type=str,
+    required=False,
+    help="Path to distance scaler. Only required for GAT"
+)
+
+@click.option(
+    '--pae_scaler_edge',
+    default="",
+    type=str,
+    required=False,
+    help="Path to PAE edge scaler. Only required for GAT"
+)
+
+def t2pmhc_predict_binding(mode, samplesheet, saved_graphs, out, hyperparams, model, pae_scaler_structure, pae_scaler_tcrpmhc, hydro_scaler, distance_scaler, pae_scaler_edge):
+    """
+    Predict TCR-pMHC binding using the t2pmhc models
+    """
+
+    print("Predicting binder status")
+    predict_binding(mode,
+                    samplesheet,
+                    saved_graphs,
+                    out,
+                    hyperparams,
+                    model,
+                    pae_scaler_structure,
+                    pae_scaler_tcrpmhc,
+                    hydro_scaler,
+                    distance_scaler,
+                    pae_scaler_edge)
+    
+    logger.info(".................. done ..................")
+    
+
+    
 
 
 if __name__ == "__main__":

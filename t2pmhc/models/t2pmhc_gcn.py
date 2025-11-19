@@ -29,7 +29,7 @@ from sklearn.model_selection import train_test_split, StratifiedKFold
 from sklearn.metrics import roc_curve, auc, roc_auc_score, confusion_matrix
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
-from utils.helpers import save_last_model, get_device
+from utils.helpers import save_last_model, save_last_scalers, get_device
 
 
 
@@ -226,6 +226,46 @@ def train(model, loader, optimizer, criterion, device):
     return total_loss / len(loader)
 
 
+def evaluate(model, loader, criterion, device, return_probs=False):
+    # put model in evaluation mode
+    model.eval()
+    # init statistics
+    total_loss = 0
+    correct = 0
+    total = 0
+    all_labels = []
+    all_probs = []
+    all_preds = []
+
+    # disble gradient tracking (performance and memory efficiency)
+    with torch.no_grad():
+        for data in loader:
+            # move to gpu if possible
+            data = data.to(device)
+            # forward pass
+            out = model(data)
+            loss = criterion(out, data.y)
+            total_loss += loss.item()
+
+            # 2-class classification
+            probs = F.softmax(out, dim=1)[:, 1]  # Probability of class 1 (binder)
+            # give out predicted class
+            pred = out.argmax(dim=1)
+
+            # update stats
+            correct += (pred == data.y).sum().item()
+            total += data.y.size(0)
+
+            all_labels.extend(data.y.cpu().numpy())
+            all_probs.extend(probs.cpu().numpy())
+            all_preds.extend(pred.cpu().numpy())
+
+    accuracy = correct / total
+    avg_loss = total_loss / len(loader)
+    if return_probs:
+        return avg_loss, accuracy, all_labels, all_probs, all_preds
+    return avg_loss, accuracy
+
 
 def train_gcn(metadata_path, name, hyperparams, saved_graphs, save_model):
     print("Training t2pmhc-GCN")
@@ -278,8 +318,12 @@ def train_gcn(metadata_path, name, hyperparams, saved_graphs, save_model):
         train_loss = train(model, train_loader, optimizer, criterion, device)
         print(f"Epoch {epoch+1}/{num_epochs} | Train Loss: {train_loss:.4f}")
       
+
     # save model
-    if os.path.exists(save_model):
-        save_last_model(model, save_model, name)
+    if not os.path.exists(save_model):
+        os.makedirs(save_model)
+
+    save_last_model(model, save_model, name)
+    save_last_scalers(pae_scaler, pae_tcrpmhc_scaler, distance_scaler, "", hydro_scaler, name, "GCN")
 
     print("Final model trained and saved.")
