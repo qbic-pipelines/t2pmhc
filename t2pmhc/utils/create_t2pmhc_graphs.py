@@ -2,7 +2,6 @@
 
 import os
 import pandas as pd
-import argparse
 import numpy as np
 import logging
 logger = logging.getLogger(__name__)
@@ -18,30 +17,19 @@ mp.set_start_method('spawn', force=True)
 from joblib import load
 import sys
 
-from features import (
+from utils.features import (
                         HYDROPHOBICITY,
                         AA_CHARGES,
                         ATCHLEY_FACTORS,
                         read_in_tcrblosum,
                         get_aa_type_tcrblosum,
-                        create_index_list,
                         create_complex_list,
                         annotate_residue_with_complex_info,
                         get_sequence_coord,
                         annotate_sequence
                         )
 
-from helpers import (calculate_contact_map,
-                            plot_predictions_labels,
-                            str_to_bool,
-                            write_run_to_summarytable,
-                            save_last_model,
-                            save_last_scalers,
-                            plot_pred_probs,
-                            plot_category_results, 
-                            plot_correctly_predicted_samples,
-                            get_device
-                            )
+from utils.helpers import calculate_contact_map
 
 
 # read in tcrblosum
@@ -181,6 +169,8 @@ def gcn_create_graphs(pdb_files, metadata, threshold, graphs_path):
 
         # save the graphs
         print(f"saving test graphs to {graphs_path}")
+        if not os.path.exists(os.path.dirname(graphs_path)):
+            os.makedirs(os.path.dirname(graphs_path))
         torch.save(dataset, graphs_path)
 
     return dataset, len(dataset)
@@ -302,31 +292,19 @@ def gat_create_graphs(pdb_files, metadata, threshold, graphs_path):
     return dataset, len(dataset)
 
 
-def main():
-    parser = argparse.ArgumentParser(description='Predict binder status of samples in a t2pmhc samplesheets')
-    parser.add_argument('--mode', type=str, required=True, help="t2pmhc-gat, t2pmhc-gcn")
-    parser.add_argument('--samplesheet', type=str, required=True, help="Path to t2pmhc samplesheet")
-    parser.add_argument('--out', type=str, required=True, help="Path to store the graphs")
-
-    args = parser.parse_args()
-
-    # init logging
-    logging.basicConfig(level=logging.INFO, format='%(message)s', handlers=[logging.StreamHandler(sys.stdout)])
-
+def create_graphs(mode, samplesheet, out):
     # read in samplesheet 
-    pdb_files = read_in_samplesheet(args.samplesheet)
-    metadata = pd.read_csv(args.samplesheet, sep="\t")
-
-
+    pdb_files = read_in_samplesheet(samplesheet)
+    metadata = pd.read_csv(samplesheet, sep="\t")
 
     # create graphs
-    if args.mode == "t2pmhc-gat":
+    if mode == "t2pmhc-gat":
         logging.info("Creating Graphs -- t2pmhc-gat")
-        gat_create_graphs(pdb_files=pdb_files, metadata=metadata, threshold=10, graphs_path=args.out)
-    elif args.mode == "t2pmhc-gcn":
+        gat_create_graphs(pdb_files=pdb_files, metadata=metadata, threshold=10, graphs_path=out)
+    elif mode == "t2pmhc-gcn":
         logging.info("Creating Graphs -- t2pmhc-gcn")
-        gcn_create_graphs(pdb_files=pdb_files, metadata=metadata, threshold=10, graphs_path=args.out)
+        gcn_create_graphs(pdb_files=pdb_files, metadata=metadata, threshold=10, graphs_path=out)
 
 
 if __name__ == "__main__":
-    main()
+    create_graphs()

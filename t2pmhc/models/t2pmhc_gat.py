@@ -349,7 +349,8 @@ def train_gat(metadata_path, name, hyperparams, saved_graphs, save_model):
 
 
     # save model
-    if os.path.exists(save_model):
-        save_last_model(model, save_model, name)
-
+    if not os.path.exists(save_model):
+        os.makedirs(save_model)
+        
+    save_last_model(model, save_model, name)
     print("Final model trained and saved.")
