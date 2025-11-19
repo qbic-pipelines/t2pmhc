@@ -87,6 +87,7 @@ def scale_test(dataset, mode, pae_node_scaler, pae_tcrpmhc_node_scaler, hydro_sc
 
 
 def add_predictions_to_samplesheet(df, probs, preds, model):
+    print(len(df))
     df["binder_prob"] = probs
     df["binder_prediction"] = preds
     df["model"] = model
