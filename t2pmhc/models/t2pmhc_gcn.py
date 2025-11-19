@@ -1,33 +1,22 @@
 import os
-import tqdm
-import glob
-import argparse
-import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-from Bio.PDB import PDBParser
-from Bio.SeqUtils import seq1
 import random
 from collections import Counter
-import json
+from datetime import datetime
 import copy
 
 import torch.multiprocessing as mp
 mp.set_start_method('spawn', force=True)
-import gc
 
 import torch
-from torch_geometric.data import Data
-from torch_geometric.nn import GCNConv, BatchNorm, AttentionalAggregation, global_mean_pool
+from torch_geometric.nn import GCNConv, BatchNorm, AttentionalAggregation
 import torch.nn.functional as F
 import torch.nn as nn
 from torch_geometric.loader import DataLoader
-from torch.utils.data import Subset
 import torch_scatter
 
-from sklearn.model_selection import train_test_split, StratifiedKFold
-from sklearn.metrics import roc_curve, auc, roc_auc_score, confusion_matrix
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler
 
 from utils.helpers import save_last_model, save_last_scalers, get_device
 
@@ -316,7 +305,7 @@ def train_gcn(metadata_path, name, hyperparams, saved_graphs, save_model):
     print("Training t2pmhc-GCN model")
     for epoch in range(num_epochs):
         train_loss = train(model, train_loader, optimizer, criterion, device)
-        print(f"Epoch {epoch+1}/{num_epochs} | Train Loss: {train_loss:.4f}")
+        print(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}: Epoch {epoch+1}/{num_epochs} | Train Loss: {train_loss:.4f}')
       
 
     # save model

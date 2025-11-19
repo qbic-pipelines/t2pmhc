@@ -5,8 +5,6 @@ import sys
 from datetime import datetime
 import copy
 
-from Bio.PDB import PDBParser
-from Bio.SeqUtils import seq1
 import random
 from collections import Counter
 
@@ -14,18 +12,13 @@ import torch.multiprocessing as mp
 mp.set_start_method('spawn', force=True)
 
 import torch
-from torch_geometric.data import Data
-from torch_geometric.nn import GATConv, BatchNorm, AttentionalAggregation, global_mean_pool
+from torch_geometric.nn import GATConv, BatchNorm, AttentionalAggregation
 import torch.nn.functional as F
 import torch.nn as nn
 from torch_geometric.loader import DataLoader
-from torch.utils.data import Subset
 
-from sklearn.model_selection import StratifiedKFold
-from sklearn.metrics import roc_auc_score, confusion_matrix
 from sklearn.preprocessing import MinMaxScaler
 
-import wandb
 
 
 from utils.helpers import save_last_model, save_last_scalers, get_device
@@ -382,7 +375,7 @@ def train_gat(metadata_path, name, hyperparams, saved_graphs, save_model):
     print("Training t2pmhc-GAT model")
     for epoch in range(num_epochs):
         train_loss = train(model, train_loader, optimizer, criterion, device)
-        print(f"Epoch {epoch+1}/{num_epochs} | Train Loss: {train_loss:.4f}")
+        print(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}: Epoch {epoch+1}/{num_epochs} | Train Loss: {train_loss:.4f}')
 
 
     # save model
