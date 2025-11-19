@@ -161,6 +161,9 @@ def train_t2pmhc_gcn(samplesheet, run_name, hyperparameters, saved_graphs, save_
                 save_model,
                 )
     
+    logger.info(".................. done ..................")
+
+
 @t2pmhc_cli.command()
 @click.option(
     '--run_name',
@@ -211,6 +214,8 @@ def train_t2pmhc_gat(samplesheet, run_name, hyperparameters, saved_graphs, save_
                 saved_graphs,
                 save_model,
                 )
+    
+    logger.info(".................. done ..................")
 
 
 @t2pmhc_cli.command()
@@ -243,7 +248,7 @@ def create_t2pmhc_graphs(mode, samplesheet, out):
               out
                 )       
 
-logger.info(".................. done ..................")
+    logger.info(".................. done ..................")
 
 
 if __name__ == "__main__":
