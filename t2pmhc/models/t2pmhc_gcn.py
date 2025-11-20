@@ -13,7 +13,6 @@ from torch_geometric.nn import GCNConv, BatchNorm, AttentionalAggregation
 import torch.nn.functional as F
 import torch.nn as nn
 from torch_geometric.loader import DataLoader
-import torch_scatter
 
 from sklearn.preprocessing import MinMaxScaler
 
@@ -193,7 +192,10 @@ class GCNClassifier(torch.nn.Module):
         return x
     
     def get_attention_weights(self, data):
-        """Return node embeddings and attention weights per node for each graph."""
+        """
+        Return node embeddings and attention weights per node for each graph.
+        """
+
         x, edge_index, batch = data.x, data.edge_index, data.batch
 
         # Forward through GCN layers (same as in forward())
@@ -212,9 +214,28 @@ class GCNClassifier(torch.nn.Module):
         x = F.relu(x)
         x = self.dropout(x)
 
-        # Compute attention logits and softmax per graph (for benchmarking)
+        # Compute attention logits
         gate_logits = self.att_pool.gate_nn(x).squeeze()  # [num_nodes]
-        attn_weights = torch_scatter.composite.scatter_softmax(gate_logits, batch)
+
+        # Subtract max per graph for numerical stability
+        unique_batches = batch.unique()
+        max_per_graph = torch.zeros_like(gate_logits)
+        for b in unique_batches:
+            mask = (batch == b)
+            max_per_graph[mask] = gate_logits[mask].max()
+
+        stabilized = gate_logits - max_per_graph
+
+        # exp
+        exp_x = stabilized.exp()
+
+        # sum per group
+        sum_per_graph = torch.zeros_like(exp_x)
+        for b in unique_batches:
+            mask = (batch == b)
+            sum_per_graph[mask] = exp_x[mask].sum()
+
+        attn_weights = exp_x / (sum_per_graph + 1e-16)
 
         return x, attn_weights, batch
         
