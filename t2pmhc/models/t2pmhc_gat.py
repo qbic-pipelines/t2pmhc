@@ -18,7 +18,7 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 
-from utils.helpers import save_last_model, save_last_scalers, get_device
+from t2pmhc.utils.helpers import save_last_model, save_last_scalers, get_device
 
 
 

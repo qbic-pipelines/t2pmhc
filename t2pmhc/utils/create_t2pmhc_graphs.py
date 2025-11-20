@@ -11,7 +11,7 @@ from torch_geometric.data import Data
 
 import multiprocessing as mp
 
-from utils.features import (
+from t2pmhc.utils.features import (
                         HYDROPHOBICITY,
                         AA_CHARGES,
                         ATCHLEY_FACTORS,
@@ -23,7 +23,7 @@ from utils.features import (
                         annotate_sequence,
                         )
 
-from utils.helpers import calculate_contact_map, read_in_samplesheet
+from t2pmhc.utils.helpers import calculate_contact_map, read_in_samplesheet
 
 
 logger = logging.getLogger("t2pmhc")

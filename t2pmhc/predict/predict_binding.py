@@ -15,10 +15,10 @@ from torch_geometric.loader import DataLoader
 
 from joblib import load
 
-from models.t2pmhc_gcn import GCNClassifier, evaluate as gcn_evaluate, create_graph_dataset as gcn_create_graphs
-from models.t2pmhc_gat import GATClassifier, evaluate as gat_evaluate, create_graph_dataset as gat_create_graphs
+from t2pmhc.models.t2pmhc_gcn import GCNClassifier, evaluate as gcn_evaluate, create_graph_dataset as gcn_create_graphs
+from t2pmhc.models.t2pmhc_gat import GATClassifier, evaluate as gat_evaluate, create_graph_dataset as gat_create_graphs
 
-from utils.helpers import read_hyperparams, get_device
+from t2pmhc.utils.helpers import read_hyperparams, get_device
 
 
 logger = logging.getLogger("t2pmhc")

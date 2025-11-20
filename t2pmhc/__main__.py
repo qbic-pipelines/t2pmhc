@@ -4,14 +4,14 @@ from rich.logging import RichHandler
 from pathlib import Path
 import rich_click as click
 
-from models.t2pmhc_gcn import train_gcn
-from models.t2pmhc_gat import train_gat
+from t2pmhc.models.t2pmhc_gcn import train_gcn
+from t2pmhc.models.t2pmhc_gat import train_gat
 
-from predict.predict_binding import predict_binding
+from t2pmhc.predict.predict_binding import predict_binding
 
-from utils.create_t2pmhc_graphs import create_graphs
+from t2pmhc.utils.create_t2pmhc_graphs import create_graphs
 
-from utils.helpers import read_hyperparams
+from t2pmhc.utils.helpers import read_hyperparams
 
 
 # ============================================================================= #
