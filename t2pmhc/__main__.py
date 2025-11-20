@@ -16,17 +16,6 @@ from utils.create_t2pmhc_graphs import create_graphs
 
 from utils.helpers import read_hyperparams
 
-# ============================================================================= #
-#                               set seed                                        #
-# ============================================================================= #
-
-def set_seed(seed=42):
-    random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-
-set_seed(42)
 
 # ============================================================================= #
 #                          create logger                                        #
