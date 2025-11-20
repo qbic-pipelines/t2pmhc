@@ -17,16 +17,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 
 # Download the GitHub release (replace user/repo)
-RUN wget https://github.com/qbic-pipelines/t2pmhc/archive/refs/tags/0.1.0.tar.gz -O source.tar.gz
-
+#RUN wget https://github.com/qbic-pipelines/t2pmhc/archive/refs/tags/0.1.0.tar.gz -O source.tar.gz
 
 # Extract the archive
-RUN tar -xzf source.tar.gz && \
-    rm source.tar.gz
+#RUN tar -xzf source.tar.gz && \
+#    rm source.tar.gz
+
+# test it
+COPY . /app
 
 
 # Move into the extracted folder (GitHub exports as repo-<tag>)
-WORKDIR /app/t2pmhc-0.1.0
+#WORKDIR /app/t2pmhc-0.1.0
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
