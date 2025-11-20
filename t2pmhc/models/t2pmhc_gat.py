@@ -4,7 +4,7 @@ import numpy as np
 import sys
 from datetime import datetime
 import copy
-
+import logging
 import random
 from collections import Counter
 
@@ -22,6 +22,7 @@ from utils.helpers import save_last_model, save_last_scalers, get_device
 
 
 
+logger = logging.getLogger("t2pmhc")
 
 # ============================================================================= #
 #                               set seed                                        #
@@ -38,10 +39,10 @@ set_seed(42)
 
 def create_graph_dataset(saved_graphs):
     if os.path.exists(saved_graphs):
-        print("Loading Graphs from pt file")
+        logger.info("Loading Graphs from pt file")
         dataset = torch.load(saved_graphs, weights_only=False)
     else:
-        print("Error: Saved graphs file does not exist. Please ensure the file path is correct or set 'load_graphs' to False to generate graphs.")
+        raise FileNotFoundError("Error: Saved graphs file does not exist. Please ensure the file path is correct or set 'load_graphs' to False to generate graphs.")
 
     return dataset, len(dataset)
 
@@ -253,7 +254,7 @@ class GATClassifier(torch.nn.Module):
         if torch.equal(edge_index3, edge_index3) and torch.equal(edge_index2, edge_index3):
             edge_index_out = edge_index3
         else:
-            print("edge index assumption is wrong!")
+            logger.info("edge index assumption is wrong!")
             sys.exit()
 
         return node_emb, (edge_index_out, avg_alpha), batch
@@ -325,10 +326,10 @@ def evaluate(model, loader, criterion, device, return_probs=False):
 
 
 def train_gat(metadata_path, name, hyperparams, saved_graphs, save_model):
-    print("Training t2pmhc-GAT")
+    logger.info("Training t2pmhc-GAT")
 
-    print(f"\nName: {name}\nSaved Graphs: {saved_graphs}\n")
-    print("............. reading dataset ............")
+    logger.info(f"\nName: {name}\nSaved Graphs: {saved_graphs}\n")
+    logger.info("Reading dataset")
 
     metadata = pd.read_csv(metadata_path, sep="\t")
     dataset, structure_count = create_graph_dataset(saved_graphs)
@@ -348,7 +349,7 @@ def train_gat(metadata_path, name, hyperparams, saved_graphs, save_model):
 
     # enable GPU usage
     device = get_device()
-    print(f"Training on {device}")
+    logger.info(f"Training on {device}")
 
 
     # Add PAE features across the full dataset
@@ -369,10 +370,10 @@ def train_gat(metadata_path, name, hyperparams, saved_graphs, save_model):
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=weight_decay)
     criterion = torch.nn.CrossEntropyLoss(weight=class_weights.to(device))
 
-    print("Training t2pmhc-GAT model")
+    logger.info("Training t2pmhc-GAT model")
     for epoch in range(num_epochs):
         train_loss = train(model, train_loader, optimizer, criterion, device)
-        print(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}: Epoch {epoch+1}/{num_epochs} | Train Loss: {train_loss:.4f}')
+        logger.info(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}: Epoch {epoch+1}/{num_epochs} | Train Loss: {train_loss:.4f}')
 
 
     # save model
@@ -381,4 +382,4 @@ def train_gat(metadata_path, name, hyperparams, saved_graphs, save_model):
 
     save_last_model(model, save_model, name)
     save_last_scalers(pae_node_scaler, pae_tcrpmhc_node_scaler, distance_scaler, pae_edge_scaler, hydro_scaler, name, "GAT", save_model)
-    print("Final model trained and saved.")
+    plogger.inforint("Final model trained and saved.")

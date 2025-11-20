@@ -3,6 +3,7 @@ import numpy as np
 import random
 import json
 import logging
+from rich.logging import RichHandler
 import torch
 from pathlib import Path
 import rich_click as click
@@ -20,17 +21,13 @@ from utils.helpers import read_hyperparams
 # ============================================================================= #
 #                          create logger                                        #
 # ============================================================================= #
-# Create logger
+logging.basicConfig(
+    level=logging.INFO,
+    handlers=[RichHandler()],
+    format="%(message)s"
+)
+
 logger = logging.getLogger("t2pmhc")
-# Create console handler
-ch = logging.StreamHandler()
-# Create formatter
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-ch.setFormatter(formatter)
-# add ch to logger
-logger.addHandler(ch)
-logger.setLevel(logging.INFO)
-logger.propagate = False
 
 
 # ============================================================================= #
@@ -124,7 +121,7 @@ def train_t2pmhc_gcn(samplesheet, run_name, hyperparameters, saved_graphs, save_
     # read in hyperparameters
     hyperparams = read_hyperparams(hyperparameters)
 
-    logging.info("training t2pmhc-gcn")
+    logging.info("......... Training t2pmhc-gcn .........")
     train_gcn(samplesheet,
                 run_name,
                 hyperparams,
@@ -178,7 +175,7 @@ def train_t2pmhc_gat(samplesheet, run_name, hyperparameters, saved_graphs, save_
     # read in hyperparameters
     hyperparams = read_hyperparams(hyperparameters)
 
-    logging.info("training t2pmhc-gat")
+    logging.info("......... Training t2pmhc-gat .........")
     train_gat(samplesheet,
                 run_name,
                 hyperparams,
@@ -217,7 +214,7 @@ def create_t2pmhc_graphs(mode, samplesheet, out):
     Build t2pmhc graphs from pdb files
     """
 
-    logging.info(f"Building {mode} graphs")
+    logging.info(f"........ Building {mode} graphs ........")
     create_graphs(mode,
               samplesheet,
               out
@@ -325,7 +322,8 @@ def t2pmhc_predict_binding(mode, samplesheet, saved_graphs, out, hyperparams, mo
         pae_scaler_edge = pae_scaler_edge or mode_defaults.get("pae_scaler_edge")
 
 
-    print("Predicting binder status")
+    logging.info(f".................. {mode} ..................")
+    logging.info("Predicting binder status")
     predict_binding(mode,
                     samplesheet,
                     saved_graphs,

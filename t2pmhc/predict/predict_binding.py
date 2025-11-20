@@ -9,21 +9,19 @@ It produces a table with binding prediction.
 import os
 import pandas as pd
 import numpy as np
-
+import logging
 import torch
 from torch_geometric.loader import DataLoader
 
 from joblib import load
-
-# necessary to import functions from a siblings dir
-import sys
-sys.path.append('/mnt/lustre/groups/nahnsen/nahpo775/workdir/projects/tcrpha_pred/tcr_pHLApred/tcr_phla/tcr_phla/models')
 
 from models.t2pmhc_gcn import GCNClassifier, evaluate as gcn_evaluate, create_graph_dataset as gcn_create_graphs
 from models.t2pmhc_gat import GATClassifier, evaluate as gat_evaluate, create_graph_dataset as gat_create_graphs
 
 from utils.helpers import read_hyperparams, get_device
 
+
+logger = logging.getLogger("t2pmhc")
 
 
 def scale_test(dataset, mode, pae_node_scaler, pae_tcrpmhc_node_scaler, hydro_scaler, distance_scaler, pae_scaler_edge):
@@ -87,7 +85,7 @@ def scale_test(dataset, mode, pae_node_scaler, pae_tcrpmhc_node_scaler, hydro_sc
 
 
 def add_predictions_to_samplesheet(df, probs, preds, model):
-    print(len(df))
+
     df["binder_prob"] = probs
     df["binder_prediction"] = preds
     df["model"] = model
@@ -95,22 +93,10 @@ def add_predictions_to_samplesheet(df, probs, preds, model):
 
 def predict_binding(mode, samplesheet, saved_graphs, out, hyperparams, model_path, pae_scaler_structure, pae_scaler_tcrpmhc, hydro_scaler, distance_scaler, pae_scaler_edge):
 
-    # # init logging
-    # logging.basicConfig(level=logging.INFO, format='%(message)s', handlers=[logging.StreamHandler(sys.stdout)])
-
-    # # log arguments
-    # logging.info("======= PARAMS =====")
-    # logging.info(f"Mode: {args.mode}")
-    # logging.info(f"Samplesheet: {args.samplesheet}")
-    # logging.info(f"Graphs: {args.graphs}")
-    # logging.info(f"Output path: {args.out}")
-    # logging.info("======= PARAMS =====\n\n")
-    
 
 
     # read in hyperparams
-    #logging.info("Reading Hyperparameters")
-    print("Reading hyperparams")
+    logging.info("Reading Hyperparameters")
     hyperparams = read_hyperparams(hyperparams)
   
     # read in samplesheet
@@ -118,20 +104,16 @@ def predict_binding(mode, samplesheet, saved_graphs, out, hyperparams, model_pat
 
     # create graphs and init respective model
     if mode == "t2pmhc-gat":
-        #logging.info("Creating Graphs")
-        print("Creating graphs")
         # read in graphs
         test_dataset, test_structure_count = gat_create_graphs(saved_graphs)
         # scale the test features
         scale_test(test_dataset, "gat", pae_scaler_structure, pae_scaler_tcrpmhc, hydro_scaler, distance_scaler, pae_scaler_edge)
         # init model
-        #logging.info("Initialising Model")
-        print("Initialising Model")
+        logging.info("Initialising Model")
         model = GATClassifier(input_dim=hyperparams["input_dim"], hidden_dim=hyperparams["hidden_dim"], output_dim=hyperparams["output_dim"], dropout_rate=hyperparams["dropout_rate"], edge_dim=hyperparams["edge_dim"], heads=hyperparams["heads"]
 )
     else: 
-        #logging.info("Creating Graphs")
-        print("Creating graphs")
+        logging.info("Creating Graphs")
         # read model and scalers
         test_dataset, test_structure_count = gcn_create_graphs(saved_graphs)
         # scale the test features
@@ -141,7 +123,7 @@ def predict_binding(mode, samplesheet, saved_graphs, out, hyperparams, model_pat
     
     # get the device
     device = get_device()
-    print(device)
+    logging.info(f"Predicting on {device} ...")
     
     # load model
     model.load_state_dict(torch.load(model_path, map_location=device))
@@ -153,16 +135,12 @@ def predict_binding(mode, samplesheet, saved_graphs, out, hyperparams, model_pat
     dummy_criterion  = torch.nn.CrossEntropyLoss() # required by the function
 
     
-    
-    # logging.info("Predicting Binder Status")
-    print("Predicting Binder Status")
     if mode == "t2pmhc-gat": 
         _, _, labels, probs, preds = gat_evaluate(model, loader, dummy_criterion, device, return_probs=True)
     else:
         _, _, labels, probs, preds = gcn_evaluate(model, loader, dummy_criterion, device, return_probs=True)
 
-    #logging.info(f"Saving prediction to {out}")
-    print(f"Saving prediction to {out}")
+    logging.info(f"Saving prediction to {out}")
     add_predictions_to_samplesheet(test_sheet, probs, preds, mode)
     
     # save test_sheet

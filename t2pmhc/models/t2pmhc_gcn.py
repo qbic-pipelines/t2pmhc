@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import numpy as np
 import random
+import logging
 from collections import Counter
 from datetime import datetime
 import copy
@@ -19,6 +20,10 @@ from sklearn.preprocessing import MinMaxScaler
 from utils.helpers import save_last_model, save_last_scalers, get_device
 
 
+
+
+# get logger
+logger = logging.getLogger("t2pmhc")
 
 
 # ============================================================================= #
@@ -44,10 +49,10 @@ set_seed(42)
 
 def create_graph_dataset(saved_graphs):
     if os.path.exists(saved_graphs):
-        print("Loading Graphs from pt file")
+        logger.info("Loading Graphs from pt file")
         dataset = torch.load(saved_graphs, weights_only=False)
     else:
-        print("Error: Saved graphs file does not exist. Please ensure the file path is correct or set 'load_graphs' to False to generate graphs.")
+        raise FileNotFoundError("Error: Saved graphs file does not exist. Please ensure the file path is correct or set 'load_graphs' to False to generate graphs.")
 
     return dataset, len(dataset)
 
@@ -255,10 +260,10 @@ def evaluate(model, loader, criterion, device, return_probs=False):
 
 
 def train_gcn(metadata_path, name, hyperparams, saved_graphs, save_model):
-    print("Training t2pmhc-GCN")
+    logger.info("Training t2pmhc-GCN")
 
-    print(f"\nName: {name}\nSaved Graphs: {saved_graphs}\n")
-    print("............. reading dataset ............")
+    logger.info(f"\nName: {name}\nSaved Graphs: {saved_graphs}\n")
+    logger.info("Reading dataset")
 
     metadata = pd.read_csv(metadata_path, sep="\t")
 
@@ -277,7 +282,7 @@ def train_gcn(metadata_path, name, hyperparams, saved_graphs, save_model):
 
     # check device
     device = get_device()
-    print(f"Training on {device}")
+    logger.info(f"Training on {device}")
 
     # get labels
     labels = [data.y.item() for data in dataset]
@@ -300,10 +305,10 @@ def train_gcn(metadata_path, name, hyperparams, saved_graphs, save_model):
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=weight_decay)
     criterion = torch.nn.CrossEntropyLoss(weight=class_weights.to(device))
 
-    print("Training t2pmhc-GCN model")
+    logger.info("Training t2pmhc-GCN model")
     for epoch in range(num_epochs):
         train_loss = train(model, train_loader, optimizer, criterion, device)
-        print(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}: Epoch {epoch+1}/{num_epochs} | Train Loss: {train_loss:.4f}')
+        logger.info(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}: Epoch {epoch+1}/{num_epochs} | Train Loss: {train_loss:.4f}')
       
 
     # save model
@@ -313,4 +318,4 @@ def train_gcn(metadata_path, name, hyperparams, saved_graphs, save_model):
     save_last_model(model, save_model, name)
     save_last_scalers(pae_scaler, pae_tcrpmhc_scaler, distance_scaler, "", hydro_scaler, name, "GCN", save_model)
 
-    print("Final model trained and saved.")
+    logger.info("Final model trained and saved.")

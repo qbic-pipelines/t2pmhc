@@ -12,6 +12,7 @@ import re
 import pandas as pd
 import torch
 import seaborn as sns
+import logging
 
 from Bio.PDB import PDBParser
 
@@ -24,13 +25,15 @@ import warnings
 warnings.filterwarnings("ignore", category=FutureWarning, message="The behavior of DataFrame concatenation with empty or all-NA entries is deprecated")
 
 
+logger = logging.getLogger("t2pmhc")
+
 # ============================================================================= #
 #                             MODEL FUNCTIONS                                   #
 # ============================================================================= #
 
 def read_hyperparams(json_path):
     if not json_path.endswith(".json"):
-        print("Hyperparameters must be in json format")
+        raise FileExistsError("Hyperparameters must be in json format")
     
     with open(json_path, "r") as f:
         hyperparams = json.load(f)
@@ -52,12 +55,12 @@ def read_in_samplesheet(samplesheet):
     numpy.ndarray
         Array of PDB file paths extracted from the sample sheet.
     """
-    print("reading samplesheet")
+    logger.info("reading samplesheet")
     samplesheet = pd.read_csv(samplesheet, sep="\t")
     try:
         pdb_files = samplesheet["pdb_file_path"].values
     except KeyError:
-        print("Error: 'pdb_file_path' column not found in samplesheet")
+        raise KeyError("'pdb_file_path' column not found in samplesheet")
         sys.exit(1)
     return pdb_files
 
@@ -361,7 +364,7 @@ def write_run_to_summarytable(summary_dict):
     # Save the updated DataFrame back to the TSV file
     summary_df.to_csv("../../data/model_results/runs_summary.tsv", sep='\t', index=False)
 
-    print("Wrote results to summary table.")
+    logger.info("Wrote results to summary table.")
 
 
 
@@ -372,11 +375,11 @@ def save_last_model(model, model_path, name):
         model (torch.nn.Module): The PyTorch model whose state dictionary is to be saved.
         model_path (str): The path to the directory to store the model in.
         name (str): The name to use for the saved model file (without extension).
-    The model is saved to the path '../../data/models/{name}.pt'. Prints a confirmation message upon successful save.
+    The model is saved to the path '../../data/models/{name}.pt'. Logs a confirmation message upon successful save.
     """
     model_path = f"{model_path}/{name}.pt"
     torch.save(model.state_dict(), model_path)
-    print("Saved final model.")
+    logger.info("Saved final model.")
 
 
 def save_last_scalers(pae_node_scaler, pae_tcrpmhc_node_scaler, distance_scaler, pae_edge_scaler, hydro_scaler, name, mode, model_path):
@@ -403,4 +406,4 @@ def save_last_scalers(pae_node_scaler, pae_tcrpmhc_node_scaler, distance_scaler,
         joblib.dump(pae_tcrpmhc_node_scaler, f"{model_path}/{name}_pae_node_TCRPMHC.pkl")
         joblib.dump(distance_scaler, f"{model_path}/{name}_distance.pkl")
         joblib.dump(hydro_scaler, f"{model_path}/{name}_hydro.pkl")
-    print("Saved PAE scalers")
+    logger.info("Saved PAE scalers")

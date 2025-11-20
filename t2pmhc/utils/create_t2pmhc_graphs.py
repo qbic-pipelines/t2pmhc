@@ -3,7 +3,7 @@
 import os
 import pandas as pd
 import numpy as np
-
+import logging
 from Bio.SeqUtils import seq1
 
 import torch
@@ -25,6 +25,8 @@ from utils.features import (
 
 from utils.helpers import calculate_contact_map, read_in_samplesheet
 
+
+logger = logging.getLogger("t2pmhc")
 
 # read in tcrblosum
 TCRBLOSUM = read_in_tcrblosum("data/tcrblosum/tcrBLOSUM_all.tsv")
@@ -57,11 +59,11 @@ def create_gcn_graph(pdb_file, metadata, threshold):
     pae_pmhc_tcr = file_df["pmhc_tcr_pae"].iloc[0]
 
     if len(file_df) > 1:
-        print(os.path.basename(pdb_file))
-        print("ERROR: multiple hits in metadata for filename")
+        logger.info(os.path.basename(pdb_file))
+        raise AttributeError("ERROR: multiple hits in metadata for filename")
     elif len(file_df) < 1:
-        print(os.path.basename(pdb_file))
-        print("ERROR: NO hits in metadata for filename")
+        logger.info(os.path.basename(pdb_file))
+        raise AttributeError("ERROR: NO hits in metadata for filename")
 
     complex_list = create_complex_list(file_df)
     complex_features = np.array([annotate_residue_with_complex_info(complex_list, i) for i, res in enumerate(residues)]).reshape(-1, 1)
@@ -119,7 +121,7 @@ def gcn_create_graphs(pdb_files, metadata, threshold, graphs_path):
                 batch_results.append(result)
 
         # Convert NumPy arrays to PyTorch in the main process
-        print("creating PyTorch Data Instances")
+        logger.info("creating PyTorch Data Instances")
         for node_features, edge_index, edge_features, label, identifier, pae_val, pae_pmhc_tcr, hydrophobicity_features, pdb_file in batch_results:
             node_features = torch.tensor(node_features, dtype=torch.float)
             edge_index = torch.tensor(edge_index, dtype=torch.long)
@@ -138,10 +140,10 @@ def gcn_create_graphs(pdb_files, metadata, threshold, graphs_path):
             data.edge_features = edge_features
             dataset.append(data)
 
-        print(f"Processed {i + batch_size} / {len(pdb_files)} files")
+        logger.info(f"Processed {i + batch_size} / {len(pdb_files)} files")
 
     # save the graphs
-    print(f"saving test graphs to {graphs_path}")
+    logger.info(f"saving test graphs to {graphs_path}")
     if not os.path.exists(os.path.dirname(graphs_path)):
         os.makedirs(os.path.dirname(graphs_path))
     torch.save(dataset, graphs_path)
@@ -174,11 +176,11 @@ def create_gat_graph(pdb_file, metadata, threshold):
     pae_pmhc_tcr = file_df["pmhc_tcr_pae"].iloc[0]
 
     if len(file_df) > 1:
-        print(os.path.basename(pdb_file))
-        print("ERROR: multiple hits in metadata for filename")
+        logger.info(os.path.basename(pdb_file))
+        raise AttributeError("ERROR: multiple hits in metadata for filename")
     elif len(file_df) < 1:
-        print(os.path.basename(pdb_file))
-        print("ERROR: NO hits in metadata for filename")
+        logger.info(os.path.basename(pdb_file))
+        raise AttributeError("ERROR: NO hits in metadata for filename")
 
     complex_list = create_complex_list(file_df)
     complex_features = np.array([annotate_residue_with_complex_info(complex_list, i) for i, res in enumerate(residues)]).reshape(-1, 1)
@@ -237,7 +239,7 @@ def gat_create_graphs(pdb_files, metadata, threshold, graphs_path):
                 batch_results.append(result)
 
         # Convert NumPy arrays to PyTorch in the main process
-        print("creating PyTorch Data Instances")
+        logger.info("creating PyTorch Data Instances")
         for node_features, edge_index, edge_features, label, identifier, pae_val, pae_pmhc_tcr, hydrophobicity_features, pdb_file in batch_results:
             node_features = torch.tensor(node_features, dtype=torch.float)
             edge_index = torch.tensor(edge_index, dtype=torch.long)
@@ -256,10 +258,10 @@ def gat_create_graphs(pdb_files, metadata, threshold, graphs_path):
             data.edge_features = edge_features
             dataset.append(data)
 
-        print(f"Processed {i + batch_size} / {len(pdb_files)} files")
+        logger.info(f"Processed {i + batch_size} / {len(pdb_files)} files")
 
     
-    print(f"saving graphs to {graphs_path}")
+    logger.info(f"saving graphs to {graphs_path}")
     torch.save(dataset, graphs_path)
 
     return dataset, len(dataset)
@@ -273,11 +275,11 @@ def create_graphs(mode, samplesheet, out):
     # create graphs
     if mode == "t2pmhc-gat":
         #logging.info("Creating Graphs -- t2pmhc-gat")
-        print("Creating Graphs -- t2pmhc-gat")
+        logger.info("Creating Graphs -- t2pmhc-gat")
         gat_create_graphs(pdb_files=pdb_files, metadata=metadata, threshold=10, graphs_path=out)
     elif mode == "t2pmhc-gcn":
         #logging.info("Creating Graphs -- t2pmhc-gcn")
-        print("Creating Graphs -- t2pmhc-gcn")
+        logger.info("Creating Graphs -- t2pmhc-gcn")
         gcn_create_graphs(pdb_files=pdb_files, metadata=metadata, threshold=10, graphs_path=out)
 
 
