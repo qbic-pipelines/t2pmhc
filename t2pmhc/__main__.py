@@ -58,7 +58,7 @@ def load_defaults(json_path: str):
 #                               MAIN FUNCTION                                   #
 # ============================================================================= #
 
-def train_t2pmhc():
+def run_t2pmhc():
     print("-------------------------------------------")
     print(" _   ____                  _          ")
     print("\n| |_|___ \ _ __  _ __ ___ | |__   ___")
@@ -344,4 +344,4 @@ def t2pmhc_predict_binding(mode, samplesheet, saved_graphs, out, hyperparams, mo
 
 
 if __name__ == "__main__":
-    train_t2pmhc()
+    run_t2pmhc()
