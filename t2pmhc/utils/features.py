@@ -50,9 +50,24 @@ ATCHLEY_FACTORS = {
 
 # tcrblosum for AA types
 def read_in_tcrblosum(file_path):
+    """
+    reads in the tcrblosum matrix.
+    Args:
+        file_path (str): Path to the tcrblosum file.
+    Returns:
+        pd.DataFrame: DataFrame containing the tcrblosum matrix.
+    """
     return pd.read_csv(file_path, sep="\t", index_col=0)
 
 def get_aa_type_tcrblosum(aa, tcrblosum):
+    """
+    gets the tcrblosum feature for a specific AA.
+    Args:
+        aa (str): Amino acid.
+        tcrblosum (pd.DataFrame): DataFrame containing the tcrblosum matrix.
+    Returns:
+        list: List of tcrblosum values for the given amino acid.
+    """
     return tcrblosum.loc[aa].tolist()
 
 
@@ -61,6 +76,12 @@ def get_aa_type_tcrblosum(aa, tcrblosum):
 def create_index_list(l, index, chain):
     """
     sets the first and last index for a specific chain.
+    Args:
+        l (list): List to append the indices to.
+        index (int): Current index counter.
+        chain (str): Chain sequence.
+    Returns:
+        tuple: Updated list and index counter.
     """
     if index > 0:
         index += 1    
@@ -72,7 +93,11 @@ def create_index_list(l, index, chain):
 def create_complex_list(file_df):
     """
     creates a list of lists. Each list holding the first and last index of a specific complex in the pdb file
-    [[hla],[peptide],[tcr_a],[tcr_b]] 
+    [[hla],[peptide],[tcr_a],[tcr_b]]
+    Args:
+        file_df (pd.DataFrame): DataFrame containing the file data.
+    Returns:
+        list: List of lists with start and end indices for each complex.
     """
     residue_seq = file_df["target_chainseq"].values[0]
     x = residue_seq.split("/")
@@ -91,6 +116,13 @@ def annotate_residue_with_complex_info(complex_list, index):
     1: peptide
     2: TCR_A
     3: TCR_B
+    Args:
+        complex_list (list): List of lists with start and end indices for each complex.
+        index (int): Index of the residue to annotate.
+    Returns:
+        int: Index of the complex the residue belongs to.
+    Raises:
+        ValueError: If the index is not found in any complex.
     """
     for i, (start, end) in enumerate(complex_list):
         if start <= index <= end:
@@ -100,7 +132,12 @@ def annotate_residue_with_complex_info(complex_list, index):
 # feature to annotate cdr3 / peptide region specifically
 def get_sequence_coord(file_df, sequence):
     """
-    function to find cdr3 or peptide sequences
+    function to find cdr3 or peptide sequences.
+    Args:
+        file_df (pd.DataFrame): DataFrame containing the file data.
+        sequence (str): Column name for the sequence to find.
+    Returns:
+        List containing start and end indices of the sequence.
     """
     # find cdr3 coords
     seq = file_df[sequence].values[0]
@@ -116,6 +153,11 @@ def annotate_sequence(coords, residues):
     annotates cdr3/peptide information. Done for both a & b & peptide
     0: not cdr3 (a/b) or peptide
     1: cdr3 (a/b) or peptide
+    Args:
+        coords (list): List containing start and end indices of the sequence.
+        residues (list): List of residues in the structure.
+    Returns:
+        List annotating each residue with 0 or 1.
     """
     complex_list = []
     for i, res in enumerate(residues):

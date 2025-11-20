@@ -29,6 +29,11 @@ logger = logging.getLogger("t2pmhc")
 # ============================================================================= #
 
 def set_seed(seed=42):
+    """
+    Sets the seed for generating random numbers to ensure reproducibility.
+    Args:
+        seed (int): The seed value to set for random number generation.
+    """
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -38,6 +43,17 @@ set_seed(42)
 
 
 def create_graph_dataset(saved_graphs):
+    """
+    Loads a pre-saved graph dataset from a specified file path.
+    If the file exists, it loads the dataset using torch.load and returns the dataset along with its length.
+    If the file does not exist, it raises a FileNotFoundError with an appropriate message.
+    Args:
+        saved_graphs (str): The file path to the saved graph dataset.
+    Returns:
+        tuple: (dataset, length of dataset)
+    Raises:
+        FileNotFoundError: If the specified file does not exist.
+    """
     if os.path.exists(saved_graphs):
         logger.info("Loading Graphs from pt file")
         dataset = torch.load(saved_graphs, weights_only=False)
@@ -326,6 +342,15 @@ def evaluate(model, loader, criterion, device, return_probs=False):
 
 
 def train_gat(metadata_path, name, hyperparams, saved_graphs, save_model):
+    """
+    Trains a t2pmhc-GAT model using the provided dataset and hyperparameters.
+    Args:
+        metadata_path (str): Path to the metadata file.
+        name (str): Name identifier for the model.
+        hyperparams (dict): Dictionary containing hyperparameters for training.
+        saved_graphs (str): Path to the saved graph dataset.
+        save_model (str): Directory path to save the trained model.
+    """
     logger.info("Training t2pmhc-GAT")
 
     logger.info(f"\nName: {name}\nSaved Graphs: {saved_graphs}\n")
@@ -382,4 +407,4 @@ def train_gat(metadata_path, name, hyperparams, saved_graphs, save_model):
 
     save_last_model(model, save_model, name)
     save_last_scalers(pae_node_scaler, pae_tcrpmhc_node_scaler, distance_scaler, pae_edge_scaler, hydro_scaler, name, "GAT", save_model)
-    plogger.inforint("Final model trained and saved.")
+    logger.info("Final model trained and saved.")

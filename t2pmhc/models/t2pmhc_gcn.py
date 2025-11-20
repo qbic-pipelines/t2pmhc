@@ -31,6 +31,9 @@ logger = logging.getLogger("t2pmhc")
 # ============================================================================= #
 
 def set_seed(seed=42):
+    """
+    Set seed for reproducibility.
+    """
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -48,6 +51,14 @@ set_seed(42)
 
 
 def create_graph_dataset(saved_graphs):
+    """
+    Load precomputed graph dataset from a .pt file.  
+    Args:
+        saved_graphs (str): Path to the saved graphs .pt file.
+    Returns:
+        dataset (list): List of graph objects.
+        structure_count (int): Number of structures in the dataset. 
+    """
     if os.path.exists(saved_graphs):
         logger.info("Loading Graphs from pt file")
         dataset = torch.load(saved_graphs, weights_only=False)
@@ -58,7 +69,21 @@ def create_graph_dataset(saved_graphs):
 
 
 def scale_features(train_subset, val_subset, metadata):
-
+    """
+    Scale PAE, hydro, and distance features using MinMaxScaler.
+    Returns scaled train and val subsets along with the fitted scalers.
+    Args:
+        train_subset (list): List of training graph objects.
+        val_subset (list): List of validation graph objects.
+        metadata (pd.DataFrame): Metadata DataFrame containing PAE and hydro values.
+    Returns:
+        train_subset_copy (list): Scaled training graph objects.
+        val_subset_copy (list): Scaled validation graph objects.
+        pae_scaler (MinMaxScaler): Fitted scaler for PAE values.
+        paetcrpmhc_scaler (MinMaxScaler): Fitted scaler for PAE_TCRpMHC values.
+        hydro_scaler (MinMaxScaler): Fitted scaler for hydro values.
+        distance_scaler (MinMaxScaler): Fitted scaler for edge distances.
+    """
     # Deep copy to avoid modifying input objects
     train_subset_copy = [copy.deepcopy(graph) for graph in train_subset]
     val_subset_copy = [copy.deepcopy(graph) for graph in val_subset]
@@ -260,6 +285,15 @@ def evaluate(model, loader, criterion, device, return_probs=False):
 
 
 def train_gcn(metadata_path, name, hyperparams, saved_graphs, save_model):
+    """
+    Train t2pmhc-GCN model.
+    Args:
+        metadata_path (str): Path to metadata file.
+        name (str): Name for the model. 
+        hyperparams (dict): Hyperparameters for training.
+        saved_graphs (str): Path to saved graphs .pt file.
+        save_model (str): Directory to save the trained model.
+    """
     logger.info("Training t2pmhc-GCN")
 
     logger.info(f"\nName: {name}\nSaved Graphs: {saved_graphs}\n")

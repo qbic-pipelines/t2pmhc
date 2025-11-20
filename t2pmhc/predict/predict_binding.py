@@ -25,6 +25,17 @@ logger = logging.getLogger("t2pmhc")
 
 
 def scale_test(dataset, mode, pae_node_scaler, pae_tcrpmhc_node_scaler, hydro_scaler, distance_scaler, pae_scaler_edge):
+    """
+    Scale the test dataset features using the provided scalers.
+    Args:
+        dataset: The test dataset containing graphs.
+        mode: The mode of the model ("gcn" or "gat").
+        pae_node_scaler: Scaler for PAE node feature.
+        pae_tcrpmhc_node_scaler: Scaler for PAE_TCRpMHC node feature.
+        hydro_scaler: Scaler for hydrophobicity node feature.
+        distance_scaler: Scaler for distance edge feature.
+        pae_scaler_edge: Scaler for PAE edge feature (only for GAT mode).
+    """
     # load shared scalers
     pae_node_scaler = load(pae_node_scaler)
     pae_tcrpmhc_node_scaler = load(pae_tcrpmhc_node_scaler)
@@ -85,16 +96,38 @@ def scale_test(dataset, mode, pae_node_scaler, pae_tcrpmhc_node_scaler, hydro_sc
 
 
 def add_predictions_to_samplesheet(df, probs, preds, model):
-
+    """
+    Add prediction results to the samplesheet dataframe.
+    Args:
+        df: The samplesheet dataframe.
+        probs: The predicted probabilities.
+        preds: The predicted classes.
+        model: The model used for prediction.
+    Returns:
+        The updated dataframe with predictions.
+    """
     df["binder_prob"] = probs
     df["binder_prediction"] = preds
     df["model"] = model
+    return df
 
 
 def predict_binding(mode, samplesheet, saved_graphs, out, hyperparams, model_path, pae_scaler_structure, pae_scaler_tcrpmhc, hydro_scaler, distance_scaler, pae_scaler_edge):
-
-
-
+    """
+    Predict TCR-pMHC binding using the t2pmhc models
+    Args:
+        mode: The mode of the model ("t2pmhc-gcn" or "t2pmhc-gat").
+        samplesheet: Path to the samplesheet file.
+        saved_graphs: Path to the saved graphs directory.
+        out: Path to save the output predictions.
+        hyperparams: Path to the hyperparameters file.
+        model_path: Path to the trained model file.
+        pae_scaler_structure: Path to PAE scaler file of the whole structure.
+        pae_scaler_tcrpmhc: Path to PAE scaler file of the TCR-pMHC complex.
+        hydro_scaler: Path to hydro scaler.
+        distance_scaler: Path to distance scaler.
+        pae_scaler_edge: Path to PAE edge scaler (only required for GAT).
+    """
     # read in hyperparams
     logging.info("Reading Hyperparameters")
     hyperparams = read_hyperparams(hyperparams)
@@ -141,7 +174,7 @@ def predict_binding(mode, samplesheet, saved_graphs, out, hyperparams, model_pat
         _, _, labels, probs, preds = gcn_evaluate(model, loader, dummy_criterion, device, return_probs=True)
 
     logging.info(f"Saving prediction to {out}")
-    add_predictions_to_samplesheet(test_sheet, probs, preds, mode)
+    test_sheet = add_predictions_to_samplesheet(test_sheet, probs, preds, mode)
     
     # save test_sheet
     if not os.path.exists(os.path.dirname(out)):

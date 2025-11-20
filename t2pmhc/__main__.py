@@ -1,10 +1,6 @@
-import os
-import numpy as np
-import random
 import json
 import logging
 from rich.logging import RichHandler
-import torch
 from pathlib import Path
 import rich_click as click
 
@@ -35,7 +31,12 @@ logger = logging.getLogger("t2pmhc")
 # ============================================================================= #
 
 def load_defaults(json_path: str):
-    """Load defaults and resolve all file paths relative to the JSON file."""
+    """
+    Load defaults and resolve all file paths relative to the JSON file.
+    Args:
+        json_path: Path to the JSON file containing default settings.
+        Returns: A dictionary with resolved absolute paths.
+    """
     
     json_path = Path(json_path).resolve()          # full path to defaults.json
     base_dir = json_path.parent                    # directory containing defaults.json

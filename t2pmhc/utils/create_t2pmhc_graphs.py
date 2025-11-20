@@ -38,6 +38,22 @@ TCRBLOSUM = read_in_tcrblosum("data/tcrblosum/tcrBLOSUM_all.tsv")
 
 
 def create_gcn_graph(pdb_file, metadata, threshold):
+    """
+    Processes a single PDB file into a graph.
+    Args:
+        pdb_file (str): Path to the PDB file.
+        metadata (pd.DataFrame): Metadata DataFrame.
+        threshold (float): Distance threshold for contact map.
+    Returns:
+        node_features (np.ndarray): Node features array.
+        edge_index (np.ndarray): Edge index array.
+        edge_features (np.ndarray): Edge features array.
+        identifier (str): Identifier from metadata.
+        pae_val (float): PAE value from metadata.
+        pae_pmhc_tcr (float): PAE TCR-pMHC value from metadata.
+        hydrophobicity_features (np.ndarray): Hydrophobicity features array.
+        pdb_file (str): Path to the PDB file.
+    """
     # read in pae matrix 
     pae_path = pdb_file.replace(".pdb", "_predicted_aligned_error.npy")
     pae_matrix = np.load(pae_path)
@@ -93,7 +109,21 @@ def create_gcn_graph(pdb_file, metadata, threshold):
 def process_pdb_file_gcn(pdb_file, metadata, threshold):
     """
     Processes a single PDB file into a graph with a label.
-    Used for multiprocessing
+    Used for multiprocessing.
+    Args:
+        pdb_file (str): Path to the PDB file.
+        metadata (pd.DataFrame): Metadata DataFrame.
+        threshold (float): Distance threshold for contact map.
+    Returns:
+        node_features (np.ndarray): Node features array.
+        edge_index (np.ndarray): Edge index array.
+        edge_features (np.ndarray): Edge features array.
+        label (int): Label extracted from the PDB file name.
+        identifier (str): Identifier from metadata.
+        pae_val (float): PAE value from metadata.
+        pae_pmhc_tcr (float): PAE TCR-pMHC value from metadata.
+        hydrophobicity_features (np.ndarray): Hydrophobicity features array.
+        pdb_file (str): Path to the PDB file.
     """
     label = int(pdb_file.split("_")[-1].replace(".pdb", ""))
     
@@ -105,6 +135,17 @@ def process_pdb_file_gcn(pdb_file, metadata, threshold):
 
 
 def gcn_create_graphs(pdb_files, metadata, threshold, graphs_path):
+    """
+    Creates GCN graphs from a list of PDB files using multiprocessing.
+    Args:
+        pdb_files (list): List of PDB file paths.
+        metadata (pd.DataFrame): Metadata DataFrame.
+        threshold (float): Distance threshold for contact map.
+        graphs_path (str): Path to save the resulting graphs.
+    Returns:
+        dataset (list): List of PyTorch Data objects.
+        int: Number of graphs created.
+    """
     dataset = []
 
     # set workers and batches for multiprocessing
@@ -155,6 +196,22 @@ def gcn_create_graphs(pdb_files, metadata, threshold, graphs_path):
 # ==================================================================================================
 
 def create_gat_graph(pdb_file, metadata, threshold):
+    """
+    Processes a single PDB file into a graph.
+    Args:
+        pdb_file (str): Path to the PDB file.
+        metadata (pd.DataFrame): Metadata DataFrame.
+        threshold (float): Distance threshold for contact map.
+    Returns:
+        node_features (np.ndarray): Node features array.
+        edge_index (np.ndarray): Edge index array.
+        edge_features (np.ndarray): Edge features array.
+        identifier (str): Identifier from metadata.
+        pae_val (float): PAE value from metadata.
+        pae_pmhc_tcr (float): PAE TCR-pMHC value from metadata.
+        hydrophobicity_features (np.ndarray): Hydrophobicity features array.
+        pdb_file (str): Path to the PDB file.
+    """
     # read in pae matrix 
     pae_path = pdb_file.replace(".pdb", "_predicted_aligned_error.npy")
     pae_matrix = np.load(pae_path)
@@ -209,7 +266,21 @@ def create_gat_graph(pdb_file, metadata, threshold):
 def process_pdb_file_gat(pdb_file, metadata, threshold):
     """
     Processes a single PDB file into a graph with a label.
-    Used for multiprocessing
+    Used for multiprocessing.
+    Args:
+        pdb_file (str): Path to the PDB file.
+        metadata (pd.DataFrame): Metadata DataFrame.
+        threshold (float): Distance threshold for contact map.
+    Returns:
+        node_features (np.ndarray): Node features array.
+        edge_index (np.ndarray): Edge index array.
+        edge_features (np.ndarray): Edge features array.
+        label (int): Label extracted from the PDB file name.
+        identifier (str): Identifier from metadata.
+        pae_val (float): PAE value from metadata.
+        pae_pmhc_tcr (float): PAE TCR-pMHC value from metadata.
+        hydrophobicity_features (np.ndarray): Hydrophobicity features array.
+        pdb_file (str): Path to the PDB file.
     """
     label = int(pdb_file.split("_")[-1].replace(".pdb", ""))
     
@@ -221,8 +292,16 @@ def process_pdb_file_gat(pdb_file, metadata, threshold):
 
 def gat_create_graphs(pdb_files, metadata, threshold, graphs_path):
     """
+    Creates GAT graphs from a list of PDB files using multiprocessing.
+    Args:
+        pdb_files (list): List of PDB file paths.
+        metadata (pd.DataFrame): Metadata DataFrame.
+        threshold (float): Distance threshold for contact map.
+        graphs_path (str): Path to save the resulting graphs.
+    Returns:
+        dataset (list): List of PyTorch Data objects.
+        int: Number of graphs created.
     """
-    
     dataset = []
 
     # set workers and batch for multiprocessing
@@ -268,6 +347,13 @@ def gat_create_graphs(pdb_files, metadata, threshold, graphs_path):
 
 
 def create_graphs(mode, samplesheet, out):
+    """
+    Main function to create graphs based on the specified mode.
+    Args:
+        mode (str): Mode of graph creation ("t2pmhc-gat" or "t2pmhc-gcn").
+        samplesheet (str): Path to the samplesheet file.
+        out (str): Output path to save the graphs.
+    """
     # read in samplesheet 
     pdb_files = read_in_samplesheet(samplesheet)
     metadata = pd.read_csv(samplesheet, sep="\t")
