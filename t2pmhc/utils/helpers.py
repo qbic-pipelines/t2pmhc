@@ -14,9 +14,6 @@ import torch
 import seaborn as sns
 
 from Bio.PDB import PDBParser
-from Bio.SeqUtils import seq1
-import random
-from collections import Counter
 
 import joblib
 
@@ -392,7 +389,7 @@ def save_last_scalers(pae_node_scaler, pae_tcrpmhc_node_scaler, distance_scaler,
         pae_tcrphmc_scaler: The scaler object for the TCR-PMHC PAE data to be saved.
         name (str): The base name to use for the saved scaler files.
     """
-    model_path = f"{model_path}/scalers"
+    model_path = f"{model_path}/scalers/{name}"
     if not os.path.exists(model_path):
         os.makedirs(model_path)
     if mode == "GAT":

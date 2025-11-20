@@ -6,8 +6,6 @@ from collections import Counter
 from datetime import datetime
 import copy
 
-import torch.multiprocessing as mp
-mp.set_start_method('spawn', force=True)
 
 import torch
 from torch_geometric.nn import GCNConv, BatchNorm, AttentionalAggregation
@@ -313,6 +311,6 @@ def train_gcn(metadata_path, name, hyperparams, saved_graphs, save_model):
         os.makedirs(save_model)
 
     save_last_model(model, save_model, name)
-    save_last_scalers(pae_scaler, pae_tcrpmhc_scaler, distance_scaler, "", hydro_scaler, name, "GCN")
+    save_last_scalers(pae_scaler, pae_tcrpmhc_scaler, distance_scaler, "", hydro_scaler, name, "GCN", save_model)
 
     print("Final model trained and saved.")

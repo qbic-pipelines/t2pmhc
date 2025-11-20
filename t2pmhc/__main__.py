@@ -1,11 +1,11 @@
-import pandas as pd
+import os
 import numpy as np
 import random
 import json
-
 import logging
-
 import torch
+from pathlib import Path
+import rich_click as click
 
 from models.t2pmhc_gcn import train_gcn
 from models.t2pmhc_gat import train_gat
@@ -15,12 +15,6 @@ from predict.predict_binding import predict_binding
 from utils.create_t2pmhc_graphs import create_graphs
 
 from utils.helpers import read_hyperparams
-
-import rich_click as click
-
-import sys
-
-
 
 # ============================================================================= #
 #                               set seed                                        #
@@ -49,6 +43,29 @@ logger.addHandler(ch)
 logger.setLevel(logging.INFO)
 logger.propagate = False
 
+
+# ============================================================================= #
+#                               HELPERS                                         #
+# ============================================================================= #
+
+def load_defaults(json_path: str):
+    """Load defaults and resolve all file paths relative to the JSON file."""
+    
+    json_path = Path(json_path).resolve()          # full path to defaults.json
+    base_dir = json_path.parent                    # directory containing defaults.json
+
+    with open(json_path, "r") as f:
+        config = json.load(f)
+
+    resolved = {}
+
+    for mode, settings in config.items():
+        resolved[mode] = {}
+        for key, rel_path in settings.items():
+            abs_path = (base_dir / rel_path).resolve()
+            resolved[mode][key] = str(abs_path)
+
+    return resolved
 
 # ============================================================================= #
 #                               MAIN FUNCTION                                   #
@@ -187,7 +204,7 @@ def train_t2pmhc_gat(samplesheet, run_name, hyperparameters, saved_graphs, save_
 @t2pmhc_cli.command()
 @click.option(
     '--mode',
-    type=str,
+    type=click.Choice(['t2pmhc-gcn', 't2pmhc-gat']),
     required=True,
     help="Model for which to create graphs for [t2pmhc-gcn, t2pmhc-gat]"
 )
@@ -223,7 +240,7 @@ def create_t2pmhc_graphs(mode, samplesheet, out):
 @t2pmhc_cli.command()
 @click.option(
     '--mode',
-    type=str,
+    type=click.Choice(['t2pmhc-gcn', 't2pmhc-gat']),
     required=True,
     help="Model to use for binding prediction [t2pmhc-gcn, t2pmhc-gat]"
 )
@@ -251,7 +268,6 @@ def create_t2pmhc_graphs(mode, samplesheet, out):
 
 @click.option(
     '--hyperparams',
-    default="",
     type=str,
     required=False,
     help="Path to hyperparams json"
@@ -259,7 +275,6 @@ def create_t2pmhc_graphs(mode, samplesheet, out):
 
 @click.option(
     '--model',
-    default="",
     type=str,
     required=False,
     help="t2pmhc model to use for prediction"
@@ -267,7 +282,6 @@ def create_t2pmhc_graphs(mode, samplesheet, out):
 
 @click.option(
     '--pae_scaler_structure',
-    default="",
     type=str,
     required=False,
     help="Path to PAE scaler file of the whole structure"
@@ -275,7 +289,6 @@ def create_t2pmhc_graphs(mode, samplesheet, out):
 
 @click.option(
     '--pae_scaler_tcrpmhc',
-    default="",
     type=str,
     required=False,
     help="Path to PAE scaler file of the TCR-pMHC complex"
@@ -283,23 +296,20 @@ def create_t2pmhc_graphs(mode, samplesheet, out):
 
 @click.option(
     '--hydro_scaler',
-    default="",
     type=str,
     required=False,
-    help="Path to hydro scaler. Only required for GAT"
+    help="Path to hydro scaler"
 )
 
 @click.option(
     '--distance_scaler',
-    default="",
     type=str,
     required=False,
-    help="Path to distance scaler. Only required for GAT"
+    help="Path to distance scaler"
 )
 
 @click.option(
     '--pae_scaler_edge',
-    default="",
     type=str,
     required=False,
     help="Path to PAE edge scaler. Only required for GAT"
@@ -309,6 +319,22 @@ def t2pmhc_predict_binding(mode, samplesheet, saved_graphs, out, hyperparams, mo
     """
     Predict TCR-pMHC binding using the t2pmhc models
     """
+
+    # load default config json
+    defaults = load_defaults(Path(__file__).parent / "utils" / "t2pmhc_binder_defaults.json")
+    # set defaults
+    mode_defaults = defaults[mode]
+
+    # Apply defaults only where user did NOT set a value
+    hyperparams = hyperparams or mode_defaults.get("hyperparams")
+    model = model or mode_defaults.get("model")
+    pae_scaler_structure = pae_scaler_structure or mode_defaults.get("pae_scaler_structure")
+    pae_scaler_tcrpmhc = pae_scaler_tcrpmhc or mode_defaults.get("pae_scaler_tcrpmhc")
+    hydro_scaler = hydro_scaler or mode_defaults.get("hydro_scaler")
+    distance_scaler = distance_scaler or mode_defaults.get("distance_scaler")
+    if mode == "t2pmhc-gat":
+        pae_scaler_edge = pae_scaler_edge or mode_defaults.get("pae_scaler_edge")
+
 
     print("Predicting binder status")
     predict_binding(mode,

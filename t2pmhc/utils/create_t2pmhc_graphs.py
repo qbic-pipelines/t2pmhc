@@ -9,11 +9,7 @@ from Bio.SeqUtils import seq1
 import torch
 from torch_geometric.data import Data
 
-import torch.multiprocessing as mp
-mp.set_start_method('spawn', force=True)
-
-from joblib import load
-import sys
+import multiprocessing as mp
 
 from utils.features import (
                         HYDROPHOBICITY,

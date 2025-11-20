@@ -8,9 +8,6 @@ import copy
 import random
 from collections import Counter
 
-import torch.multiprocessing as mp
-mp.set_start_method('spawn', force=True)
-
 import torch
 from torch_geometric.nn import GATConv, BatchNorm, AttentionalAggregation
 import torch.nn.functional as F
@@ -383,5 +380,5 @@ def train_gat(metadata_path, name, hyperparams, saved_graphs, save_model):
         os.makedirs(save_model)
 
     save_last_model(model, save_model, name)
-    save_last_scalers(pae_node_scaler, pae_tcrpmhc_node_scaler, distance_scaler, pae_edge_scaler, hydro_scaler, name, "GAT")
+    save_last_scalers(pae_node_scaler, pae_tcrpmhc_node_scaler, distance_scaler, pae_edge_scaler, hydro_scaler, name, "GAT", save_model)
     print("Final model trained and saved.")
