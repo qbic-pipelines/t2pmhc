@@ -177,7 +177,8 @@ def predict_binding(mode, samplesheet, saved_graphs, out, hyperparams, model_pat
     test_sheet = add_predictions_to_samplesheet(test_sheet, probs, preds, mode)
     
     # save test_sheet
-    if not os.path.exists(os.path.dirname(out)):
+    dirpath = os.path.dirname(out)
+    if dirpath and not os.path.exists(out):
         os.makedirs(os.path.dirname(out))
 
     test_sheet.to_csv(out, sep="\t", index=False)

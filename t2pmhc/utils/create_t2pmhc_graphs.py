@@ -187,7 +187,8 @@ def gcn_create_graphs(pdb_files, metadata, threshold, graphs_path):
 
     # save the graphs
     logger.info(f"saving test graphs to {graphs_path}")
-    if not os.path.exists(os.path.dirname(graphs_path)):
+    dirpath = os.path.dirname(graphs_path)
+    if dirpath and not os.path.exists(dirpath):
         os.makedirs(os.path.dirname(graphs_path))
     torch.save(dataset, graphs_path)
 
