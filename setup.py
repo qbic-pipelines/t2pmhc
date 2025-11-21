@@ -14,4 +14,8 @@ setup(
             "t2pmhc = t2pmhc.__main__:run_t2pmhc",
         ]
     },
+    include_package_data=True,
+    package_data={
+        "t2pmhc": ["data/**/*"]
+    }
 )
