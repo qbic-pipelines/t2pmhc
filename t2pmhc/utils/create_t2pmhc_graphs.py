@@ -4,6 +4,7 @@ import os
 import pandas as pd
 import numpy as np
 import logging
+from pathlib import Path
 from Bio.SeqUtils import seq1
 
 import torch
@@ -29,7 +30,8 @@ from t2pmhc.utils.helpers import calculate_contact_map, read_in_samplesheet
 logger = logging.getLogger("t2pmhc")
 
 # read in tcrblosum
-TCRBLOSUM = read_in_tcrblosum("data/tcrblosum/tcrBLOSUM_all.tsv")
+DATA_PATH = Path(__file__).resolve().parents[2] / "data" / "tcrblosum" / "tcrBLOSUM_all.tsv"
+TCRBLOSUM = read_in_tcrblosum(DATA_PATH)
 
 
 # ==================================================================================================
