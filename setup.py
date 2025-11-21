@@ -7,8 +7,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        # You can also parse requirements.txt if you prefer:
-        # line.strip() for line in open("requirements.txt")
+        # TODO move requirementx.txt here
     ],
     entry_points={
         "console_scripts": [
