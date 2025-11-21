@@ -7,7 +7,8 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     package_data={
-        "t2pmhc": ["data/**/*"]
+        "t2pmhc": ["data/**/*",
+                   "utils/*.json",]
     },
     install_requires=[
         # TODO move requirementx.txt here
