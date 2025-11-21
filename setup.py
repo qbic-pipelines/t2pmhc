@@ -6,6 +6,9 @@ setup(
     version="0.1.0",
     packages=find_packages(),
     include_package_data=True,
+    package_data={
+        "t2pmhc": ["data/**/*"]
+    },
     install_requires=[
         # TODO move requirementx.txt here
     ],
@@ -14,8 +17,4 @@ setup(
             "t2pmhc = t2pmhc.__main__:run_t2pmhc",
         ]
     },
-    include_package_data=True,
-    package_data={
-        "t2pmhc": ["data/**/*"]
-    }
 )
