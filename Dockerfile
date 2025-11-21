@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         wget \
         build-essential \
         ca-certificates \
+        procps \
     && rm -rf /var/lib/apt/lists/*
 
 
