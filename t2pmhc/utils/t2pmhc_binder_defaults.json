@@ -1,11 +1,11 @@
 {
   "t2pmhc-gcn": {
     "hyperparams": "../data/hyperparams/t2pmhc_gcn.json",
-    "model": "../data/models/gcn_final.pt",
-    "pae_scaler_structure": "../data/models/scalers/t2pmhc_gcn/gcn_final_pae_node_FULL.pkl",
-    "pae_scaler_tcrpmhc": "../data/models/scalers/t2pmhc_gcn/gcn_final_pae_node_TCRPMHC.pkl",
-    "hydro_scaler": "../data/models/scalers/t2pmhc_gcn/gcn_final_hydro.pkl",
-    "distance_scaler": "../data/models/scalers/t2pmhc_gcn/gcn_final_distance.pkl"
+    "model": "../data/models/test1.pt",
+    "pae_scaler_structure": "../data/models/scalers/test1/test1_pae_node_FULL.pkl",
+    "pae_scaler_tcrpmhc": "../data/models/scalers/test1/test1_pae_node_TCRPMHC.pkl",
+    "hydro_scaler": "../data/models/scalers/test1/test1_hydro.pkl",
+    "distance_scaler": "../data/models/scalers/test1/test1_distance.pkl"
 
   },
   "t2pmhc-gat": {
