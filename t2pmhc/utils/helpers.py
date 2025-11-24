@@ -168,7 +168,7 @@ def save_last_scalers(pae_node_scaler, pae_tcrpmhc_node_scaler, distance_scaler,
         name (str): The base name to use for the saved scaler files.
     """
     model_path = f"{model_path}/scalers/{name}"
-    if not os.path.exists(model_path):
+    if not os.path.exists(f"{model_path}/scalers/"):
         os.makedirs(model_path)
     if mode == "GAT":
         joblib.dump(pae_node_scaler, f"{model_path}/{name}_pae_node_FULL.pkl")

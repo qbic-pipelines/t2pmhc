@@ -178,7 +178,7 @@ def predict_binding(mode, samplesheet, saved_graphs, out, hyperparams, model_pat
     
     # save test_sheet
     dirpath = os.path.dirname(out)
-    if dirpath and not os.path.exists(out):
+    if dirpath and not os.path.exists(dirpath):
         os.makedirs(os.path.dirname(out))
 
     test_sheet.to_csv(out, sep="\t", index=False)

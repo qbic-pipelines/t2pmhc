@@ -29,6 +29,10 @@ logger = logging.getLogger("t2pmhc")
 #                               set seed                                        #
 # ============================================================================= #
 
+os.environ["PYTHONHASHSEED"] = "42"
+os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":16:8"
+os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
+
 def set_seed(seed=42):
     """
     Sets the seed for generating random numbers to ensure reproducibility.
@@ -358,7 +362,7 @@ def train_gcn(metadata_path, name, hyperparams, saved_graphs, save_model):
     # set reproducible generator
     g = torch.Generator()
     g.manual_seed(42)
-    
+
     # Create data loader for full dataset
     train_loader = DataLoader(dataset_scaled, batch_size=batch_size, shuffle=True, num_workers=0, worker_init_fn=lambda worker_id: np.random.seed(42 + worker_id), generator=g)
 
