@@ -10,11 +10,11 @@
   },
   "t2pmhc-gat": {
     "hyperparams": "../data/hyperparams/t2pmhc_gat.json",
-    "model": "../data/models/gat_final.pt",
-    "pae_scaler_structure": "../data/models/scalers/t2pmhc_gat/gat_final_pae_node_FULL.pkl",
-    "pae_scaler_tcrpmhc": "../data/models/scalers/t2pmhc_gat/gat_final_pae_node_TCRPMHC.pkl",
-    "hydro_scaler": "../data/models/scalers/t2pmhc_gat/gat_final_hydro.pkl",
-    "distance_scaler": "../data/models/scalers/t2pmhc_gat/gat_final_distance.pkl",
-    "pae_scaler_edge": "../data/models/scalers/t2pmhc_gat/gat_final_pae_edge_FULL.pkl"
+    "model": "../data/models/test1_gat.pt",
+    "pae_scaler_structure": "../data/models/scalers/test1_gat/test1_pae_node_FULL.pkl",
+    "pae_scaler_tcrpmhc": "../data/models/scalers/test1_gat/test1_pae_node_TCRPMHC.pkl",
+    "hydro_scaler": "../data/models/scalers/test1_gat/test1_hydro.pkl",
+    "distance_scaler": "../data/models/scalers/test1_gat/test1_distance.pkl",
+    "pae_scaler_edge": "../data/models/scalers/test1_gat/test1_pae_edge_FULL.pkl"
   }
 }
