@@ -29,30 +29,25 @@ logger = logging.getLogger("t2pmhc")
 #                               set seed                                        #
 # ============================================================================= #
 
-os.environ["PYTHONHASHSEED"] = "42"
-os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":16:8"
-os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
 
-def set_seed(seed=42):
+def set_seed(seed):
     """
     Sets the seed for generating random numbers to ensure reproducibility.
     Args:
         seed (int): The seed value to set for random number generation.
     """
+    logger.info(f"seed: {seed}")
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
 
-    # For CUDA determinism
-    torch.use_deterministic_algorithms(True)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
-    torch.backends.cuda.matmul.allow_tf32 = False
-    torch.backends.cudnn.allow_tf32 = False
-
-set_seed(42)
+def seed_worker(worker_id):
+    worker_seed = (torch.initial_seed() + worker_id) % 2**32
+    np.random.seed(worker_seed)
+    random.seed(worker_seed)
+    torch.manual_seed(worker_seed)
 
 
 
@@ -60,7 +55,6 @@ set_seed(42)
 # ============================================================================= #
 #                          Structure Representation                             #
 # ============================================================================= #
-
 
 
 def create_graph_dataset(saved_graphs):
@@ -81,7 +75,7 @@ def create_graph_dataset(saved_graphs):
     return dataset, len(dataset)
 
 
-def scale_features(train_subset, val_subset, metadata):
+def scale_features(train_subset, val_subset):
     """
     Scale PAE, hydro, and distance features using MinMaxScaler.
     Returns scaled train and val subsets along with the fitted scalers.
@@ -334,6 +328,10 @@ def train_gcn(metadata_path, name, hyperparams, saved_graphs, save_model):
     logger.info(f"\nName: {name}\nSaved Graphs: {saved_graphs}\n")
     logger.info("Reading dataset")
 
+    # set seed
+    seed = 42
+    set_seed(seed)
+
     metadata = pd.read_csv(metadata_path, sep="\t")
 
     # read in graphs
@@ -357,14 +355,20 @@ def train_gcn(metadata_path, name, hyperparams, saved_graphs, save_model):
     labels = [data.y.item() for data in dataset]
 
     # Add PAE features across the full dataset (scale features)
-    dataset_scaled, _, pae_scaler, pae_tcrpmhc_scaler, hydro_scaler, distance_scaler = scale_features(dataset, [], metadata)
+    dataset_scaled, _, pae_scaler, pae_tcrpmhc_scaler, hydro_scaler, distance_scaler = scale_features(dataset, [])
 
     # set reproducible generator
     g = torch.Generator()
-    g.manual_seed(42)
+    g.manual_seed(seed)
 
     # Create data loader for full dataset
-    train_loader = DataLoader(dataset_scaled, batch_size=batch_size, shuffle=True, num_workers=0, worker_init_fn=lambda worker_id: np.random.seed(42 + worker_id), generator=g)
+    train_loader = DataLoader(dataset_scaled, 
+                              batch_size=batch_size, 
+                              shuffle=True, 
+                              num_workers=4,
+                              persistent_workers=True, 
+                              worker_init_fn=seed_worker,
+                              generator=g)
 
     # Class weights for imbalance
     labels = [data.y.item() for data in dataset]

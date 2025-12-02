@@ -28,21 +28,32 @@ logger = logging.getLogger("t2pmhc")
 #                               set seed                                        #
 # ============================================================================= #
 
-def set_seed(seed=42):
+
+def set_seed(seed):
     """
     Sets the seed for generating random numbers to ensure reproducibility.
     Args:
         seed (int): The seed value to set for random number generation.
     """
+    logger.info(f"seed: {seed}")
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
 
 
-set_seed(42)
+def seed_worker(worker_id):
+    worker_seed = (torch.initial_seed() + worker_id) % 2**32
+    np.random.seed(worker_seed)
+    random.seed(worker_seed)
+    torch.manual_seed(worker_seed)
+
+
+
+# ============================================================================= #
+#                          Structure Representation                             #
+# ============================================================================= #
 
 
 def create_graph_dataset(saved_graphs):
@@ -359,6 +370,10 @@ def train_gat(metadata_path, name, hyperparams, saved_graphs, save_model):
     logger.info(f"\nName: {name}\nSaved Graphs: {saved_graphs}\n")
     logger.info("Reading dataset")
 
+    # set seed
+    seed = 42
+    set_seed(seed)
+
     metadata = pd.read_csv(metadata_path, sep="\t")
     dataset, structure_count = create_graph_dataset(saved_graphs)
 
@@ -381,10 +396,20 @@ def train_gat(metadata_path, name, hyperparams, saved_graphs, save_model):
 
 
     # Add PAE features across the full dataset
-    train_subset_scaled, val_subset_scaled, pae_node_scaler, pae_tcrpmhc_node_scaler, distance_scaler, pae_edge_scaler, hydro_scaler = scale_features(dataset, [])
+    dataset_scaled, _, pae_node_scaler, pae_tcrpmhc_node_scaler, distance_scaler, pae_edge_scaler, hydro_scaler = scale_features(dataset, [])
+
+    # set reproducible generator
+    g = torch.Generator()
+    g.manual_seed(seed)
 
     # Create data loader for full dataset
-    train_loader = DataLoader(train_subset_scaled, batch_size=batch_size, shuffle=True)
+    train_loader = DataLoader(dataset_scaled,
+                              batch_size=batch_size, 
+                              shuffle=True, 
+                              num_workers=4,
+                              persistent_workers=True, 
+                              worker_init_fn=seed_worker, 
+                              generator=g)
 
     # Class weights for imbalance
     labels = [data.y.item() for data in dataset]
