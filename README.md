@@ -14,7 +14,7 @@ t2pmhc: A Structure-Informed Graph Neural Network for Predicting TCR–pMHC Bind
 
 Pull image from DockerHub:
 
-``` docker pull mvp9/t2pmhc:0.1.0 ```
+``` docker pull mvp9/t2pmhc:1.0.0 ```
 
 ## 2. Python
 
