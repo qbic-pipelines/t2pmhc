@@ -14,11 +14,7 @@ t2pmhc: A Structure-Informed Graph Neural Network for Predicting TCR–pMHC Bind
 
 Pull image from DockerHub:
 
-INSERT CODE HERE
-
-Run t2pmhc using the image:
-
-INSERT CODE HERE
+``` docker pull mvp9/t2pmhc:0.1.0 ```
 
 ## 2. Python
 
@@ -49,7 +45,7 @@ Now you can use the *t2pmhc* anywhere on your machine.
 t2pmhc currently supports pdb files created with [TCRdock](https://github.com/phbradley/TCRdock).  
 You can either follow the documentation of tcrdock or use our branch of the [nf-core/proteinfold](https://github.com/nf-core/proteinfold/) pipeline
 
-### nf-core proteinfold
+### TCRDock in nf-core proteinfold
 
 
 Clone the repository and checkout to the tcrdock branch
@@ -57,14 +53,13 @@ Clone the repository and checkout to the tcrdock branch
 2. ``` git checkout -b tcrdock ```
 
 See the [documentation](https://github.com/mapo9/nf-core_proteinfold/tree/tcrdock) to create the docker container and run the pipeline.
-The commands used for the publication can be found at TODO: ADD FILES SOMEWHERE!
 
 Minimal samplesheet:  
 
 ```console
-organism,mhc_class,mhc,peptide,va,ja,cdr3a,vb,jb,cdr3b
-human,1,A*02:01:48,RLQSLQTYV,TRAV16*01,TRAJ39*01,CALSGFNNAGNMLTF,TRBV11-2*01,TRBJ2-3*01,CASSLGGAGGADTQYF
-human,1,A*02:01:48,YLQPRTFLL,TRAV12-2*01,TRAJ30*01,CAVNRDDKIIF,TRBV7-9*01,TRBJ2-7*01,CASSPDIEQYF
+organism,mhc_class,mhc,peptide,va,ja,cdr3a,vb,jb,cdr3b,identifier
+human,1,A*02:01:48,RLQSLQTYV,TRAV16*01,TRAJ39*01,CALSGFNNAGNMLTF,TRBV11-2*01,TRBJ2-3*01,CASSLGGAGGADTQYF,a2341ad
+human,1,A*02:01:48,YLQPRTFLL,TRAV12-2*01,TRAJ30*01,CAVNRDDKIIF,TRBV7-9*01,TRBJ2-7*01,CASSPDIEQYF,a2341ad
 ```
 
 | Column | Description |
@@ -79,6 +74,7 @@ human,1,A*02:01:48,YLQPRTFLL,TRAV12-2*01,TRAJ30*01,CAVNRDDKIIF,TRBV7-9*01,TRBJ2-
 | `vb` | V-beta gene. |
 | `jb` | J-beta gene. |
 | `cdr3b` | CDR3-beta sequence, starts with C, ends with the F/W/etc right before the GXG sequence in the J gene. |
+| `identifier` | Unique sample identifier. |
 
 ## Create t2pmhc graphs
 
@@ -88,8 +84,8 @@ Minimal samplesheet:
 
 ```console
 organism,mhc_class,mhc,peptide,va,ja,cdr3a,vb,jb,cdr3b,identifier,model_2_ptm_pae,pmhc_tcr_pae,target_chainseq
-human,1,A*02:01:48,RLQSLQTYV,TRAV16*01,TRAJ39*01,CALSGFNNAGNMLTF,TRBV11-2*01,TRBJ2-3*01,CASSLGGAGGADTQYF,1,2.43,6.24,CALSGFNNAGNMLTF/RLQSLQTYV/CASSLGGAGGADTQYF
-human,1,A*02:01:48,YLQPRTFLL,TRAV12-2*01,TRAJ30*01,CAVNRDDKIIF,TRBV7-9*01,TRBJ2-7*01,CASSPDIEQYF,2,4.5,7.2,YLQPRTFLL/CAVNRDDKIIF/CASSPDIEQYF
+human,1,A*02:01:48,RLQSLQTYV,TRAV16*01,TRAJ39*01,CALSGFNNAGNMLTF,TRBV11-2*01,TRBJ2-3*01,CASSLGGAGGADTQYF,1sr34,2.43,6.24,CALSGFNNAGNMLTF/RLQSLQTYV/CASSLGGAGGADTQYF
+human,1,A*02:01:48,YLQPRTFLL,TRAV12-2*01,TRAJ30*01,CAVNRDDKIIF,TRBV7-9*01,TRBJ2-7*01,CASSPDIEQYF,223dse2,4.5,7.2,YLQPRTFLL/CAVNRDDKIIF/CASSPDIEQYF
 ```
 
 | Column | Description |

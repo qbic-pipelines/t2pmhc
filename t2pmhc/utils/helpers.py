@@ -82,7 +82,6 @@ def calculate_contact_map(pdb_file, pae_matrix, threshold):
     structure = parser.get_structure('Protein', pdb_file)
     coords = []
     residues = []
-    contact_types = []
     distances = []
     paes = []
 
