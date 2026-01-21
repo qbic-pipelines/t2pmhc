@@ -10,7 +10,7 @@ WORKDIR /app
 
 # Install system build tools if needed for pip packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        wget \
+        git \
         build-essential \
         ca-certificates \
         procps \
