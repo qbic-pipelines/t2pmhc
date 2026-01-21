@@ -1,0 +1,9 @@
+biopython==1.85
+joblib==1.4.2
+numpy==1.26.4
+pandas==2.1.4
+rich==13.9.4
+rich_click==1.9.4
+scikit_learn==1.6.1
+torch==2.6.0
+torch_geometric==2.6.1

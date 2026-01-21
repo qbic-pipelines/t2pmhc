@@ -1,0 +1,4 @@
+*.sh
+**__pycache__*
+out
+test_graphs*
