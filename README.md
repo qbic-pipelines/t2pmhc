@@ -36,7 +36,7 @@ Pull image from DockerHub:
 
 ``` pip install -e . ```
 
-Now you can use the *t2pmhc* anywhere on your machine.
+Now you can use *t2pmhc* anywhere on your machine.
 
 # Usage
 
