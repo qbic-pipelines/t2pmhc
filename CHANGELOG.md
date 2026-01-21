@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1] - Ionic Hleb (2025-21-01)
+
+### Added
+
+### Fixed
+- git support in Dockerfile
+
 
 ## [1.0.0] - Ionic Hleb (2025-21-01)
 
