@@ -43,7 +43,7 @@ Now you can use *t2pmhc* anywhere on your machine.
 ## Create pdb files
 
 t2pmhc currently supports pdb files created with [TCRdock](https://github.com/phbradley/TCRdock).  
-You can either follow the documentation of tcrdock or use our branch of the [nf-core/proteinfold](https://github.com/nf-core/proteinfold/) pipeline
+You can either follow the documentation of tcrdock or use our branch of the [nf-core/proteinfold](https://github.com/nf-core/proteinfold/) pipeline.
 
 ### TCRDock in nf-core proteinfold
 
@@ -78,14 +78,19 @@ human,1,A*02:01:48,YLQPRTFLL,TRAV12-2*01,TRAJ30*01,CAVNRDDKIIF,TRBV7-9*01,TRBJ2-
 
 ## Create t2pmhc graphs
 
+The path to the resulting pdb files must be added to the samplesheet. 
+The path to the returned pae file path (`_predicted_aligned_error.npy`) must also be added to the samplesheet. 
+The filename of the pae file must be identical to the filename of the pdb file with the addition of `_predicted_aligned_error.npy`.
+So, e.g. `PDB-file: /path/to/abc.pdb -> PAE-file: /path/to/abc_predicted_aligned_error.npy`
+
 To create the graphs expected by the models from the pdb files, you can run the following command:
 t2pmhc expects TCRdock output as input for the graph generation step.
 Minimal samplesheet:  
 
 ```console
-organism,mhc_class,mhc,peptide,va,ja,cdr3a,vb,jb,cdr3b,identifier,model_2_ptm_pae,pmhc_tcr_pae,target_chainseq
-human,1,A*02:01:48,RLQSLQTYV,TRAV16*01,TRAJ39*01,CALSGFNNAGNMLTF,TRBV11-2*01,TRBJ2-3*01,CASSLGGAGGADTQYF,1sr34,2.43,6.24,CALSGFNNAGNMLTF/RLQSLQTYV/CASSLGGAGGADTQYF
-human,1,A*02:01:48,YLQPRTFLL,TRAV12-2*01,TRAJ30*01,CAVNRDDKIIF,TRBV7-9*01,TRBJ2-7*01,CASSPDIEQYF,223dse2,4.5,7.2,YLQPRTFLL/CAVNRDDKIIF/CASSPDIEQYF
+organism,mhc_class,mhc,peptide,va,ja,cdr3a,vb,jb,cdr3b,identifier,model_2_ptm_pae,pmhc_tcr_pae,target_chainseq,pdb_file_path
+human,1,A*02:01:48,RLQSLQTYV,TRAV16*01,TRAJ39*01,CALSGFNNAGNMLTF,TRBV11-2*01,TRBJ2-3*01,CASSLGGAGGADTQYF,1sr34,2.43,6.24,CALSGFNNAGNMLTF/RLQSLQTYV/CASSLGGAGGADTQYF,/path/to/abc.pdb
+human,1,A*02:01:48,YLQPRTFLL,TRAV12-2*01,TRAJ30*01,CAVNRDDKIIF,TRBV7-9*01,TRBJ2-7*01,CASSPDIEQYF,223dse2,4.5,7.2,YLQPRTFLL/CAVNRDDKIIF/CASSPDIEQYF,/path/to/def.pdb
 ```
 
 | Column | Description |
@@ -104,6 +109,7 @@ human,1,A*02:01:48,YLQPRTFLL,TRAV12-2*01,TRAJ30*01,CAVNRDDKIIF,TRBV7-9*01,TRBJ2-
 | `model_2_ptm_pae` | PAE of the complex (provided by TCRdock). |
 | `pmhc_tcr_pae` | TCR-pMHC specific PAE value (provided by TCRdock). |
 | `target_chainseq` | Full sequence of the complex (MHC/peptide/TCRA/TCRB) (provided by TCRdock). |
+| `pdb_file_path` | Path to pdb file created by TCRdock. |
 
 
 

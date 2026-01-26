@@ -107,7 +107,6 @@ def add_predictions_to_samplesheet(df, probs, preds, model):
         The updated dataframe with predictions.
     """
     df["binder_prob"] = probs
-    df["binder_prediction"] = preds
     df["model"] = model
     return df
 
