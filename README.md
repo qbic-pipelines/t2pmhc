@@ -10,6 +10,18 @@ t2pmhc: A Structure-Informed Graph Neural Network for Predicting TCR–pMHC Bind
 
 # Installation
 
+## Prerequisites
+
+t2pmhc has two installation routes with different requirements.
+
+**Docker (recommended).** The only requirement is a working Docker
+installation. Because the container bundles the full software
+environment, t2pmhc is platform-independent and produces identical
+results across operating systems.
+
+**Manual (conda/pip) installation.** The manual installation has been
+tested on Linux (Rocky Linux 9.8) with Python 3.11 with the tool versions visible in the requirements.txt.
+
 ## 1. Docker
 
 You can pull the image here:
