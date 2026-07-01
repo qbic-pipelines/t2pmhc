@@ -143,6 +143,20 @@ t2pmhc train-t2pmhc-gat \
     --save_model <path/to/model_dir>
 ```
 
+#### Resuming training from a checkpoint
+
+Checkpoints are saved after each epoch to `<model_dir>/checkpoints/<run_name>_latest.pt`. To resume training (e.g. after a SLURM job timeout), use `--resume_from`:
+
+```
+t2pmhc train-t2pmhc-gat \
+    --run_name <name to save model under> \
+    --hyperparameters path/to/t2pmhc/t2pmhc/data/hyperparams/t2pmhc_gat.json \
+    --samplesheet samplesheet.tsv \
+    --saved_graphs <path/to/graphs.pt> \
+    --save_model <path/to/model_dir> \
+    --resume_from <path/to/model_dir>/checkpoints/<run_name>_latest.pt
+```
+
 ## Predict binder status of TCR-pMHC samples
 
 You can either use a model you trained or use the published default models to predict the binder status for your TCR-pMHC complexes.  

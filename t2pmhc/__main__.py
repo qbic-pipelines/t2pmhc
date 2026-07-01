@@ -4,8 +4,8 @@ from rich.logging import RichHandler
 from pathlib import Path
 import rich_click as click
 
-from t2pmhc.models.t2pmhc_gcn import train_gcn
-from t2pmhc.models.t2pmhc_gat import train_gat
+from t2pmhc.models.t2pmhc_gcn import train_gcn, train_gcn_cv, train_gcn_peptide_cv
+from t2pmhc.models.t2pmhc_gat import train_gat, train_gat_cv, train_gat_peptide_cv
 
 from t2pmhc.predict.predict_binding import predict_binding
 
@@ -168,7 +168,13 @@ def train_t2pmhc_gcn(samplesheet, run_name, hyperparameters, saved_graphs, save_
     required=True,
     help='Directory to save model in'
 )
-def train_t2pmhc_gat(samplesheet, run_name, hyperparameters, saved_graphs, save_model):
+@click.option(
+    '--resume_from',
+    type=str,
+    default=None,
+    help='Path to a checkpoint .pt file to resume training from'
+)
+def train_t2pmhc_gat(samplesheet, run_name, hyperparameters, saved_graphs, save_model, resume_from):
     """
     t2pmhc-gat. A Graph Attention Network to predict TCR-pMHC binding
     """
@@ -182,8 +188,201 @@ def train_t2pmhc_gat(samplesheet, run_name, hyperparameters, saved_graphs, save_
                 hyperparams,
                 saved_graphs,
                 save_model,
+                resume_from,
                 )
     
+    logger.info(".................. done ..................")
+
+
+# train gat cv
+@t2pmhc_cli.command()
+@click.option(
+    '--run_name',
+    type=str,
+    required=True,
+    help="Name of the run under which graphs and model will be saved"
+)
+@click.option(
+    '--hyperparameters',
+    type=str,
+    required=True,
+    help="Path to json file containing the hyperparameters"
+)
+@click.option(
+    '--saved_graphs',
+    type=str,
+    required=True,
+    help="Path to the saved graphs"
+)
+@click.option(
+    '--samplesheet',
+    type=str,
+    required=True,
+    help='Path to metadata'
+)
+@click.option(
+    '--save_model',
+    type=str,
+    required=True,
+    help='Directory to save model in'
+)
+@click.option(
+    '--no_pae',
+    is_flag=True,
+    default=False,
+    help='Ablate all PAE features (node PAE, PAE_TCRpMHC, edge PAE)'
+)
+def train_t2pmhc_gat_cv(samplesheet, run_name, hyperparameters, saved_graphs, save_model, no_pae):
+    """
+    t2pmhc-gat 5-fold CV. Train with stratified cross-validation, checkpoint/resume support.
+    """
+    hyperparams = read_hyperparams(hyperparameters)
+    logging.info("......... Training t2pmhc-gat (5-fold CV) .........")
+    train_gat_cv(samplesheet, run_name, hyperparams, saved_graphs, save_model, ablate_pae=no_pae)
+    logger.info(".................. done ..................")
+
+
+# train gcn cv
+@t2pmhc_cli.command()
+@click.option(
+    '--run_name',
+    type=str,
+    required=True,
+    help="Name of the run under which graphs and model will be saved"
+)
+@click.option(
+    '--hyperparameters',
+    type=str,
+    required=True,
+    help="Path to json file containing the hyperparameters"
+)
+@click.option(
+    '--saved_graphs',
+    type=str,
+    required=True,
+    help="Path to the saved graphs"
+)
+@click.option(
+    '--samplesheet',
+    type=str,
+    required=True,
+    help='Path to metadata'
+)
+@click.option(
+    '--save_model',
+    type=str,
+    required=True,
+    help='Directory to save model in'
+)
+@click.option(
+    '--no_pae',
+    is_flag=True,
+    default=False,
+    help='Ablate all PAE features (node PAE, PAE_TCRpMHC)'
+)
+def train_t2pmhc_gcn_cv(samplesheet, run_name, hyperparameters, saved_graphs, save_model, no_pae):
+    """
+    t2pmhc-gcn 5-fold CV. Train with stratified cross-validation, checkpoint/resume support.
+    """
+    hyperparams = read_hyperparams(hyperparameters)
+    logging.info("......... Training t2pmhc-gcn (5-fold CV) .........")
+    train_gcn_cv(samplesheet, run_name, hyperparams, saved_graphs, save_model, ablate_pae=no_pae)
+    logger.info(".................. done ..................")
+
+
+# train gat peptide cv
+@t2pmhc_cli.command()
+@click.option(
+    '--run_name',
+    type=str,
+    required=True,
+    help="Name of the run under which graphs and model will be saved"
+)
+@click.option(
+    '--hyperparameters',
+    type=str,
+    required=True,
+    help="Path to json file containing the hyperparameters"
+)
+@click.option(
+    '--saved_graphs',
+    type=str,
+    required=True,
+    help="Path to the saved graphs"
+)
+@click.option(
+    '--samplesheet',
+    type=str,
+    required=True,
+    help='Path to metadata'
+)
+@click.option(
+    '--save_model',
+    type=str,
+    required=True,
+    help='Directory to save model in'
+)
+@click.option(
+    '--no_pae',
+    is_flag=True,
+    default=False,
+    help='Ablate all PAE features (node PAE, PAE_TCRpMHC, edge PAE)'
+)
+def train_t2pmhc_gat_peptide_cv(samplesheet, run_name, hyperparameters, saved_graphs, save_model, no_pae):
+    """
+    t2pmhc-gat 5-fold peptide-grouped CV. Train with peptide-based cross-validation, checkpoint/resume support.
+    """
+    hyperparams = read_hyperparams(hyperparameters)
+    logging.info("......... Training t2pmhc-gat (5-fold peptide-grouped CV) .........")
+    train_gat_peptide_cv(samplesheet, run_name, hyperparams, saved_graphs, save_model, ablate_pae=no_pae)
+    logger.info(".................. done ..................")
+
+
+# train gcn peptide cv
+@t2pmhc_cli.command()
+@click.option(
+    '--run_name',
+    type=str,
+    required=True,
+    help="Name of the run under which graphs and model will be saved"
+)
+@click.option(
+    '--hyperparameters',
+    type=str,
+    required=True,
+    help="Path to json file containing the hyperparameters"
+)
+@click.option(
+    '--saved_graphs',
+    type=str,
+    required=True,
+    help="Path to the saved graphs"
+)
+@click.option(
+    '--samplesheet',
+    type=str,
+    required=True,
+    help='Path to metadata'
+)
+@click.option(
+    '--save_model',
+    type=str,
+    required=True,
+    help='Directory to save model in'
+)
+@click.option(
+    '--no_pae',
+    is_flag=True,
+    default=False,
+    help='Ablate all PAE features (node PAE, PAE_TCRpMHC)'
+)
+def train_t2pmhc_gcn_peptide_cv(samplesheet, run_name, hyperparameters, saved_graphs, save_model, no_pae):
+    """
+    t2pmhc-gcn 5-fold peptide-grouped CV. Train with peptide-based cross-validation, checkpoint/resume support.
+    """
+    hyperparams = read_hyperparams(hyperparameters)
+    logging.info("......... Training t2pmhc-gcn (5-fold peptide-grouped CV) .........")
+    train_gcn_peptide_cv(samplesheet, run_name, hyperparams, saved_graphs, save_model, ablate_pae=no_pae)
     logger.info(".................. done ..................")
 
 

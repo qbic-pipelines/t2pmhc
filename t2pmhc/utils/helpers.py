@@ -2,12 +2,14 @@
 THIS SCRIPT CONTAINS HELPER FUNCTIONS USED BY MULTIPLE PYTHON SCRIPTS
 """
 
+import heapq
 import json
 import numpy as np
 import os
 import pandas as pd
 import torch
 import logging
+from collections import Counter
 
 from Bio.PDB import PDBParser
 
@@ -38,6 +40,53 @@ def read_hyperparams(json_path):
         hyperparams = json.load(f)
 
     return hyperparams
+
+
+def create_peptide_folds(dataset, n_splits=5):
+    """
+    Create peptide-grouped folds using greedy bin-packing.
+    All samples sharing the same peptide are assigned to the same fold.
+    Peptides are sorted by descending sample count and greedily assigned
+    to the fold with the smallest current total (deterministic, no random seed).
+    Args:
+        dataset (list): List of graph Data objects with meta["pdb_path"].
+        n_splits (int): Number of folds.
+    Returns:
+        fold_assignments (dict): fold number (1-based) -> list of dataset indices.
+        peptide_fold_map (dict): peptide string -> fold number.
+        peptide_counts (dict): peptide string -> sample count.
+    """
+    # Extract peptide for each graph from PDB filename
+    peptide_per_sample = []
+    for graph in dataset:
+        basename = os.path.basename(graph.meta["pdb_path"]).replace('.pdb', '')
+        peptide = basename.split('_')[1]
+        peptide_per_sample.append(peptide)
+
+    # Count samples per peptide
+    peptide_counts = dict(Counter(peptide_per_sample))
+
+    # Sort peptides by descending count for greedy bin-packing
+    sorted_peptides = sorted(peptide_counts.items(), key=lambda x: (-x[1], x[0]))
+
+    # Greedy bin-packing: assign each peptide to fold with smallest current total
+    # Heap entries: (current_total, fold_number)
+    heap = [(0, fold) for fold in range(1, n_splits + 1)]
+    heapq.heapify(heap)
+
+    peptide_fold_map = {}
+    for peptide, count in sorted_peptides:
+        total, fold = heapq.heappop(heap)
+        peptide_fold_map[peptide] = fold
+        heapq.heappush(heap, (total + count, fold))
+
+    # Build fold_assignments: fold -> list of dataset indices
+    fold_assignments = {fold: [] for fold in range(1, n_splits + 1)}
+    for i, peptide in enumerate(peptide_per_sample):
+        fold = peptide_fold_map[peptide]
+        fold_assignments[fold].append(i)
+
+    return fold_assignments, peptide_fold_map, peptide_counts
 
 
 def read_in_samplesheet(samplesheet):
