@@ -8,9 +8,8 @@ t2pmhc: A Structure-Informed Graph Neural Network for Predicting TCR–pMHC Bind
   </picture>
 </h1>
 
-# Installation
 
-## Prerequisites
+# Prerequisites
 
 t2pmhc has two installation routes with different requirements.
 
@@ -20,7 +19,10 @@ environment, t2pmhc is platform-independent and produces identical
 results across operating systems.
 
 **Manual (conda/pip) installation.** The manual installation has been
-tested on Linux (Rocky Linux 9.8) with Python 3.11 with the tool versions visible in the requirements.txt.
+tested on Linux (Rocky Linux 9.8 & Ubuntu 24.04) with Python 3.11 with the tool versions in the `requirements.txt`.
+
+
+# Installation
 
 ## 1. Docker
 
@@ -49,6 +51,42 @@ You can pull the image here:
 ``` pip install -e . ```
 
 Now you can use *t2pmhc* anywhere on your machine.
+
+# Quickstart
+
+This example lets you verify your installation and see the expected
+input/output format before running your own analyses. It uses a small
+set of pre-computed TCRdock structures included in the repository, so
+you can skip structure prediction and run t2pmhc end-to-end in a few
+minutes.
+
+All files are located in the `example/` directory.
+
+Run the following two commands from the root of the repository.
+
+**1. Build the graphs from the example structures**
+
+```
+t2pmhc create-t2pmhc-graphs \
+    --mode t2pmhc-gcn \ 
+    --samplesheet example/samplesheet_predict.tsv \ 
+    --prediction-mode \ 
+    --out example/graphs.pt
+```
+
+**2. Predict binding using the published default model**
+
+```
+t2pmhc t2pmhc-predict-binding \ 
+    --mode t2pmhc-gcn \ 
+    --samplesheet example/samplesheet_predict.tsv \ 
+    --saved_graphs example/graphs.pt \ 
+    --out example/samplesheet_predicted.tsv
+```
+
+The output `example/samplesheet_predicted.tsv` contains a **binder_prob**
+column with the binding probability assigned by t2pmhc to each complex.
+
 
 # Usage
 
