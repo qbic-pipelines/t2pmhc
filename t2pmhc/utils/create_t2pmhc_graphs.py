@@ -369,7 +369,7 @@ def create_graphs(mode, samplesheet, training_mode, out, threshold=10):
         samplesheet (str): Path to the samplesheet file.
         training_mode (bool): Creation of training or prediction graphs
         out (str): Output path to save the graphs.
-        threshold (float): Cα-Cα distance threshold in Angstroms (default: 10).
+        threshold (float): CA-CA distance threshold in Angstroms (default: 10).
     """
     # read in samplesheet 
     pdb_files = read_in_samplesheet(samplesheet)
