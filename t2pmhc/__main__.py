@@ -222,7 +222,7 @@ def train_t2pmhc_gat(samplesheet, run_name, hyperparameters, saved_graphs, save_
     required=False,
     default=10.0,
     show_default=True,
-    help="Cα-Cα distance threshold in Angstroms for contact map construction"
+    help="CA-CA distance threshold in Angstroms for contact map construction"
 )
 
 def create_t2pmhc_graphs(mode, samplesheet, training_mode, out, threshold):
