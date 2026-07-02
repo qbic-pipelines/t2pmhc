@@ -172,6 +172,9 @@ t2pmhc t2pmhc-predict-binding \
     --pae_scaler_edge <pae_edge_FULL.pkl> \
 ```
 
+# Publication
+* you can find the hyperparameter search [here](https://github.com/qbic-pipelines/t2pmhc/tree/hyperparameter_search)
+
 # Citations
 
 If you use t2pmhc, please cite the article as follows:
