@@ -117,6 +117,7 @@ t2pmhc create-t2pmhc-graphs \
     --samplesheet samplesheet.tsv \
     --training-mode / --prediction-mode \
     --out <path/to/graphs.pt> \
+    --threshold <distance in Å> (optional, default: 10.0)
 ```
 
 ## Train t2pmhc models
