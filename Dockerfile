@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 
 # Clone repo and checkout the release tag
-RUN git clone --depth 1 --branch v1.1.0 https://github.com/qbic-pipelines/t2pmhc.git /app/t2pmhc
+RUN git clone --depth 1 --branch 1.1.0 https://github.com/qbic-pipelines/t2pmhc.git /app/t2pmhc
 
 # Set workdir
 WORKDIR /app/t2pmhc
