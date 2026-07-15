@@ -2,7 +2,6 @@
 FROM python:3.11.9-slim
 
 # metadata
-LABEL version="1.0.0"
 LABEL description="t2pmhc: A Structure-Informed Graph Neural Network for Predicting TCR-pMHC Binding"
 
 # Create app directory
@@ -18,7 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 
 # Clone repo and checkout the release tag
-RUN git clone --depth 1 --branch v1.0.0 https://github.com/qbic-pipelines/t2pmhc.git /app/t2pmhc
+RUN git clone --depth 1 --branch v1.0.2 https://github.com/qbic-pipelines/t2pmhc.git /app/t2pmhc
 
 # Set workdir
 WORKDIR /app/t2pmhc

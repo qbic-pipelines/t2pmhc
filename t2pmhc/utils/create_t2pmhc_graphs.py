@@ -108,7 +108,7 @@ def create_gcn_graph(pdb_file, metadata, threshold):
     return node_features, edge_index, edge_features, identifier, pae_val, pae_pmhc_tcr, hydrophobicity_features, pdb_file
 
 
-def process_pdb_file_gcn(pdb_file, metadata, threshold):
+def process_pdb_file_gcn(pdb_file, metadata, threshold, training_mode):
     """
     Processes a single PDB file into a graph with a label.
     Used for multiprocessing.
@@ -116,18 +116,23 @@ def process_pdb_file_gcn(pdb_file, metadata, threshold):
         pdb_file (str): Path to the PDB file.
         metadata (pd.DataFrame): Metadata DataFrame.
         threshold (float): Distance threshold for contact map.
+        training_mode (bool): Training or prediction mode
     Returns:
         node_features (np.ndarray): Node features array.
         edge_index (np.ndarray): Edge index array.
         edge_features (np.ndarray): Edge features array.
-        label (int): Label extracted from the PDB file name.
+        label (int): Label from PDB filename in training mode, 0 in prediction mode.
         identifier (str): Identifier from metadata.
         pae_val (float): PAE value from metadata.
         pae_pmhc_tcr (float): PAE TCR-pMHC value from metadata.
         hydrophobicity_features (np.ndarray): Hydrophobicity features array.
         pdb_file (str): Path to the PDB file.
     """
-    label = int(pdb_file.split("_")[-1].replace(".pdb", ""))
+    if training_mode:
+        label = int(pdb_file.split("_")[-1].replace(".pdb", ""))
+    else:
+        # set label for prediction graphs
+        label = 0
     
     # Get graph data as NumPy arrays
     node_features, edge_index, edge_features, identifier, pae_val, pae_pmhc_tcr, hydrophobicity_features, pdb_file = create_gcn_graph(pdb_file, metadata, threshold)
@@ -136,7 +141,7 @@ def process_pdb_file_gcn(pdb_file, metadata, threshold):
     return node_features, edge_index, edge_features, label, identifier, pae_val, pae_pmhc_tcr, hydrophobicity_features, pdb_file
 
 
-def gcn_create_graphs(pdb_files, metadata, threshold, graphs_path):
+def gcn_create_graphs(pdb_files, metadata, threshold, graphs_path, training_mode):
     """
     Creates GCN graphs from a list of PDB files using multiprocessing.
     Args:
@@ -144,6 +149,7 @@ def gcn_create_graphs(pdb_files, metadata, threshold, graphs_path):
         metadata (pd.DataFrame): Metadata DataFrame.
         threshold (float): Distance threshold for contact map.
         graphs_path (str): Path to save the resulting graphs.
+        training_mode (bool): Training or prediction mode
     Returns:
         dataset (list): List of PyTorch Data objects.
         int: Number of graphs created.
@@ -160,7 +166,7 @@ def gcn_create_graphs(pdb_files, metadata, threshold, graphs_path):
         
         with mp.Pool(processes=num_workers) as pool:
             for result in pool.starmap(process_pdb_file_gcn, 
-                                        [(pdb, metadata, threshold) for pdb in batch_files]):
+                                        [(pdb, metadata, threshold, training_mode) for pdb in batch_files]):
                 batch_results.append(result)
 
         # Convert NumPy arrays to PyTorch in the main process
@@ -266,7 +272,7 @@ def create_gat_graph(pdb_file, metadata, threshold):
     return node_features, edge_index, edge_features, identifier, pae_val, pae_pmhc_tcr, hydrophobicity_features, pdb_file
 
 
-def process_pdb_file_gat(pdb_file, metadata, threshold):
+def process_pdb_file_gat(pdb_file, metadata, threshold, training_mode):
     """
     Processes a single PDB file into a graph with a label.
     Used for multiprocessing.
@@ -274,18 +280,23 @@ def process_pdb_file_gat(pdb_file, metadata, threshold):
         pdb_file (str): Path to the PDB file.
         metadata (pd.DataFrame): Metadata DataFrame.
         threshold (float): Distance threshold for contact map.
+        training_mode (bool): Training or prediction mode
     Returns:
         node_features (np.ndarray): Node features array.
         edge_index (np.ndarray): Edge index array.
         edge_features (np.ndarray): Edge features array.
-        label (int): Label extracted from the PDB file name.
+        label (int): Label from PDB filename in training mode, 0 in prediction mode.
         identifier (str): Identifier from metadata.
         pae_val (float): PAE value from metadata.
         pae_pmhc_tcr (float): PAE TCR-pMHC value from metadata.
         hydrophobicity_features (np.ndarray): Hydrophobicity features array.
         pdb_file (str): Path to the PDB file.
     """
-    label = int(pdb_file.split("_")[-1].replace(".pdb", ""))
+    if training_mode:
+        label = int(pdb_file.split("_")[-1].replace(".pdb", ""))
+    else:
+        # set label for prediction graphs 
+        label = 0
     
     # Get graph data as NumPy arrays
     node_features, edge_index, edge_features, identifier, pae_val, pae_pmhc_tcr, hydrophobicity_features, pdb_file = create_gat_graph(pdb_file, metadata, threshold)
@@ -293,7 +304,7 @@ def process_pdb_file_gat(pdb_file, metadata, threshold):
     # Return raw data (not PyTorch objects)
     return node_features, edge_index, edge_features, label, identifier, pae_val, pae_pmhc_tcr, hydrophobicity_features, pdb_file
 
-def gat_create_graphs(pdb_files, metadata, threshold, graphs_path):
+def gat_create_graphs(pdb_files, metadata, threshold, graphs_path, training_mode):
     """
     Creates GAT graphs from a list of PDB files using multiprocessing.
     Args:
@@ -301,6 +312,7 @@ def gat_create_graphs(pdb_files, metadata, threshold, graphs_path):
         metadata (pd.DataFrame): Metadata DataFrame.
         threshold (float): Distance threshold for contact map.
         graphs_path (str): Path to save the resulting graphs.
+        training_mode (bool): Training or prediction mode
     Returns:
         dataset (list): List of PyTorch Data objects.
         int: Number of graphs created.
@@ -317,7 +329,7 @@ def gat_create_graphs(pdb_files, metadata, threshold, graphs_path):
         
         with mp.Pool(processes=num_workers) as pool:
             for result in pool.starmap(process_pdb_file_gat, 
-                                        [(pdb, metadata, threshold) for pdb in batch_files]):
+                                        [(pdb, metadata, threshold, training_mode) for pdb in batch_files]):
                 batch_results.append(result)
 
         # Convert NumPy arrays to PyTorch in the main process
@@ -349,13 +361,15 @@ def gat_create_graphs(pdb_files, metadata, threshold, graphs_path):
     return dataset, len(dataset)
 
 
-def create_graphs(mode, samplesheet, out):
+def create_graphs(mode, samplesheet, training_mode, out, threshold=10):
     """
     Main function to create graphs based on the specified mode.
     Args:
         mode (str): Mode of graph creation ("t2pmhc-gat" or "t2pmhc-gcn").
         samplesheet (str): Path to the samplesheet file.
+        training_mode (bool): Creation of training or prediction graphs
         out (str): Output path to save the graphs.
+        threshold (float): CA-CA distance threshold in Angstroms (default: 10).
     """
     # read in samplesheet 
     pdb_files = read_in_samplesheet(samplesheet)
@@ -365,11 +379,11 @@ def create_graphs(mode, samplesheet, out):
     if mode == "t2pmhc-gat":
         #logging.info("Creating Graphs -- t2pmhc-gat")
         logger.info("Creating Graphs -- t2pmhc-gat")
-        gat_create_graphs(pdb_files=pdb_files, metadata=metadata, threshold=10, graphs_path=out)
+        gat_create_graphs(pdb_files=pdb_files, metadata=metadata, threshold=threshold, graphs_path=out, training_mode=training_mode)
     elif mode == "t2pmhc-gcn":
         #logging.info("Creating Graphs -- t2pmhc-gcn")
         logger.info("Creating Graphs -- t2pmhc-gcn")
-        gcn_create_graphs(pdb_files=pdb_files, metadata=metadata, threshold=10, graphs_path=out)
+        gcn_create_graphs(pdb_files=pdb_files, metadata=metadata, threshold=threshold, graphs_path=out, training_mode=training_mode)
 
 
 if __name__ == "__main__":
