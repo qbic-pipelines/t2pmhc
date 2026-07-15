@@ -161,6 +161,7 @@ def predict_binding(mode, samplesheet, saved_graphs, out, hyperparams, model_pat
     # load model
     model.load_state_dict(torch.load(model_path, map_location=device))
     model.eval() # set at evaluation state
+    model.to(device) # move model to the selected device
 
     # set dataloader
     loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
