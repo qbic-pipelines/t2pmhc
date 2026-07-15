@@ -1,0 +1,29 @@
+#!/bin/bash
+
+
+#SBATCH --partition=gpu-a30
+#SBATCH --ntasks=1
+#SBATCH --gres=gpu:2
+#SBATCH --cpus-per-task=32
+#SBATCH --time=1-00:00
+#SBATCH --mem=64G
+#SBATCH --output=/mnt/lustre/groups/nahnsen/nahpo775/workdir/projects/tcrpha_pred/t2pmhc/pae_ablation_experiment/pae_ablation_CV/logs/%j_gcn_with_pae.out
+#SBATCH --error=/mnt/lustre/groups/nahnsen/nahpo775/workdir/projects/tcrpha_pred/t2pmhc/pae_ablation_experiment/pae_ablation_CV/logs/%j_gcn_with_pae.err
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-user=mark.polster@uni-tuebingen.de
+
+source /usr/lib/python3.9/site-packages/conda/shell/etc/profile.d/conda.sh
+conda deactivate
+conda activate t2pmhc
+
+export PYTHONUNBUFFERED=1
+
+REPO=/mnt/lustre/groups/nahnsen/nahpo775/workdir/projects/tcrpha_pred/t2pmhc
+EXP=${REPO}/pae_ablation_experiment/pae_ablation_CV
+
+t2pmhc train-t2pmhc-gcn-cv \
+    --run_name gcn_with_pae \
+    --hyperparameters ${EXP}/scripts/hyperparams/t2pmhc_gcn.json \
+    --samplesheet ${REPO}/data/t2pmhc_train.tsv \
+    --saved_graphs /mnt/lustre/groups/nahnsen/nahpo775/workdir/projects/tcrpha_pred/t2pmhc/test_graphs/t2pmhc_gcn_graphs.pt \
+    --save_model ${EXP}/models/gcn_with_pae

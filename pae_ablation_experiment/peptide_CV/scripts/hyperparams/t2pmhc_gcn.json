@@ -1,0 +1,11 @@
+{
+    "input_dim": 33,
+    "hidden_dim": 64,
+    "output_dim": 2,
+    "learning_rate": 0.00027927,
+    "num_epochs": 50,
+    "weight_decay": 0.0000028885,
+    "dropout_rate": 0.23269,
+    "batch_size": 8,
+    "edge_feat_dim": 1
+}

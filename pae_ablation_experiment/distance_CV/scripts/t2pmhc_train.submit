@@ -1,0 +1,31 @@
+#!/bin/bash
+#SBATCH --time=22:30:00
+#SBATCH --job-name=train_t2pmhc
+#SBATCH --ntasks=1
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=128G
+#SBATCH --account=cai_exp
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:1
+#SBATCH --output=/cluster/home/dego/log/%j_%N_train_t2pmhc_dist12.out
+#SBATCH --error=/cluster/home/dego/log/%j_%N_train_t2pmhc_dist12.err
+
+echo "=== Submit script: $(realpath "$0") ===" && cat "$0"
+
+cd ~/models/t2pmhc
+
+module load cuda/12.4.1
+
+source /cluster/home/dego/.start_uv.sh --auto
+export UV_CACHE_DIR=/tmp/uv-cache-${SLURM_JOB_ID}
+uv sync
+trap "rm -rf ${UV_CACHE_DIR}" EXIT
+
+#you are supposed to convert the samplesheet to the format expected by running /cluster/home/dego/nf-core_proteinfold_tcr_dock/Custom/tcrdock_python_utils/convert_samplesheet.py
+uv run --project ~/models/t2pmhc --directory /cluster/projects/2026_dego_NF_DB/t2pmhc_train_structures t2pmhc train-t2pmhc-gat \
+    --run_name dist12 \
+    --hyperparameters /cluster/home/dego/models/t2pmhc/t2pmhc/data/hyperparams/t2pmhc_gat.json \
+    --samplesheet ./t2pmhc_train_samplesheet_new.tsv \
+    --saved_graphs /cluster/home/dego/models/t2pmhc/generated_graphs/t2pmhc_gat_dist12.pt \
+    --save_model /cluster/home/dego/models/t2pmhc/models/dist12_gat_cv

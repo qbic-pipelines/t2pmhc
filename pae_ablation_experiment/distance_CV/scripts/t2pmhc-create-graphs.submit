@@ -1,0 +1,20 @@
+#!/bin/bash
+#SBATCH --time=12:30:00
+#SBATCH --job-name=create_t2pmhc_graphs
+#SBATCH --ntasks=1
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=24
+#SBATCH --mem=96G
+#SBATCH --account=cai_exp
+#SBATCH --partition=cpu
+#SBATCH --output=/cluster/home/dego/log/%j_%N_create_t2pmhc_graph_gcn_10.out
+#SBATCH --error=/cluster/home/dego/log/%j_%N_create_t2pmhc_graph_gcn_10.err
+
+echo "=== Submit script: $(realpath "$0") ===" && cat "$0"
+
+cd ~/models/t2pmhc
+
+source /cluster/home/dego/.start_uv.sh --auto
+uv sync
+#you are supposed to convert the samplesheet to the format expected by running /cluster/home/dego/nf-core_proteinfold_tcr_dock/Custom/tcrdock_python_utils/convert_samplesheet.py
+uv run --project ~/models/t2pmhc --directory /cluster/projects/2026_dego_NF_DB/t2pmhc_train_structures  t2pmhc create-t2pmhc-graphs --mode t2pmhc-gcn --samplesheet ./t2pmhc_train_samplesheet_new.tsv --training-mode --threshold 10 --out /cluster/home/dego/models/t2pmhc/generated_graphs/t2pmhc_gcn_dist10.pt

@@ -1,0 +1,13 @@
+{
+    "input_dim": 33,
+    "hidden_dim": 64,
+    "output_dim": 2,
+    "learning_rate": 0.0001293654092724301,
+    "num_epochs": 50,
+    "weight_decay": 0.00005945475101633513,
+    "dropout_rate": 0.25211425983398117,
+    "batch_size": 8,
+    "k": 5,
+    "edge_dim": 2,
+    "heads": 6
+}

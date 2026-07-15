@@ -1,0 +1,599 @@
+=== Submit script: /var/lib/slurm/slurmd/job29029/slurm_script ===
+#!/bin/bash
+#SBATCH --time=22:30:00
+#SBATCH --job-name=train_t2pmhc
+#SBATCH --ntasks=1
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=128G
+#SBATCH --account=cai_exp
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:1
+#SBATCH --output=/cluster/home/dego/log/%j_%N_train_t2pmhc_dist8.out
+#SBATCH --error=/cluster/home/dego/log/%j_%N_train_t2pmhc_dist8.err
+
+echo "=== Submit script: $(realpath "$0") ===" && cat "$0"
+
+cd ~/models/t2pmhc
+
+module load cuda/12.4.1
+
+source /cluster/home/dego/.start_uv.sh --auto
+export UV_CACHE_DIR=/tmp/uv-cache-${SLURM_JOB_ID}
+uv sync
+trap "rm -rf ${UV_CACHE_DIR}" EXIT
+
+#you are supposed to convert the samplesheet to the format expected by running /cluster/home/dego/nf-core_proteinfold_tcr_dock/Custom/tcrdock_python_utils/convert_samplesheet.py
+uv run --project ~/models/t2pmhc --directory /cluster/projects/2026_dego_NF_DB/t2pmhc_train_structures t2pmhc train-t2pmhc-gat \
+    --run_name dist8 \
+    --hyperparameters /cluster/home/dego/models/t2pmhc/t2pmhc/data/hyperparams/t2pmhc_gat.json \
+    --samplesheet ./t2pmhc_train_samplesheet_new.tsv \
+    --saved_graphs /cluster/home/dego/models/t2pmhc/generated_graphs/t2pmhc_gat_dist8.pt \
+    --save_model /cluster/home/dego/models/t2pmhc/models/dist8_gat_cvFound .python-version file -> using Python 3.11
+Attempting to load module: python/3.11
+Loaded python/3.11
+No env name given -> using current directory name lowercased: t2pmhc
+Set UV_PATH=/raid/persistent_scratch/dego/uv/
+Loading uv module with VENV="t2pmhc" ...
+uv module loaded with VENV='t2pmhc' and UV_PATH='/raid/persistent_scratch/dego/uv/'.
+Finished. 
+-------------------------------------------
+ _   ____                  _          
+
+| |_|___ \ _ __  _ __ ___ | |__   ___
+
+| __| __) | '_ \| '_ ` _ \| '_ \ / __|
+
+| |_ / __/| |_) | | | | | | | | | (__ 
+
+ \__|_____| .__/|_| |_| |_|_| |_|\___|
+
+          |_|                         
+-------------------------------------------
+[06/15/26 13:36:33] INFO     ......... Training t2pmhc-gat       __main__.py:179
+                             .........                                          
+                    INFO     Training t2pmhc-GAT               t2pmhc_gat.py:371
+                    INFO                                       t2pmhc_gat.py:372
+                             Name: dist8                                        
+                             Saved Graphs:                                      
+                             /cluster/home/dego/models/t2pmhc/                  
+                             generated_graphs/t2pmhc_gat_dist8                  
+                             .pt                                                
+                                                                                
+                    INFO     Reading dataset                   t2pmhc_gat.py:373
+                    INFO     seed: 42                           t2pmhc_gat.py:40
+[06/15/26 13:36:35] INFO     Loading Graphs from pt file        t2pmhc_gat.py:74
+[06/15/26 13:37:45] INFO     Loaded 79108 graphs               t2pmhc_gat.py:381
+                    INFO     Training on cuda                  t2pmhc_gat.py:397
+                    INFO     ---- Fold 1/5 ----                t2pmhc_gat.py:413
+[06/15/26 13:44:52] INFO     2026-06-15 13:44:52: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 1/50 | Train Loss: 0.6075                    
+[06/15/26 13:48:48] INFO     2026-06-15 13:48:48: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 2/50 | Train Loss: 0.5683                    
+[06/15/26 13:52:47] INFO     2026-06-15 13:52:47: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 3/50 | Train Loss: 0.5589                    
+[06/15/26 13:56:44] INFO     2026-06-15 13:56:44: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 4/50 | Train Loss: 0.5530                    
+[06/15/26 14:00:40] INFO     2026-06-15 14:00:40: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 5/50 | Train Loss: 0.5484                    
+[06/15/26 14:04:36] INFO     2026-06-15 14:04:36: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 6/50 | Train Loss: 0.5470                    
+[06/15/26 14:08:32] INFO     2026-06-15 14:08:32: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 7/50 | Train Loss: 0.5444                    
+[06/15/26 14:12:27] INFO     2026-06-15 14:12:27: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 8/50 | Train Loss: 0.5404                    
+[06/15/26 14:16:21] INFO     2026-06-15 14:16:21: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 9/50 | Train Loss: 0.5383                    
+[06/15/26 14:20:16] INFO     2026-06-15 14:20:16: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 10/50 | Train Loss: 0.5361                   
+[06/15/26 14:24:17] INFO     2026-06-15 14:24:17: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 11/50 | Train Loss: 0.5333                   
+[06/15/26 14:28:18] INFO     2026-06-15 14:28:18: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 12/50 | Train Loss: 0.5304                   
+[06/15/26 14:32:12] INFO     2026-06-15 14:32:12: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 13/50 | Train Loss: 0.5287                   
+[06/15/26 14:36:06] INFO     2026-06-15 14:36:06: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 14/50 | Train Loss: 0.5260                   
+[06/15/26 14:39:54] INFO     2026-06-15 14:39:54: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 15/50 | Train Loss: 0.5232                   
+[06/15/26 14:43:44] INFO     2026-06-15 14:43:44: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 16/50 | Train Loss: 0.5208                   
+[06/15/26 14:47:36] INFO     2026-06-15 14:47:36: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 17/50 | Train Loss: 0.5203                   
+[06/15/26 14:51:29] INFO     2026-06-15 14:51:29: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 18/50 | Train Loss: 0.5190                   
+[06/15/26 14:55:29] INFO     2026-06-15 14:55:29: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 19/50 | Train Loss: 0.5152                   
+[06/15/26 14:59:26] INFO     2026-06-15 14:59:26: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 20/50 | Train Loss: 0.5153                   
+[06/15/26 15:03:23] INFO     2026-06-15 15:03:23: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 21/50 | Train Loss: 0.5126                   
+[06/15/26 15:07:31] INFO     2026-06-15 15:07:31: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 22/50 | Train Loss: 0.5110                   
+[06/15/26 15:11:36] INFO     2026-06-15 15:11:36: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 23/50 | Train Loss: 0.5101                   
+[06/15/26 15:15:42] INFO     2026-06-15 15:15:42: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 24/50 | Train Loss: 0.5098                   
+[06/15/26 15:19:46] INFO     2026-06-15 15:19:46: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 25/50 | Train Loss: 0.5065                   
+[06/15/26 15:23:52] INFO     2026-06-15 15:23:52: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 26/50 | Train Loss: 0.5073                   
+[06/15/26 15:27:56] INFO     2026-06-15 15:27:56: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 27/50 | Train Loss: 0.5065                   
+[06/15/26 15:32:00] INFO     2026-06-15 15:32:00: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 28/50 | Train Loss: 0.5044                   
+[06/15/26 15:36:06] INFO     2026-06-15 15:36:06: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 29/50 | Train Loss: 0.5037                   
+[06/15/26 15:40:10] INFO     2026-06-15 15:40:10: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 30/50 | Train Loss: 0.5008                   
+[06/15/26 15:44:16] INFO     2026-06-15 15:44:16: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 31/50 | Train Loss: 0.5021                   
+[06/15/26 15:48:22] INFO     2026-06-15 15:48:22: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 32/50 | Train Loss: 0.4993                   
+[06/15/26 15:52:27] INFO     2026-06-15 15:52:27: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 33/50 | Train Loss: 0.4981                   
+[06/15/26 15:56:31] INFO     2026-06-15 15:56:31: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 34/50 | Train Loss: 0.4984                   
+[06/15/26 16:00:35] INFO     2026-06-15 16:00:35: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 35/50 | Train Loss: 0.4984                   
+[06/15/26 16:04:42] INFO     2026-06-15 16:04:42: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 36/50 | Train Loss: 0.4981                   
+[06/15/26 16:08:44] INFO     2026-06-15 16:08:44: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 37/50 | Train Loss: 0.4950                   
+[06/15/26 16:12:51] INFO     2026-06-15 16:12:51: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 38/50 | Train Loss: 0.4951                   
+[06/15/26 16:16:56] INFO     2026-06-15 16:16:56: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 39/50 | Train Loss: 0.4926                   
+[06/15/26 16:21:02] INFO     2026-06-15 16:21:02: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 40/50 | Train Loss: 0.4918                   
+[06/15/26 16:25:08] INFO     2026-06-15 16:25:08: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 41/50 | Train Loss: 0.4930                   
+[06/15/26 16:29:15] INFO     2026-06-15 16:29:15: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 42/50 | Train Loss: 0.4917                   
+[06/15/26 16:33:23] INFO     2026-06-15 16:33:23: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 43/50 | Train Loss: 0.4909                   
+[06/15/26 16:37:31] INFO     2026-06-15 16:37:31: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 44/50 | Train Loss: 0.4898                   
+[06/15/26 16:41:36] INFO     2026-06-15 16:41:36: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 45/50 | Train Loss: 0.4891                   
+[06/15/26 16:45:40] INFO     2026-06-15 16:45:40: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 46/50 | Train Loss: 0.4866                   
+[06/15/26 16:49:44] INFO     2026-06-15 16:49:44: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 47/50 | Train Loss: 0.4873                   
+[06/15/26 16:53:50] INFO     2026-06-15 16:53:50: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 48/50 | Train Loss: 0.4861                   
+[06/15/26 16:57:57] INFO     2026-06-15 16:57:57: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 49/50 | Train Loss: 0.4847                   
+[06/15/26 17:02:02] INFO     2026-06-15 17:02:02: Fold 1 |     t2pmhc_gat.py:457
+                             Epoch 50/50 | Train Loss: 0.4857                   
+                    INFO     Saved final model.                   helpers.py:156
+                    INFO     Saved PAE scalers                    helpers.py:183
+[06/15/26 17:02:49] INFO     Fold 1 AUROC: 0.8349              t2pmhc_gat.py:465
+[06/15/26 17:02:54] INFO     ---- Fold 2/5 ----                t2pmhc_gat.py:413
+[06/15/26 17:10:08] INFO     2026-06-15 17:10:08: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 1/50 | Train Loss: 0.6075                    
+[06/15/26 17:14:13] INFO     2026-06-15 17:14:13: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 2/50 | Train Loss: 0.5716                    
+[06/15/26 17:18:15] INFO     2026-06-15 17:18:15: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 3/50 | Train Loss: 0.5650                    
+[06/15/26 17:22:17] INFO     2026-06-15 17:22:17: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 4/50 | Train Loss: 0.5606                    
+[06/15/26 17:26:20] INFO     2026-06-15 17:26:20: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 5/50 | Train Loss: 0.5581                    
+[06/15/26 17:30:21] INFO     2026-06-15 17:30:21: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 6/50 | Train Loss: 0.5526                    
+[06/15/26 17:34:24] INFO     2026-06-15 17:34:24: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 7/50 | Train Loss: 0.5477                    
+[06/15/26 17:38:28] INFO     2026-06-15 17:38:28: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 8/50 | Train Loss: 0.5427                    
+[06/15/26 17:42:31] INFO     2026-06-15 17:42:31: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 9/50 | Train Loss: 0.5408                    
+[06/15/26 17:46:31] INFO     2026-06-15 17:46:31: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 10/50 | Train Loss: 0.5380                   
+[06/15/26 17:50:31] INFO     2026-06-15 17:50:31: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 11/50 | Train Loss: 0.5351                   
+[06/15/26 17:55:01] INFO     2026-06-15 17:55:01: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 12/50 | Train Loss: 0.5329                   
+[06/15/26 17:59:54] INFO     2026-06-15 17:59:54: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 13/50 | Train Loss: 0.5290                   
+[06/15/26 18:04:40] INFO     2026-06-15 18:04:40: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 14/50 | Train Loss: 0.5275                   
+[06/15/26 18:09:25] INFO     2026-06-15 18:09:25: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 15/50 | Train Loss: 0.5246                   
+[06/15/26 18:14:12] INFO     2026-06-15 18:14:12: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 16/50 | Train Loss: 0.5225                   
+[06/15/26 18:18:55] INFO     2026-06-15 18:18:55: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 17/50 | Train Loss: 0.5206                   
+[06/15/26 18:23:42] INFO     2026-06-15 18:23:42: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 18/50 | Train Loss: 0.5182                   
+[06/15/26 18:27:48] INFO     2026-06-15 18:27:48: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 19/50 | Train Loss: 0.5161                   
+[06/15/26 18:31:46] INFO     2026-06-15 18:31:46: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 20/50 | Train Loss: 0.5147                   
+[06/15/26 18:36:07] INFO     2026-06-15 18:36:07: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 21/50 | Train Loss: 0.5141                   
+[06/15/26 18:40:49] INFO     2026-06-15 18:40:49: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 22/50 | Train Loss: 0.5129                   
+[06/15/26 18:45:30] INFO     2026-06-15 18:45:30: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 23/50 | Train Loss: 0.5127                   
+[06/15/26 18:50:18] INFO     2026-06-15 18:50:18: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 24/50 | Train Loss: 0.5109                   
+[06/15/26 18:54:57] INFO     2026-06-15 18:54:57: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 25/50 | Train Loss: 0.5082                   
+[06/15/26 18:59:49] INFO     2026-06-15 18:59:49: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 26/50 | Train Loss: 0.5079                   
+[06/15/26 19:04:30] INFO     2026-06-15 19:04:30: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 27/50 | Train Loss: 0.5056                   
+[06/15/26 19:09:26] INFO     2026-06-15 19:09:26: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 28/50 | Train Loss: 0.5039                   
+[06/15/26 19:14:05] INFO     2026-06-15 19:14:05: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 29/50 | Train Loss: 0.5033                   
+[06/15/26 19:18:55] INFO     2026-06-15 19:18:55: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 30/50 | Train Loss: 0.5016                   
+[06/15/26 19:23:37] INFO     2026-06-15 19:23:37: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 31/50 | Train Loss: 0.5003                   
+[06/15/26 19:28:25] INFO     2026-06-15 19:28:25: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 32/50 | Train Loss: 0.4998                   
+[06/15/26 19:33:14] INFO     2026-06-15 19:33:14: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 33/50 | Train Loss: 0.4992                   
+[06/15/26 19:37:57] INFO     2026-06-15 19:37:57: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 34/50 | Train Loss: 0.4970                   
+[06/15/26 19:42:45] INFO     2026-06-15 19:42:45: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 35/50 | Train Loss: 0.4948                   
+[06/15/26 19:47:30] INFO     2026-06-15 19:47:30: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 36/50 | Train Loss: 0.4940                   
+[06/15/26 19:52:23] INFO     2026-06-15 19:52:23: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 37/50 | Train Loss: 0.4940                   
+[06/15/26 19:57:08] INFO     2026-06-15 19:57:08: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 38/50 | Train Loss: 0.4903                   
+[06/15/26 20:02:02] INFO     2026-06-15 20:02:02: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 39/50 | Train Loss: 0.4923                   
+[06/15/26 20:06:42] INFO     2026-06-15 20:06:42: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 40/50 | Train Loss: 0.4900                   
+[06/15/26 20:11:33] INFO     2026-06-15 20:11:33: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 41/50 | Train Loss: 0.4882                   
+[06/15/26 20:16:13] INFO     2026-06-15 20:16:13: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 42/50 | Train Loss: 0.4887                   
+[06/15/26 20:20:59] INFO     2026-06-15 20:20:59: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 43/50 | Train Loss: 0.4872                   
+[06/15/26 20:25:37] INFO     2026-06-15 20:25:37: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 44/50 | Train Loss: 0.4845                   
+[06/15/26 20:30:26] INFO     2026-06-15 20:30:26: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 45/50 | Train Loss: 0.4843                   
+[06/15/26 20:35:11] INFO     2026-06-15 20:35:11: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 46/50 | Train Loss: 0.4852                   
+[06/15/26 20:39:59] INFO     2026-06-15 20:39:59: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 47/50 | Train Loss: 0.4855                   
+[06/15/26 20:44:49] INFO     2026-06-15 20:44:49: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 48/50 | Train Loss: 0.4838                   
+[06/15/26 20:49:43] INFO     2026-06-15 20:49:43: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 49/50 | Train Loss: 0.4818                   
+[06/15/26 20:54:30] INFO     2026-06-15 20:54:30: Fold 2 |     t2pmhc_gat.py:457
+                             Epoch 50/50 | Train Loss: 0.4809                   
+                    INFO     Saved final model.                   helpers.py:156
+                    INFO     Saved PAE scalers                    helpers.py:183
+[06/15/26 20:55:29] INFO     Fold 2 AUROC: 0.8348              t2pmhc_gat.py:465
+[06/15/26 20:55:34] INFO     ---- Fold 3/5 ----                t2pmhc_gat.py:413
+[06/15/26 21:03:25] INFO     2026-06-15 21:03:25: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 1/50 | Train Loss: 0.6072                    
+[06/15/26 21:07:08] INFO     2026-06-15 21:07:08: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 2/50 | Train Loss: 0.5723                    
+[06/15/26 21:11:04] INFO     2026-06-15 21:11:04: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 3/50 | Train Loss: 0.5649                    
+[06/15/26 21:14:52] INFO     2026-06-15 21:14:52: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 4/50 | Train Loss: 0.5581                    
+[06/15/26 21:18:49] INFO     2026-06-15 21:18:49: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 5/50 | Train Loss: 0.5533                    
+[06/15/26 21:22:40] INFO     2026-06-15 21:22:40: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 6/50 | Train Loss: 0.5488                    
+[06/15/26 21:26:32] INFO     2026-06-15 21:26:32: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 7/50 | Train Loss: 0.5451                    
+[06/15/26 21:30:22] INFO     2026-06-15 21:30:22: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 8/50 | Train Loss: 0.5418                    
+[06/15/26 21:34:12] INFO     2026-06-15 21:34:12: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 9/50 | Train Loss: 0.5382                    
+[06/15/26 21:38:07] INFO     2026-06-15 21:38:07: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 10/50 | Train Loss: 0.5349                   
+[06/15/26 21:42:01] INFO     2026-06-15 21:42:01: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 11/50 | Train Loss: 0.5334                   
+[06/15/26 21:45:54] INFO     2026-06-15 21:45:54: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 12/50 | Train Loss: 0.5307                   
+[06/15/26 21:49:49] INFO     2026-06-15 21:49:49: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 13/50 | Train Loss: 0.5296                   
+[06/15/26 21:53:36] INFO     2026-06-15 21:53:36: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 14/50 | Train Loss: 0.5262                   
+[06/15/26 21:57:19] INFO     2026-06-15 21:57:19: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 15/50 | Train Loss: 0.5253                   
+[06/15/26 22:01:01] INFO     2026-06-15 22:01:01: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 16/50 | Train Loss: 0.5232                   
+[06/15/26 22:04:48] INFO     2026-06-15 22:04:48: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 17/50 | Train Loss: 0.5202                   
+[06/15/26 22:08:31] INFO     2026-06-15 22:08:31: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 18/50 | Train Loss: 0.5200                   
+[06/15/26 22:12:28] INFO     2026-06-15 22:12:28: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 19/50 | Train Loss: 0.5178                   
+[06/15/26 22:16:11] INFO     2026-06-15 22:16:11: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 20/50 | Train Loss: 0.5172                   
+[06/15/26 22:19:54] INFO     2026-06-15 22:19:54: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 21/50 | Train Loss: 0.5168                   
+[06/15/26 22:23:36] INFO     2026-06-15 22:23:36: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 22/50 | Train Loss: 0.5145                   
+[06/15/26 22:27:21] INFO     2026-06-15 22:27:21: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 23/50 | Train Loss: 0.5134                   
+[06/15/26 22:31:07] INFO     2026-06-15 22:31:07: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 24/50 | Train Loss: 0.5109                   
+[06/15/26 22:34:27] INFO     2026-06-15 22:34:27: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 25/50 | Train Loss: 0.5112                   
+[06/15/26 22:37:53] INFO     2026-06-15 22:37:53: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 26/50 | Train Loss: 0.5097                   
+[06/15/26 22:41:16] INFO     2026-06-15 22:41:16: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 27/50 | Train Loss: 0.5089                   
+[06/15/26 22:44:39] INFO     2026-06-15 22:44:39: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 28/50 | Train Loss: 0.5065                   
+[06/15/26 22:48:04] INFO     2026-06-15 22:48:04: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 29/50 | Train Loss: 0.5062                   
+[06/15/26 22:51:30] INFO     2026-06-15 22:51:30: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 30/50 | Train Loss: 0.5042                   
+[06/15/26 22:54:58] INFO     2026-06-15 22:54:58: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 31/50 | Train Loss: 0.5021                   
+[06/15/26 22:58:21] INFO     2026-06-15 22:58:21: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 32/50 | Train Loss: 0.5002                   
+[06/15/26 23:01:43] INFO     2026-06-15 23:01:43: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 33/50 | Train Loss: 0.4996                   
+[06/15/26 23:05:04] INFO     2026-06-15 23:05:04: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 34/50 | Train Loss: 0.4997                   
+[06/15/26 23:08:20] INFO     2026-06-15 23:08:20: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 35/50 | Train Loss: 0.4998                   
+[06/15/26 23:11:18] INFO     2026-06-15 23:11:18: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 36/50 | Train Loss: 0.4973                   
+[06/15/26 23:14:17] INFO     2026-06-15 23:14:17: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 37/50 | Train Loss: 0.4963                   
+[06/15/26 23:17:17] INFO     2026-06-15 23:17:17: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 38/50 | Train Loss: 0.4968                   
+[06/15/26 23:20:15] INFO     2026-06-15 23:20:15: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 39/50 | Train Loss: 0.4959                   
+[06/15/26 23:23:12] INFO     2026-06-15 23:23:12: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 40/50 | Train Loss: 0.4938                   
+[06/15/26 23:26:11] INFO     2026-06-15 23:26:11: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 41/50 | Train Loss: 0.4909                   
+[06/15/26 23:29:10] INFO     2026-06-15 23:29:10: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 42/50 | Train Loss: 0.4911                   
+[06/15/26 23:32:07] INFO     2026-06-15 23:32:07: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 43/50 | Train Loss: 0.4909                   
+[06/15/26 23:35:05] INFO     2026-06-15 23:35:05: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 44/50 | Train Loss: 0.4906                   
+[06/15/26 23:38:01] INFO     2026-06-15 23:38:01: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 45/50 | Train Loss: 0.4891                   
+[06/15/26 23:41:03] INFO     2026-06-15 23:41:03: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 46/50 | Train Loss: 0.4867                   
+[06/15/26 23:44:00] INFO     2026-06-15 23:44:00: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 47/50 | Train Loss: 0.4880                   
+[06/15/26 23:46:56] INFO     2026-06-15 23:46:56: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 48/50 | Train Loss: 0.4867                   
+[06/15/26 23:49:55] INFO     2026-06-15 23:49:55: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 49/50 | Train Loss: 0.4840                   
+[06/15/26 23:52:55] INFO     2026-06-15 23:52:55: Fold 3 |     t2pmhc_gat.py:457
+                             Epoch 50/50 | Train Loss: 0.4861                   
+                    INFO     Saved final model.                   helpers.py:156
+                    INFO     Saved PAE scalers                    helpers.py:183
+[06/15/26 23:53:31] INFO     Fold 3 AUROC: 0.8179              t2pmhc_gat.py:465
+[06/15/26 23:53:35] INFO     ---- Fold 4/5 ----                t2pmhc_gat.py:413
+[06/15/26 23:59:00] INFO     2026-06-15 23:59:00: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 1/50 | Train Loss: 0.6127                    
+[06/16/26 00:01:57] INFO     2026-06-16 00:01:57: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 2/50 | Train Loss: 0.5796                    
+[06/16/26 00:04:57] INFO     2026-06-16 00:04:57: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 3/50 | Train Loss: 0.5666                    
+[06/16/26 00:07:56] INFO     2026-06-16 00:07:56: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 4/50 | Train Loss: 0.5576                    
+[06/16/26 00:10:55] INFO     2026-06-16 00:10:55: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 5/50 | Train Loss: 0.5522                    
+[06/16/26 00:13:53] INFO     2026-06-16 00:13:53: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 6/50 | Train Loss: 0.5465                    
+[06/16/26 00:16:52] INFO     2026-06-16 00:16:52: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 7/50 | Train Loss: 0.5435                    
+[06/16/26 00:19:51] INFO     2026-06-16 00:19:51: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 8/50 | Train Loss: 0.5402                    
+[06/16/26 00:22:48] INFO     2026-06-16 00:22:48: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 9/50 | Train Loss: 0.5365                    
+[06/16/26 00:25:45] INFO     2026-06-16 00:25:45: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 10/50 | Train Loss: 0.5336                   
+[06/16/26 00:28:43] INFO     2026-06-16 00:28:43: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 11/50 | Train Loss: 0.5332                   
+[06/16/26 00:31:41] INFO     2026-06-16 00:31:41: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 12/50 | Train Loss: 0.5302                   
+[06/16/26 00:34:40] INFO     2026-06-16 00:34:40: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 13/50 | Train Loss: 0.5276                   
+[06/16/26 00:37:40] INFO     2026-06-16 00:37:40: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 14/50 | Train Loss: 0.5257                   
+[06/16/26 00:40:37] INFO     2026-06-16 00:40:37: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 15/50 | Train Loss: 0.5237                   
+[06/16/26 00:43:36] INFO     2026-06-16 00:43:36: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 16/50 | Train Loss: 0.5213                   
+[06/16/26 00:46:35] INFO     2026-06-16 00:46:35: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 17/50 | Train Loss: 0.5216                   
+[06/16/26 00:49:34] INFO     2026-06-16 00:49:34: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 18/50 | Train Loss: 0.5178                   
+[06/16/26 00:52:32] INFO     2026-06-16 00:52:32: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 19/50 | Train Loss: 0.5163                   
+[06/16/26 00:55:32] INFO     2026-06-16 00:55:32: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 20/50 | Train Loss: 0.5138                   
+[06/16/26 00:58:30] INFO     2026-06-16 00:58:30: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 21/50 | Train Loss: 0.5121                   
+[06/16/26 01:01:32] INFO     2026-06-16 01:01:32: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 22/50 | Train Loss: 0.5110                   
+[06/16/26 01:04:32] INFO     2026-06-16 01:04:32: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 23/50 | Train Loss: 0.5099                   
+[06/16/26 01:07:31] INFO     2026-06-16 01:07:31: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 24/50 | Train Loss: 0.5082                   
+[06/16/26 01:10:28] INFO     2026-06-16 01:10:28: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 25/50 | Train Loss: 0.5072                   
+[06/16/26 01:13:27] INFO     2026-06-16 01:13:27: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 26/50 | Train Loss: 0.5037                   
+[06/16/26 01:16:25] INFO     2026-06-16 01:16:25: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 27/50 | Train Loss: 0.5055                   
+[06/16/26 01:19:25] INFO     2026-06-16 01:19:25: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 28/50 | Train Loss: 0.5044                   
+[06/16/26 01:22:23] INFO     2026-06-16 01:22:23: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 29/50 | Train Loss: 0.5014                   
+[06/16/26 01:25:22] INFO     2026-06-16 01:25:22: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 30/50 | Train Loss: 0.4995                   
+[06/16/26 01:28:20] INFO     2026-06-16 01:28:20: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 31/50 | Train Loss: 0.4972                   
+[06/16/26 01:31:17] INFO     2026-06-16 01:31:17: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 32/50 | Train Loss: 0.4969                   
+[06/16/26 01:34:18] INFO     2026-06-16 01:34:18: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 33/50 | Train Loss: 0.4957                   
+[06/16/26 01:37:17] INFO     2026-06-16 01:37:17: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 34/50 | Train Loss: 0.4961                   
+[06/16/26 01:40:16] INFO     2026-06-16 01:40:16: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 35/50 | Train Loss: 0.4936                   
+[06/16/26 01:43:13] INFO     2026-06-16 01:43:13: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 36/50 | Train Loss: 0.4926                   
+[06/16/26 01:46:11] INFO     2026-06-16 01:46:11: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 37/50 | Train Loss: 0.4914                   
+[06/16/26 01:49:10] INFO     2026-06-16 01:49:10: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 38/50 | Train Loss: 0.4907                   
+[06/16/26 01:52:08] INFO     2026-06-16 01:52:08: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 39/50 | Train Loss: 0.4887                   
+[06/16/26 01:55:07] INFO     2026-06-16 01:55:07: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 40/50 | Train Loss: 0.4897                   
+[06/16/26 01:58:07] INFO     2026-06-16 01:58:07: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 41/50 | Train Loss: 0.4874                   
+[06/16/26 02:01:03] INFO     2026-06-16 02:01:03: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 42/50 | Train Loss: 0.4850                   
+[06/16/26 02:04:02] INFO     2026-06-16 02:04:02: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 43/50 | Train Loss: 0.4858                   
+[06/16/26 02:07:01] INFO     2026-06-16 02:07:01: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 44/50 | Train Loss: 0.4840                   
+[06/16/26 02:10:01] INFO     2026-06-16 02:10:01: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 45/50 | Train Loss: 0.4836                   
+[06/16/26 02:12:58] INFO     2026-06-16 02:12:58: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 46/50 | Train Loss: 0.4818                   
+[06/16/26 02:15:55] INFO     2026-06-16 02:15:55: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 47/50 | Train Loss: 0.4805                   
+[06/16/26 02:18:53] INFO     2026-06-16 02:18:53: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 48/50 | Train Loss: 0.4818                   
+[06/16/26 02:21:50] INFO     2026-06-16 02:21:50: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 49/50 | Train Loss: 0.4812                   
+[06/16/26 02:24:48] INFO     2026-06-16 02:24:48: Fold 4 |     t2pmhc_gat.py:457
+                             Epoch 50/50 | Train Loss: 0.4785                   
+[06/16/26 02:24:49] INFO     Saved final model.                   helpers.py:156
+                    INFO     Saved PAE scalers                    helpers.py:183
+[06/16/26 02:25:24] INFO     Fold 4 AUROC: 0.8267              t2pmhc_gat.py:465
+[06/16/26 02:25:28] INFO     ---- Fold 5/5 ----                t2pmhc_gat.py:413
+[06/16/26 02:30:56] INFO     2026-06-16 02:30:56: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 1/50 | Train Loss: 0.6043                    
+[06/16/26 02:33:54] INFO     2026-06-16 02:33:54: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 2/50 | Train Loss: 0.5729                    
+[06/16/26 02:36:52] INFO     2026-06-16 02:36:52: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 3/50 | Train Loss: 0.5602                    
+[06/16/26 02:39:51] INFO     2026-06-16 02:39:51: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 4/50 | Train Loss: 0.5529                    
+[06/16/26 02:42:49] INFO     2026-06-16 02:42:49: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 5/50 | Train Loss: 0.5475                    
+[06/16/26 02:45:49] INFO     2026-06-16 02:45:49: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 6/50 | Train Loss: 0.5420                    
+[06/16/26 02:48:49] INFO     2026-06-16 02:48:49: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 7/50 | Train Loss: 0.5387                    
+[06/16/26 02:51:46] INFO     2026-06-16 02:51:46: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 8/50 | Train Loss: 0.5360                    
+[06/16/26 02:54:44] INFO     2026-06-16 02:54:44: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 9/50 | Train Loss: 0.5329                    
+[06/16/26 02:57:42] INFO     2026-06-16 02:57:42: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 10/50 | Train Loss: 0.5309                   
+[06/16/26 03:00:38] INFO     2026-06-16 03:00:38: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 11/50 | Train Loss: 0.5289                   
+[06/16/26 03:03:35] INFO     2026-06-16 03:03:35: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 12/50 | Train Loss: 0.5261                   
+[06/16/26 03:06:33] INFO     2026-06-16 03:06:33: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 13/50 | Train Loss: 0.5245                   
+[06/16/26 03:09:32] INFO     2026-06-16 03:09:32: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 14/50 | Train Loss: 0.5221                   
+[06/16/26 03:12:29] INFO     2026-06-16 03:12:29: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 15/50 | Train Loss: 0.5192                   
+[06/16/26 03:15:25] INFO     2026-06-16 03:15:25: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 16/50 | Train Loss: 0.5179                   
+[06/16/26 03:18:23] INFO     2026-06-16 03:18:23: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 17/50 | Train Loss: 0.5160                   
+[06/16/26 03:21:19] INFO     2026-06-16 03:21:19: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 18/50 | Train Loss: 0.5145                   
+[06/16/26 03:24:18] INFO     2026-06-16 03:24:18: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 19/50 | Train Loss: 0.5145                   
+[06/16/26 03:27:18] INFO     2026-06-16 03:27:18: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 20/50 | Train Loss: 0.5123                   
+[06/16/26 03:30:16] INFO     2026-06-16 03:30:16: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 21/50 | Train Loss: 0.5121                   
+[06/16/26 03:33:13] INFO     2026-06-16 03:33:13: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 22/50 | Train Loss: 0.5079                   
+[06/16/26 03:36:10] INFO     2026-06-16 03:36:10: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 23/50 | Train Loss: 0.5082                   
+[06/16/26 03:39:08] INFO     2026-06-16 03:39:08: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 24/50 | Train Loss: 0.5073                   
+[06/16/26 03:42:04] INFO     2026-06-16 03:42:04: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 25/50 | Train Loss: 0.5059                   
+[06/16/26 03:45:02] INFO     2026-06-16 03:45:02: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 26/50 | Train Loss: 0.5052                   
+[06/16/26 03:47:57] INFO     2026-06-16 03:47:57: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 27/50 | Train Loss: 0.5040                   
+[06/16/26 03:50:53] INFO     2026-06-16 03:50:53: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 28/50 | Train Loss: 0.5019                   
+[06/16/26 03:53:52] INFO     2026-06-16 03:53:52: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 29/50 | Train Loss: 0.5018                   
+[06/16/26 03:56:52] INFO     2026-06-16 03:56:52: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 30/50 | Train Loss: 0.5003                   
+[06/16/26 03:59:53] INFO     2026-06-16 03:59:53: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 31/50 | Train Loss: 0.4989                   
+[06/16/26 04:02:51] INFO     2026-06-16 04:02:51: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 32/50 | Train Loss: 0.4980                   
+[06/16/26 04:05:50] INFO     2026-06-16 04:05:50: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 33/50 | Train Loss: 0.4968                   
+[06/16/26 04:08:50] INFO     2026-06-16 04:08:50: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 34/50 | Train Loss: 0.4958                   
+[06/16/26 04:11:48] INFO     2026-06-16 04:11:48: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 35/50 | Train Loss: 0.4945                   
+[06/16/26 04:14:48] INFO     2026-06-16 04:14:48: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 36/50 | Train Loss: 0.4939                   
+[06/16/26 04:17:47] INFO     2026-06-16 04:17:47: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 37/50 | Train Loss: 0.4951                   
+[06/16/26 04:20:48] INFO     2026-06-16 04:20:48: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 38/50 | Train Loss: 0.4934                   
+[06/16/26 04:23:47] INFO     2026-06-16 04:23:47: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 39/50 | Train Loss: 0.4904                   
+[06/16/26 04:26:48] INFO     2026-06-16 04:26:48: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 40/50 | Train Loss: 0.4912                   
+[06/16/26 04:29:47] INFO     2026-06-16 04:29:47: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 41/50 | Train Loss: 0.4906                   
+[06/16/26 04:32:45] INFO     2026-06-16 04:32:45: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 42/50 | Train Loss: 0.4883                   
+[06/16/26 04:35:43] INFO     2026-06-16 04:35:43: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 43/50 | Train Loss: 0.4871                   
+[06/16/26 04:38:40] INFO     2026-06-16 04:38:40: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 44/50 | Train Loss: 0.4876                   
+[06/16/26 04:41:38] INFO     2026-06-16 04:41:38: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 45/50 | Train Loss: 0.4865                   
+[06/16/26 04:44:39] INFO     2026-06-16 04:44:39: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 46/50 | Train Loss: 0.4868                   
+[06/16/26 04:47:36] INFO     2026-06-16 04:47:36: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 47/50 | Train Loss: 0.4852                   
+[06/16/26 04:50:36] INFO     2026-06-16 04:50:36: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 48/50 | Train Loss: 0.4836                   
+[06/16/26 04:53:35] INFO     2026-06-16 04:53:35: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 49/50 | Train Loss: 0.4825                   
+[06/16/26 04:56:34] INFO     2026-06-16 04:56:34: Fold 5 |     t2pmhc_gat.py:457
+                             Epoch 50/50 | Train Loss: 0.4823                   
+                    INFO     Saved final model.                   helpers.py:156
+                    INFO     Saved PAE scalers                    helpers.py:183
+[06/16/26 04:57:11] INFO     Fold 5 AUROC: 0.8258              t2pmhc_gat.py:465
+[06/16/26 04:57:15] INFO     5-fold CV AUROC: 0.8280 ± 0.0071  t2pmhc_gat.py:486
+                    INFO     Saved CV AUROC results to         t2pmhc_gat.py:487
+                             /cluster/home/dego/models/t2pmhc/                  
+                             models/dist8_gat_cv/dist8_cv_auro                  
+                             c.csv                                              
+[06/16/26 04:57:16] INFO     Saved split samplesheet to        t2pmhc_gat.py:488
+                             /cluster/home/dego/models/t2pmhc/                  
+                             models/dist8_gat_cv/dist8_cv_spli                  
+                             ts.tsv                                             
+                    INFO     5-fold cross-validation complete. t2pmhc_gat.py:490
+[06/16/26 04:57:17] INFO     .................. done             __main__.py:187
+                             ..................                                 

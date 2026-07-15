@@ -1,0 +1,584 @@
+-------------------------------------------
+ _   ____                  _          
+
+| |_|___ \ _ __  _ __ ___ | |__   ___
+
+| __| __) | '_ \| '_ ` _ \| '_ \ / __|
+
+| |_ / __/| |_) | | | | | | | | | (__ 
+
+ \__|_____| .__/|_| |_| |_|_| |_|\___|
+
+          |_|                         
+-------------------------------------------
+[06/24/26 11:03:24] INFO     ......... Training t2pmhc-gcn       __main__.py:384
+                             (5-fold peptide-grouped CV)                        
+                             .........                                          
+                    INFO     Training t2pmhc-GCN (5-fold       t2pmhc_gcn.py:579
+                             peptide-grouped CV)                                
+                    INFO                                       t2pmhc_gcn.py:580
+                             Name: gcn_with_pae                                 
+                             Saved Graphs:                                      
+                             /mnt/lustre/groups/nahnsen/nahpo7                  
+                             75/workdir/projects/tcrpha_pred/t                  
+                             2pmhc/test_graphs/t2pmhc_gcn_grap                  
+                             hs.pt                                              
+                             Ablate PAE: False                                  
+                                                                                
+                    INFO     Reading dataset                   t2pmhc_gcn.py:581
+                    INFO     seed: 42                           t2pmhc_gcn.py:43
+                    INFO     Loading Graphs from pt file        t2pmhc_gcn.py:74
+[06/24/26 11:04:02] INFO     Loaded 79108 graphs               t2pmhc_gcn.py:589
+                    INFO     Training on cuda                  t2pmhc_gcn.py:602
+[06/24/26 11:04:03] INFO     Fold 1: 21282 samples, 1 peptides t2pmhc_gcn.py:626
+                    INFO     Fold 2: 14443 samples, 3 peptides t2pmhc_gcn.py:626
+                    INFO     Fold 3: 14462 samples, 23         t2pmhc_gcn.py:626
+                             peptides                                           
+                    INFO     Fold 4: 14459 samples, 25         t2pmhc_gcn.py:626
+                             peptides                                           
+                    INFO     Fold 5: 14462 samples, 25         t2pmhc_gcn.py:626
+                             peptides                                           
+                    INFO     ---- Fold 1/5 ----                t2pmhc_gcn.py:635
+[06/24/26 11:06:47] INFO     2026-06-24 11:06:47: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 1/50 | Train Loss: 0.6426                    
+[06/24/26 11:08:08] INFO     2026-06-24 11:08:08: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 2/50 | Train Loss: 0.6164                    
+[06/24/26 11:09:30] INFO     2026-06-24 11:09:30: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 3/50 | Train Loss: 0.6065                    
+[06/24/26 11:10:55] INFO     2026-06-24 11:10:55: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 4/50 | Train Loss: 0.6019                    
+[06/24/26 11:12:23] INFO     2026-06-24 11:12:23: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 5/50 | Train Loss: 0.5968                    
+[06/24/26 11:13:49] INFO     2026-06-24 11:13:49: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 6/50 | Train Loss: 0.5942                    
+[06/24/26 11:15:14] INFO     2026-06-24 11:15:14: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 7/50 | Train Loss: 0.5920                    
+[06/24/26 11:16:41] INFO     2026-06-24 11:16:41: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 8/50 | Train Loss: 0.5875                    
+[06/24/26 11:18:06] INFO     2026-06-24 11:18:06: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 9/50 | Train Loss: 0.5869                    
+[06/24/26 11:19:31] INFO     2026-06-24 11:19:31: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 10/50 | Train Loss: 0.5846                   
+[06/24/26 11:20:54] INFO     2026-06-24 11:20:54: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 11/50 | Train Loss: 0.5807                   
+[06/24/26 11:22:18] INFO     2026-06-24 11:22:18: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 12/50 | Train Loss: 0.5785                   
+[06/24/26 11:23:38] INFO     2026-06-24 11:23:38: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 13/50 | Train Loss: 0.5743                   
+[06/24/26 11:25:03] INFO     2026-06-24 11:25:03: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 14/50 | Train Loss: 0.5736                   
+[06/24/26 11:26:26] INFO     2026-06-24 11:26:26: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 15/50 | Train Loss: 0.5717                   
+[06/24/26 11:27:50] INFO     2026-06-24 11:27:50: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 16/50 | Train Loss: 0.5694                   
+[06/24/26 11:29:14] INFO     2026-06-24 11:29:14: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 17/50 | Train Loss: 0.5666                   
+[06/24/26 11:30:39] INFO     2026-06-24 11:30:39: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 18/50 | Train Loss: 0.5641                   
+[06/24/26 11:32:04] INFO     2026-06-24 11:32:04: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 19/50 | Train Loss: 0.5641                   
+[06/24/26 11:33:29] INFO     2026-06-24 11:33:29: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 20/50 | Train Loss: 0.5585                   
+[06/24/26 11:34:54] INFO     2026-06-24 11:34:54: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 21/50 | Train Loss: 0.5573                   
+[06/24/26 11:36:14] INFO     2026-06-24 11:36:14: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 22/50 | Train Loss: 0.5542                   
+[06/24/26 11:37:31] INFO     2026-06-24 11:37:31: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 23/50 | Train Loss: 0.5537                   
+[06/24/26 11:38:50] INFO     2026-06-24 11:38:50: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 24/50 | Train Loss: 0.5521                   
+[06/24/26 11:40:08] INFO     2026-06-24 11:40:08: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 25/50 | Train Loss: 0.5511                   
+[06/24/26 11:41:31] INFO     2026-06-24 11:41:31: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 26/50 | Train Loss: 0.5502                   
+[06/24/26 11:42:56] INFO     2026-06-24 11:42:56: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 27/50 | Train Loss: 0.5475                   
+[06/24/26 11:44:20] INFO     2026-06-24 11:44:20: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 28/50 | Train Loss: 0.5452                   
+[06/24/26 11:45:44] INFO     2026-06-24 11:45:44: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 29/50 | Train Loss: 0.5455                   
+[06/24/26 11:47:09] INFO     2026-06-24 11:47:09: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 30/50 | Train Loss: 0.5425                   
+[06/24/26 11:48:35] INFO     2026-06-24 11:48:35: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 31/50 | Train Loss: 0.5413                   
+[06/24/26 11:49:56] INFO     2026-06-24 11:49:56: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 32/50 | Train Loss: 0.5387                   
+[06/24/26 11:51:17] INFO     2026-06-24 11:51:17: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 33/50 | Train Loss: 0.5406                   
+[06/24/26 11:52:40] INFO     2026-06-24 11:52:40: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 34/50 | Train Loss: 0.5367                   
+[06/24/26 11:54:02] INFO     2026-06-24 11:54:02: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 35/50 | Train Loss: 0.5358                   
+[06/24/26 11:55:27] INFO     2026-06-24 11:55:27: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 36/50 | Train Loss: 0.5352                   
+[06/24/26 11:56:52] INFO     2026-06-24 11:56:52: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 37/50 | Train Loss: 0.5334                   
+[06/24/26 11:58:17] INFO     2026-06-24 11:58:17: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 38/50 | Train Loss: 0.5331                   
+[06/24/26 11:59:43] INFO     2026-06-24 11:59:43: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 39/50 | Train Loss: 0.5315                   
+[06/24/26 12:01:07] INFO     2026-06-24 12:01:07: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 40/50 | Train Loss: 0.5293                   
+[06/24/26 12:02:28] INFO     2026-06-24 12:02:28: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 41/50 | Train Loss: 0.5278                   
+[06/24/26 12:03:47] INFO     2026-06-24 12:03:47: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 42/50 | Train Loss: 0.5290                   
+[06/24/26 12:05:11] INFO     2026-06-24 12:05:11: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 43/50 | Train Loss: 0.5291                   
+[06/24/26 12:06:32] INFO     2026-06-24 12:06:32: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 44/50 | Train Loss: 0.5260                   
+[06/24/26 12:07:52] INFO     2026-06-24 12:07:52: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 45/50 | Train Loss: 0.5228                   
+[06/24/26 12:09:12] INFO     2026-06-24 12:09:12: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 46/50 | Train Loss: 0.5247                   
+[06/24/26 12:10:31] INFO     2026-06-24 12:10:31: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 47/50 | Train Loss: 0.5235                   
+[06/24/26 12:11:52] INFO     2026-06-24 12:11:52: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 48/50 | Train Loss: 0.5209                   
+[06/24/26 12:13:13] INFO     2026-06-24 12:13:13: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 49/50 | Train Loss: 0.5206                   
+[06/24/26 12:14:33] INFO     2026-06-24 12:14:33: Fold 1 |     t2pmhc_gcn.py:692
+                             Epoch 50/50 | Train Loss: 0.5195                   
+                    INFO     Saved final model.                   helpers.py:205
+                    INFO     Saved PAE scalers                    helpers.py:232
+[06/24/26 12:15:00] INFO     Fold 1 AUROC: 0.5694              t2pmhc_gcn.py:712
+[06/24/26 12:15:03] INFO     ---- Fold 2/5 ----                t2pmhc_gcn.py:635
+[06/24/26 12:17:51] INFO     2026-06-24 12:17:51: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 1/50 | Train Loss: 0.6196                    
+[06/24/26 12:19:27] INFO     2026-06-24 12:19:27: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 2/50 | Train Loss: 0.5993                    
+[06/24/26 12:20:59] INFO     2026-06-24 12:20:59: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 3/50 | Train Loss: 0.5918                    
+[06/24/26 12:22:27] INFO     2026-06-24 12:22:27: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 4/50 | Train Loss: 0.5868                    
+[06/24/26 12:23:56] INFO     2026-06-24 12:23:56: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 5/50 | Train Loss: 0.5839                    
+[06/24/26 12:25:27] INFO     2026-06-24 12:25:27: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 6/50 | Train Loss: 0.5794                    
+[06/24/26 12:26:58] INFO     2026-06-24 12:26:58: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 7/50 | Train Loss: 0.5771                    
+[06/24/26 12:28:32] INFO     2026-06-24 12:28:32: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 8/50 | Train Loss: 0.5748                    
+[06/24/26 12:30:05] INFO     2026-06-24 12:30:05: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 9/50 | Train Loss: 0.5721                    
+[06/24/26 12:31:41] INFO     2026-06-24 12:31:41: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 10/50 | Train Loss: 0.5717                   
+[06/24/26 12:33:16] INFO     2026-06-24 12:33:16: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 11/50 | Train Loss: 0.5683                   
+[06/24/26 12:34:49] INFO     2026-06-24 12:34:49: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 12/50 | Train Loss: 0.5664                   
+[06/24/26 12:36:22] INFO     2026-06-24 12:36:22: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 13/50 | Train Loss: 0.5638                   
+[06/24/26 12:37:55] INFO     2026-06-24 12:37:55: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 14/50 | Train Loss: 0.5633                   
+[06/24/26 12:39:26] INFO     2026-06-24 12:39:26: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 15/50 | Train Loss: 0.5610                   
+[06/24/26 12:40:55] INFO     2026-06-24 12:40:55: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 16/50 | Train Loss: 0.5597                   
+[06/24/26 12:42:26] INFO     2026-06-24 12:42:26: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 17/50 | Train Loss: 0.5569                   
+[06/24/26 12:43:58] INFO     2026-06-24 12:43:58: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 18/50 | Train Loss: 0.5558                   
+[06/24/26 12:45:30] INFO     2026-06-24 12:45:30: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 19/50 | Train Loss: 0.5527                   
+[06/24/26 12:47:04] INFO     2026-06-24 12:47:04: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 20/50 | Train Loss: 0.5531                   
+[06/24/26 12:48:37] INFO     2026-06-24 12:48:37: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 21/50 | Train Loss: 0.5504                   
+[06/24/26 12:50:10] INFO     2026-06-24 12:50:10: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 22/50 | Train Loss: 0.5501                   
+[06/24/26 12:51:43] INFO     2026-06-24 12:51:43: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 23/50 | Train Loss: 0.5492                   
+[06/24/26 12:53:18] INFO     2026-06-24 12:53:18: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 24/50 | Train Loss: 0.5476                   
+[06/24/26 12:54:51] INFO     2026-06-24 12:54:51: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 25/50 | Train Loss: 0.5478                   
+[06/24/26 12:56:25] INFO     2026-06-24 12:56:25: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 26/50 | Train Loss: 0.5460                   
+[06/24/26 12:57:58] INFO     2026-06-24 12:57:58: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 27/50 | Train Loss: 0.5458                   
+[06/24/26 12:59:30] INFO     2026-06-24 12:59:30: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 28/50 | Train Loss: 0.5422                   
+[06/24/26 13:01:04] INFO     2026-06-24 13:01:04: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 29/50 | Train Loss: 0.5413                   
+[06/24/26 13:02:37] INFO     2026-06-24 13:02:37: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 30/50 | Train Loss: 0.5403                   
+[06/24/26 13:04:09] INFO     2026-06-24 13:04:09: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 31/50 | Train Loss: 0.5399                   
+[06/24/26 13:05:42] INFO     2026-06-24 13:05:42: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 32/50 | Train Loss: 0.5393                   
+[06/24/26 13:07:17] INFO     2026-06-24 13:07:17: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 33/50 | Train Loss: 0.5372                   
+[06/24/26 13:08:51] INFO     2026-06-24 13:08:51: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 34/50 | Train Loss: 0.5362                   
+[06/24/26 13:10:26] INFO     2026-06-24 13:10:26: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 35/50 | Train Loss: 0.5354                   
+[06/24/26 13:11:57] INFO     2026-06-24 13:11:57: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 36/50 | Train Loss: 0.5350                   
+[06/24/26 13:13:29] INFO     2026-06-24 13:13:29: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 37/50 | Train Loss: 0.5341                   
+[06/24/26 13:15:02] INFO     2026-06-24 13:15:02: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 38/50 | Train Loss: 0.5319                   
+[06/24/26 13:16:37] INFO     2026-06-24 13:16:37: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 39/50 | Train Loss: 0.5320                   
+[06/24/26 13:18:13] INFO     2026-06-24 13:18:13: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 40/50 | Train Loss: 0.5314                   
+[06/24/26 13:19:46] INFO     2026-06-24 13:19:46: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 41/50 | Train Loss: 0.5287                   
+[06/24/26 13:21:19] INFO     2026-06-24 13:21:19: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 42/50 | Train Loss: 0.5291                   
+[06/24/26 13:22:51] INFO     2026-06-24 13:22:51: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 43/50 | Train Loss: 0.5285                   
+[06/24/26 13:24:23] INFO     2026-06-24 13:24:23: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 44/50 | Train Loss: 0.5275                   
+[06/24/26 13:25:57] INFO     2026-06-24 13:25:57: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 45/50 | Train Loss: 0.5243                   
+[06/24/26 13:27:31] INFO     2026-06-24 13:27:31: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 46/50 | Train Loss: 0.5264                   
+[06/24/26 13:29:02] INFO     2026-06-24 13:29:02: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 47/50 | Train Loss: 0.5263                   
+[06/24/26 13:30:31] INFO     2026-06-24 13:30:31: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 48/50 | Train Loss: 0.5241                   
+[06/24/26 13:32:01] INFO     2026-06-24 13:32:01: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 49/50 | Train Loss: 0.5228                   
+[06/24/26 13:33:33] INFO     2026-06-24 13:33:33: Fold 2 |     t2pmhc_gcn.py:692
+                             Epoch 50/50 | Train Loss: 0.5235                   
+                    INFO     Saved final model.                   helpers.py:205
+                    INFO     Saved PAE scalers                    helpers.py:232
+[06/24/26 13:33:52] INFO     Fold 2 AUROC: 0.2475              t2pmhc_gcn.py:712
+[06/24/26 13:33:55] INFO     ---- Fold 3/5 ----                t2pmhc_gcn.py:635
+[06/24/26 13:36:40] INFO     2026-06-24 13:36:40: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 1/50 | Train Loss: 0.6048                    
+[06/24/26 13:38:17] INFO     2026-06-24 13:38:17: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 2/50 | Train Loss: 0.5742                    
+[06/24/26 13:39:54] INFO     2026-06-24 13:39:54: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 3/50 | Train Loss: 0.5597                    
+[06/24/26 13:41:31] INFO     2026-06-24 13:41:31: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 4/50 | Train Loss: 0.5526                    
+[06/24/26 13:43:08] INFO     2026-06-24 13:43:08: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 5/50 | Train Loss: 0.5467                    
+[06/24/26 13:44:44] INFO     2026-06-24 13:44:44: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 6/50 | Train Loss: 0.5423                    
+[06/24/26 13:46:28] INFO     2026-06-24 13:46:28: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 7/50 | Train Loss: 0.5391                    
+[06/24/26 13:48:03] INFO     2026-06-24 13:48:03: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 8/50 | Train Loss: 0.5356                    
+[06/24/26 13:49:37] INFO     2026-06-24 13:49:37: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 9/50 | Train Loss: 0.5322                    
+[06/24/26 13:51:13] INFO     2026-06-24 13:51:13: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 10/50 | Train Loss: 0.5294                   
+[06/24/26 13:52:45] INFO     2026-06-24 13:52:45: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 11/50 | Train Loss: 0.5272                   
+[06/24/26 13:54:25] INFO     2026-06-24 13:54:25: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 12/50 | Train Loss: 0.5258                   
+[06/24/26 13:55:58] INFO     2026-06-24 13:55:58: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 13/50 | Train Loss: 0.5251                   
+[06/24/26 13:57:31] INFO     2026-06-24 13:57:31: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 14/50 | Train Loss: 0.5216                   
+[06/24/26 13:59:06] INFO     2026-06-24 13:59:06: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 15/50 | Train Loss: 0.5197                   
+[06/24/26 14:00:41] INFO     2026-06-24 14:00:41: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 16/50 | Train Loss: 0.5198                   
+[06/24/26 14:02:16] INFO     2026-06-24 14:02:16: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 17/50 | Train Loss: 0.5171                   
+[06/24/26 14:03:49] INFO     2026-06-24 14:03:49: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 18/50 | Train Loss: 0.5151                   
+[06/24/26 14:05:22] INFO     2026-06-24 14:05:22: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 19/50 | Train Loss: 0.5131                   
+[06/24/26 14:06:52] INFO     2026-06-24 14:06:52: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 20/50 | Train Loss: 0.5122                   
+[06/24/26 14:08:22] INFO     2026-06-24 14:08:22: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 21/50 | Train Loss: 0.5100                   
+[06/24/26 14:09:52] INFO     2026-06-24 14:09:52: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 22/50 | Train Loss: 0.5104                   
+[06/24/26 14:11:24] INFO     2026-06-24 14:11:24: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 23/50 | Train Loss: 0.5091                   
+[06/24/26 14:12:55] INFO     2026-06-24 14:12:55: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 24/50 | Train Loss: 0.5075                   
+[06/24/26 14:14:25] INFO     2026-06-24 14:14:25: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 25/50 | Train Loss: 0.5058                   
+[06/24/26 14:15:55] INFO     2026-06-24 14:15:55: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 26/50 | Train Loss: 0.5056                   
+[06/24/26 14:17:29] INFO     2026-06-24 14:17:29: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 27/50 | Train Loss: 0.5036                   
+[06/24/26 14:19:03] INFO     2026-06-24 14:19:03: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 28/50 | Train Loss: 0.5013                   
+[06/24/26 14:20:36] INFO     2026-06-24 14:20:36: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 29/50 | Train Loss: 0.5011                   
+[06/24/26 14:22:09] INFO     2026-06-24 14:22:09: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 30/50 | Train Loss: 0.4993                   
+[06/24/26 14:23:41] INFO     2026-06-24 14:23:41: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 31/50 | Train Loss: 0.4999                   
+[06/24/26 14:25:16] INFO     2026-06-24 14:25:16: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 32/50 | Train Loss: 0.4974                   
+[06/24/26 14:26:49] INFO     2026-06-24 14:26:49: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 33/50 | Train Loss: 0.4975                   
+[06/24/26 14:28:22] INFO     2026-06-24 14:28:22: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 34/50 | Train Loss: 0.4957                   
+[06/24/26 14:29:55] INFO     2026-06-24 14:29:55: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 35/50 | Train Loss: 0.4957                   
+[06/24/26 14:31:26] INFO     2026-06-24 14:31:26: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 36/50 | Train Loss: 0.4952                   
+[06/24/26 14:32:58] INFO     2026-06-24 14:32:58: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 37/50 | Train Loss: 0.4929                   
+[06/24/26 14:34:32] INFO     2026-06-24 14:34:32: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 38/50 | Train Loss: 0.4934                   
+[06/24/26 14:36:05] INFO     2026-06-24 14:36:05: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 39/50 | Train Loss: 0.4915                   
+[06/24/26 14:37:39] INFO     2026-06-24 14:37:39: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 40/50 | Train Loss: 0.4899                   
+[06/24/26 14:39:11] INFO     2026-06-24 14:39:11: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 41/50 | Train Loss: 0.4888                   
+[06/24/26 14:40:45] INFO     2026-06-24 14:40:45: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 42/50 | Train Loss: 0.4888                   
+[06/24/26 14:42:17] INFO     2026-06-24 14:42:17: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 43/50 | Train Loss: 0.4899                   
+[06/24/26 14:43:49] INFO     2026-06-24 14:43:49: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 44/50 | Train Loss: 0.4875                   
+[06/24/26 14:45:19] INFO     2026-06-24 14:45:19: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 45/50 | Train Loss: 0.4865                   
+[06/24/26 14:46:52] INFO     2026-06-24 14:46:52: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 46/50 | Train Loss: 0.4870                   
+[06/24/26 14:48:25] INFO     2026-06-24 14:48:25: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 47/50 | Train Loss: 0.4855                   
+[06/24/26 14:49:56] INFO     2026-06-24 14:49:56: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 48/50 | Train Loss: 0.4864                   
+[06/24/26 14:51:28] INFO     2026-06-24 14:51:28: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 49/50 | Train Loss: 0.4834                   
+[06/24/26 14:52:59] INFO     2026-06-24 14:52:59: Fold 3 |     t2pmhc_gcn.py:692
+                             Epoch 50/50 | Train Loss: 0.4828                   
+                    INFO     Saved final model.                   helpers.py:205
+                    INFO     Saved PAE scalers                    helpers.py:232
+[06/24/26 14:53:20] INFO     Fold 3 AUROC: 0.5424              t2pmhc_gcn.py:712
+[06/24/26 14:53:23] INFO     ---- Fold 4/5 ----                t2pmhc_gcn.py:635
+[06/24/26 14:56:08] INFO     2026-06-24 14:56:08: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 1/50 | Train Loss: 0.6002                    
+[06/24/26 14:57:40] INFO     2026-06-24 14:57:40: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 2/50 | Train Loss: 0.5691                    
+[06/24/26 14:59:12] INFO     2026-06-24 14:59:12: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 3/50 | Train Loss: 0.5591                    
+[06/24/26 15:00:44] INFO     2026-06-24 15:00:44: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 4/50 | Train Loss: 0.5524                    
+[06/24/26 15:02:15] INFO     2026-06-24 15:02:15: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 5/50 | Train Loss: 0.5466                    
+[06/24/26 15:03:47] INFO     2026-06-24 15:03:47: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 6/50 | Train Loss: 0.5428                    
+[06/24/26 15:05:20] INFO     2026-06-24 15:05:20: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 7/50 | Train Loss: 0.5394                    
+[06/24/26 15:06:52] INFO     2026-06-24 15:06:52: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 8/50 | Train Loss: 0.5364                    
+[06/24/26 15:08:24] INFO     2026-06-24 15:08:24: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 9/50 | Train Loss: 0.5330                    
+[06/24/26 15:09:55] INFO     2026-06-24 15:09:55: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 10/50 | Train Loss: 0.5330                   
+[06/24/26 15:11:26] INFO     2026-06-24 15:11:26: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 11/50 | Train Loss: 0.5310                   
+[06/24/26 15:12:55] INFO     2026-06-24 15:12:55: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 12/50 | Train Loss: 0.5295                   
+[06/24/26 15:14:25] INFO     2026-06-24 15:14:25: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 13/50 | Train Loss: 0.5277                   
+[06/24/26 15:15:54] INFO     2026-06-24 15:15:54: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 14/50 | Train Loss: 0.5245                   
+[06/24/26 15:17:25] INFO     2026-06-24 15:17:25: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 15/50 | Train Loss: 0.5232                   
+[06/24/26 15:18:55] INFO     2026-06-24 15:18:55: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 16/50 | Train Loss: 0.5222                   
+[06/24/26 15:20:24] INFO     2026-06-24 15:20:24: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 17/50 | Train Loss: 0.5200                   
+[06/24/26 15:21:55] INFO     2026-06-24 15:21:55: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 18/50 | Train Loss: 0.5202                   
+[06/24/26 15:23:28] INFO     2026-06-24 15:23:28: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 19/50 | Train Loss: 0.5176                   
+[06/24/26 15:24:58] INFO     2026-06-24 15:24:58: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 20/50 | Train Loss: 0.5180                   
+[06/24/26 15:26:28] INFO     2026-06-24 15:26:28: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 21/50 | Train Loss: 0.5162                   
+[06/24/26 15:27:58] INFO     2026-06-24 15:27:58: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 22/50 | Train Loss: 0.5141                   
+[06/24/26 15:29:28] INFO     2026-06-24 15:29:28: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 23/50 | Train Loss: 0.5133                   
+[06/24/26 15:30:59] INFO     2026-06-24 15:30:59: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 24/50 | Train Loss: 0.5130                   
+[06/24/26 15:32:29] INFO     2026-06-24 15:32:29: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 25/50 | Train Loss: 0.5129                   
+[06/24/26 15:34:00] INFO     2026-06-24 15:34:00: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 26/50 | Train Loss: 0.5108                   
+[06/24/26 15:35:29] INFO     2026-06-24 15:35:29: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 27/50 | Train Loss: 0.5088                   
+[06/24/26 15:36:59] INFO     2026-06-24 15:36:59: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 28/50 | Train Loss: 0.5094                   
+[06/24/26 15:38:30] INFO     2026-06-24 15:38:30: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 29/50 | Train Loss: 0.5086                   
+[06/24/26 15:40:02] INFO     2026-06-24 15:40:02: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 30/50 | Train Loss: 0.5078                   
+[06/24/26 15:41:33] INFO     2026-06-24 15:41:33: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 31/50 | Train Loss: 0.5070                   
+[06/24/26 15:43:06] INFO     2026-06-24 15:43:06: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 32/50 | Train Loss: 0.5063                   
+[06/24/26 15:44:40] INFO     2026-06-24 15:44:40: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 33/50 | Train Loss: 0.5053                   
+[06/24/26 15:46:13] INFO     2026-06-24 15:46:13: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 34/50 | Train Loss: 0.5041                   
+[06/24/26 15:47:46] INFO     2026-06-24 15:47:46: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 35/50 | Train Loss: 0.5044                   
+[06/24/26 15:49:17] INFO     2026-06-24 15:49:17: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 36/50 | Train Loss: 0.5017                   
+[06/24/26 15:50:48] INFO     2026-06-24 15:50:48: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 37/50 | Train Loss: 0.5022                   
+[06/24/26 15:52:17] INFO     2026-06-24 15:52:17: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 38/50 | Train Loss: 0.5010                   
+[06/24/26 15:53:45] INFO     2026-06-24 15:53:45: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 39/50 | Train Loss: 0.5004                   
+[06/24/26 15:55:14] INFO     2026-06-24 15:55:14: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 40/50 | Train Loss: 0.5002                   
+[06/24/26 15:56:45] INFO     2026-06-24 15:56:45: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 41/50 | Train Loss: 0.4978                   
+[06/24/26 15:58:14] INFO     2026-06-24 15:58:14: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 42/50 | Train Loss: 0.4995                   
+[06/24/26 15:59:44] INFO     2026-06-24 15:59:44: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 43/50 | Train Loss: 0.4981                   
+[06/24/26 16:01:15] INFO     2026-06-24 16:01:15: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 44/50 | Train Loss: 0.4967                   
+[06/24/26 16:02:44] INFO     2026-06-24 16:02:44: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 45/50 | Train Loss: 0.4960                   
+[06/24/26 16:04:14] INFO     2026-06-24 16:04:14: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 46/50 | Train Loss: 0.4969                   
+[06/24/26 16:05:42] INFO     2026-06-24 16:05:42: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 47/50 | Train Loss: 0.4964                   
+[06/24/26 16:07:12] INFO     2026-06-24 16:07:12: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 48/50 | Train Loss: 0.4958                   
+[06/24/26 16:08:41] INFO     2026-06-24 16:08:41: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 49/50 | Train Loss: 0.4942                   
+[06/24/26 16:10:12] INFO     2026-06-24 16:10:12: Fold 4 |     t2pmhc_gcn.py:692
+                             Epoch 50/50 | Train Loss: 0.4941                   
+                    INFO     Saved final model.                   helpers.py:205
+                    INFO     Saved PAE scalers                    helpers.py:232
+[06/24/26 16:10:33] INFO     Fold 4 AUROC: 0.4819              t2pmhc_gcn.py:712
+[06/24/26 16:10:36] INFO     ---- Fold 5/5 ----                t2pmhc_gcn.py:635
+[06/24/26 16:13:24] INFO     2026-06-24 16:13:24: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 1/50 | Train Loss: 0.6123                    
+[06/24/26 16:14:58] INFO     2026-06-24 16:14:58: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 2/50 | Train Loss: 0.5873                    
+[06/24/26 16:16:32] INFO     2026-06-24 16:16:32: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 3/50 | Train Loss: 0.5764                    
+[06/24/26 16:18:05] INFO     2026-06-24 16:18:05: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 4/50 | Train Loss: 0.5699                    
+[06/24/26 16:19:38] INFO     2026-06-24 16:19:38: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 5/50 | Train Loss: 0.5604                    
+[06/24/26 16:21:12] INFO     2026-06-24 16:21:12: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 6/50 | Train Loss: 0.5527                    
+[06/24/26 16:22:45] INFO     2026-06-24 16:22:45: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 7/50 | Train Loss: 0.5475                    
+[06/24/26 16:24:19] INFO     2026-06-24 16:24:19: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 8/50 | Train Loss: 0.5433                    
+[06/24/26 16:25:54] INFO     2026-06-24 16:25:54: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 9/50 | Train Loss: 0.5402                    
+[06/24/26 16:27:28] INFO     2026-06-24 16:27:28: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 10/50 | Train Loss: 0.5388                   
+[06/24/26 16:29:03] INFO     2026-06-24 16:29:03: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 11/50 | Train Loss: 0.5360                   
+[06/24/26 16:30:36] INFO     2026-06-24 16:30:36: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 12/50 | Train Loss: 0.5332                   
+[06/24/26 16:32:09] INFO     2026-06-24 16:32:09: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 13/50 | Train Loss: 0.5317                   
+[06/24/26 16:33:44] INFO     2026-06-24 16:33:44: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 14/50 | Train Loss: 0.5277                   
+[06/24/26 16:35:16] INFO     2026-06-24 16:35:16: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 15/50 | Train Loss: 0.5252                   
+[06/24/26 16:36:49] INFO     2026-06-24 16:36:49: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 16/50 | Train Loss: 0.5245                   
+[06/24/26 16:38:22] INFO     2026-06-24 16:38:22: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 17/50 | Train Loss: 0.5210                   
+[06/24/26 16:39:54] INFO     2026-06-24 16:39:54: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 18/50 | Train Loss: 0.5196                   
+[06/24/26 16:41:28] INFO     2026-06-24 16:41:28: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 19/50 | Train Loss: 0.5175                   
+[06/24/26 16:43:01] INFO     2026-06-24 16:43:01: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 20/50 | Train Loss: 0.5174                   
+[06/24/26 16:44:45] INFO     2026-06-24 16:44:45: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 21/50 | Train Loss: 0.5152                   
+[06/24/26 16:46:18] INFO     2026-06-24 16:46:18: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 22/50 | Train Loss: 0.5138                   
+[06/24/26 16:47:52] INFO     2026-06-24 16:47:52: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 23/50 | Train Loss: 0.5126                   
+[06/24/26 16:49:26] INFO     2026-06-24 16:49:26: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 24/50 | Train Loss: 0.5104                   
+[06/24/26 16:51:00] INFO     2026-06-24 16:51:00: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 25/50 | Train Loss: 0.5097                   
+[06/24/26 16:52:33] INFO     2026-06-24 16:52:33: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 26/50 | Train Loss: 0.5075                   
+[06/24/26 16:54:05] INFO     2026-06-24 16:54:05: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 27/50 | Train Loss: 0.5060                   
+[06/24/26 16:55:37] INFO     2026-06-24 16:55:37: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 28/50 | Train Loss: 0.5063                   
+[06/24/26 16:57:09] INFO     2026-06-24 16:57:09: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 29/50 | Train Loss: 0.5054                   
+[06/24/26 16:58:42] INFO     2026-06-24 16:58:42: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 30/50 | Train Loss: 0.5024                   
+[06/24/26 17:00:17] INFO     2026-06-24 17:00:17: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 31/50 | Train Loss: 0.5035                   
+[06/24/26 17:01:52] INFO     2026-06-24 17:01:52: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 32/50 | Train Loss: 0.5022                   
+[06/24/26 17:03:27] INFO     2026-06-24 17:03:27: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 33/50 | Train Loss: 0.5017                   
+[06/24/26 17:05:01] INFO     2026-06-24 17:05:01: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 34/50 | Train Loss: 0.4996                   
+[06/24/26 17:06:35] INFO     2026-06-24 17:06:35: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 35/50 | Train Loss: 0.4993                   
+[06/24/26 17:08:08] INFO     2026-06-24 17:08:08: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 36/50 | Train Loss: 0.4986                   
+[06/24/26 17:09:42] INFO     2026-06-24 17:09:42: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 37/50 | Train Loss: 0.4976                   
+[06/24/26 17:11:13] INFO     2026-06-24 17:11:13: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 38/50 | Train Loss: 0.4965                   
+[06/24/26 17:12:44] INFO     2026-06-24 17:12:44: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 39/50 | Train Loss: 0.4955                   
+[06/24/26 17:14:15] INFO     2026-06-24 17:14:15: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 40/50 | Train Loss: 0.4947                   
+[06/24/26 17:15:47] INFO     2026-06-24 17:15:47: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 41/50 | Train Loss: 0.4935                   
+[06/24/26 17:17:20] INFO     2026-06-24 17:17:20: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 42/50 | Train Loss: 0.4947                   
+[06/24/26 17:18:54] INFO     2026-06-24 17:18:54: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 43/50 | Train Loss: 0.4927                   
+[06/24/26 17:20:25] INFO     2026-06-24 17:20:25: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 44/50 | Train Loss: 0.4911                   
+[06/24/26 17:21:55] INFO     2026-06-24 17:21:55: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 45/50 | Train Loss: 0.4923                   
+[06/24/26 17:23:24] INFO     2026-06-24 17:23:24: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 46/50 | Train Loss: 0.4912                   
+[06/24/26 17:24:55] INFO     2026-06-24 17:24:55: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 47/50 | Train Loss: 0.4888                   
+[06/24/26 17:26:28] INFO     2026-06-24 17:26:28: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 48/50 | Train Loss: 0.4905                   
+[06/24/26 17:27:59] INFO     2026-06-24 17:27:59: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 49/50 | Train Loss: 0.4893                   
+[06/24/26 17:29:32] INFO     2026-06-24 17:29:32: Fold 5 |     t2pmhc_gcn.py:692
+                             Epoch 50/50 | Train Loss: 0.4884                   
+                    INFO     Saved final model.                   helpers.py:205
+                    INFO     Saved PAE scalers                    helpers.py:232
+[06/24/26 17:29:52] INFO     Fold 5 AUROC: 0.5510              t2pmhc_gcn.py:712
+[06/24/26 17:29:55] INFO     5-fold peptide-grouped CV AUROC:  t2pmhc_gcn.py:733
+                             0.4784 ± 0.1332                                    
+[06/24/26 17:29:56] INFO     Saved CV AUROC results to         t2pmhc_gcn.py:734
+                             /mnt/lustre/groups/nahnsen/nahpo7                  
+                             75/workdir/projects/tcrpha_pred/t                  
+                             2pmhc/pae_ablation_experiment/pep                  
+                             tide_CV/models/gcn_with_pae/gcn_w                  
+                             ith_pae_cv_auroc.csv                               
+                    INFO     Saved split samplesheet to        t2pmhc_gcn.py:735
+                             /mnt/lustre/groups/nahnsen/nahpo7                  
+                             75/workdir/projects/tcrpha_pred/t                  
+                             2pmhc/pae_ablation_experiment/pep                  
+                             tide_CV/models/gcn_with_pae/gcn_w                  
+                             ith_pae_cv_splits.tsv                              
+                    INFO     Saved peptide fold assignments to t2pmhc_gcn.py:736
+                             /mnt/lustre/groups/nahnsen/nahpo7                  
+                             75/workdir/projects/tcrpha_pred/t                  
+                             2pmhc/pae_ablation_experiment/pep                  
+                             tide_CV/models/gcn_with_pae/gcn_w                  
+                             ith_pae_peptide_folds.tsv                          
+                    INFO     5-fold peptide-grouped            t2pmhc_gcn.py:738
+                             cross-validation complete.                         
+[06/24/26 17:29:57] INFO     .................. done             __main__.py:386
+                             ..................                                 

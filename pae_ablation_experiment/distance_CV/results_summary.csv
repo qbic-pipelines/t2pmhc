@@ -1,0 +1,11 @@
+model,distance_threshold,cv_auc,cv_auc_std,n_cv_folds_completed,train_cv_fold_runtime_max_hms,train_cv_fold_runtime_max_s,train_max_rss_gb,train_gpu_type,train_log_paths,graph_gen_runtime_hms,graph_gen_runtime_s,graph_gen_max_rss_gb,graph_gen_log_path,graph_pt_path,notes
+GAT,6,0.7856,0.0063,5,02:49:11,10151,27.82,v100sxm,logs/29028_sandiego_train_t2pmhc_dist6.out,01:51:06,6666,68.68,logs/28862_honolulu_create_t2pmhc_graph_gat_6.out,generated_graphs/t2pmhc_gat_dist6.pt,
+GAT,8,0.8280,0.0071,5,03:52:35,13955,45.0,v100sxm,logs/29029_losangeles_train_t2pmhc_dist8.out,01:52:30,6750,24.9,logs/28861_honolulu_create_t2pmhc_graph_gat_8.out,generated_graphs/t2pmhc_gat_dist8.pt,
+GAT,10,0.8316,0.0028,5,03:00:43,10843,67.46,v100sxm,logs/29031_sanfrancisco_train_t2pmhc_dist10.out,01:54:09,6849,58.14,logs/28860_honolulu_create_t2pmhc_graph_gat_10.out,generated_graphs/t2pmhc_gat_dist10.pt,
+GAT,12,0.8323,0.0031,5,04:01:07,14467,97.91,v100sxm,logs/29207_sandiego_train_t2pmhc_dist12.out,02:22:45,8565,56.39,logs/28858_honolulu_create_t2pmhc_graph_gat_12.out,generated_graphs/t2pmhc_gat_dist12.pt,
+GAT,14,0.8363,0.0056,5,03:37:17,13037,127.99,a100sxm,logs/29033_sacramento_train_t2pmhc_dist14.out,02:20:41,8441,74.98,logs/28859_honolulu_create_t2pmhc_graph_gat_14.out,generated_graphs/t2pmhc_gat_dist14.pt,
+GCN,6,0.7759,0.0060,5,02:14:44,8084,56.62,v100sxm,logs/28746_sandiego_train_t2pmhc_dist6.out,01:45:26,6326,79.49,logs/29625_honolulu_create_t2pmhc_graph_gcn_6.out,generated_graphs/t2pmhc_gcn_dist6.pt,
+GCN,8,0.8141,0.0087,5,01:49:15,6555,39.26,v100sxm,logs/28826_sandiego_train_t2pmhc_dist8.out,02:03:33,7413,24.23,logs/29624_honolulu_create_t2pmhc_graph_gcn_8.out,generated_graphs/t2pmhc_gcn_dist8.pt,
+GCN,10,0.8241,0.0045,5,01:53:10,6790,55.51,v100sxm,logs/28827_sandiego_train_t2pmhc_dist10.out,01:48:35,6515,87.31,logs/29493_honolulu_create_t2pmhc_graph_gcn_10.out,generated_graphs/t2pmhc_gcn_dist10.pt,
+GCN,12,0.8227,0.0059,5,01:59:59,7199,64.0,v100sxm,logs/28854_sandiego_train_t2pmhc_dist12.out,02:22:58,8578,96.0,logs/28834_honolulu_create_t2pmhc_graph_gcn_12.out,generated_graphs/t2pmhc_gcn_dist12.pt,
+GCN,14,0.8209,0.0064,5,02:06:05,7565,109.11,v100sxm,logs/28857_sandiego_train_t2pmhc_dist14.out,02:24:00,8640,64.16,logs/28829_hilo_create_t2pmhc_graph_gcn_14.out,generated_graphs/t2pmhc_gcn_dist14.pt,

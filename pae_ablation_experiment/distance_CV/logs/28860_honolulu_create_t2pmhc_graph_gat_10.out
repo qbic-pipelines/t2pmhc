@@ -1,0 +1,374 @@
+=== Submit script: /var/lib/slurm/slurmd/job28860/slurm_script ===
+#!/bin/bash
+#SBATCH --time=12:30:00
+#SBATCH --job-name=create_t2pmhc_graphs
+#SBATCH --ntasks=1
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=24
+#SBATCH --mem=96G
+#SBATCH --account=cai_exp
+#SBATCH --partition=cpu
+#SBATCH --output=/cluster/home/dego/log/%j_%N_create_t2pmhc_graph_gat_10.out
+#SBATCH --error=/cluster/home/dego/log/%j_%N_create_t2pmhc_graph_gat_10.err
+
+echo "=== Submit script: $(realpath "$0") ===" && cat "$0"
+
+cd ~/models/t2pmhc
+
+source /cluster/home/dego/.start_uv.sh --auto
+uv sync
+#you are supposed to convert the samplesheet to the format expected by running /cluster/home/dego/nf-core_proteinfold_tcr_dock/Custom/tcrdock_python_utils/convert_samplesheet.py
+uv run --project ~/models/t2pmhc --directory /cluster/projects/2026_dego_NF_DB/t2pmhc_train_structures  t2pmhc create-t2pmhc-graphs --mode t2pmhc-gat --samplesheet ./t2pmhc_train_samplesheet_new.tsv --training-mode --threshold 10 --out /cluster/home/dego/models/t2pmhc/generated_graphs/t2pmhc_gat_dist10.pt
+Found .python-version file -> using Python 3.11
+Attempting to load module: python/3.11
+Loaded python/3.11
+No env name given -> using current directory name lowercased: t2pmhc
+Set UV_PATH=/raid/persistent_scratch/dego/uv/
+Loading uv module with VENV="t2pmhc" ...
+uv module loaded with VENV='t2pmhc' and UV_PATH='/raid/persistent_scratch/dego/uv/'.
+Finished. 
+-------------------------------------------
+ _   ____                  _          
+
+| |_|___ \ _ __  _ __ ___ | |__   ___
+
+| __| __) | '_ \| '_ ` _ \| '_ \ / __|
+
+| |_ / __/| |_) | | | | | | | | | (__ 
+
+ \__|_____| .__/|_| |_| |_|_| |_|\___|
+
+          |_|                         
+-------------------------------------------
+[06/13/26 23:20:56] INFO     ........ Building t2pmhc-gat graphs __main__.py:232
+                             ........                                           
+                    INFO     reading samplesheet                   helpers.py:51
+[06/13/26 23:20:59] INFO     Creating Graphs --      create_t2pmhc_graphs.py:380
+                             t2pmhc-gat                                         
+[06/13/26 23:22:17] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/13/26 23:22:18] INFO     Processed 1000 / 79108  create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:23:44] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 2000 / 79108  create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:25:04] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 3000 / 79108  create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:26:25] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 4000 / 79108  create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:27:44] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/13/26 23:27:45] INFO     Processed 5000 / 79108  create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:29:05] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 6000 / 79108  create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:30:25] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 7000 / 79108  create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:31:46] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 8000 / 79108  create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:33:07] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 9000 / 79108  create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:34:29] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/13/26 23:34:30] INFO     Processed 10000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:35:52] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/13/26 23:35:53] INFO     Processed 11000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:37:13] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/13/26 23:37:14] INFO     Processed 12000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:38:33] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/13/26 23:38:34] INFO     Processed 13000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:39:54] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/13/26 23:39:55] INFO     Processed 14000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:41:15] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 15000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:42:37] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 16000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:43:57] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/13/26 23:43:58] INFO     Processed 17000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:45:19] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 18000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:46:40] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 19000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:48:04] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 20000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:49:26] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 21000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:50:47] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/13/26 23:50:48] INFO     Processed 22000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:52:08] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/13/26 23:52:09] INFO     Processed 23000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:53:30] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 24000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:54:51] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/13/26 23:54:52] INFO     Processed 25000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:56:13] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 26000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:57:36] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 27000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/13/26 23:58:58] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 28000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:00:19] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 29000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:01:40] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 30000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:03:02] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 31000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:04:24] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 32000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:05:46] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 33000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:07:08] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 34000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:08:30] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 35000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:09:52] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 36000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:11:14] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/14/26 00:11:15] INFO     Processed 37000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:12:37] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 38000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:13:59] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 39000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:15:21] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/14/26 00:15:22] INFO     Processed 40000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:16:44] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 41000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:18:07] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 42000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:19:30] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 43000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:20:53] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/14/26 00:20:54] INFO     Processed 44000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:22:19] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 45000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:23:45] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 46000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:25:12] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/14/26 00:25:13] INFO     Processed 47000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:26:35] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/14/26 00:26:36] INFO     Processed 48000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:27:59] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 49000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:29:22] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 50000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:30:46] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 51000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:32:11] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/14/26 00:32:12] INFO     Processed 52000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:33:40] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 53000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:35:04] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 54000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:36:29] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 55000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:37:54] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 56000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:39:17] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/14/26 00:39:18] INFO     Processed 57000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:40:43] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 58000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:42:07] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/14/26 00:42:08] INFO     Processed 59000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:43:32] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 60000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:44:57] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 61000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:46:22] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 62000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:47:47] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 63000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:49:12] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 64000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:50:41] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/14/26 00:50:42] INFO     Processed 65000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:52:05] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 66000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:53:30] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 67000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:54:55] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 68000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:56:21] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/14/26 00:56:22] INFO     Processed 69000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:57:53] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/14/26 00:57:54] INFO     Processed 70000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 00:59:19] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 71000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 01:00:44] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/14/26 01:00:45] INFO     Processed 72000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 01:02:10] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 73000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 01:03:36] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 74000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 01:05:02] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 75000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 01:06:28] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 76000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 01:07:57] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/14/26 01:07:58] INFO     Processed 77000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 01:09:24] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 78000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 01:10:50] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+[06/14/26 01:10:51] INFO     Processed 79000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+[06/14/26 01:11:15] INFO     creating PyTorch Data   create_t2pmhc_graphs.py:336
+                             Instances                                          
+                    INFO     Processed 80000 / 79108 create_t2pmhc_graphs.py:355
+                             files                                              
+                    INFO     saving graphs to        create_t2pmhc_graphs.py:358
+                             /cluster/home/dego/mode                            
+                             ls/t2pmhc/generated_gra                            
+                             phs/t2pmhc_gat_dist10.p                            
+                             t                                                  
+[06/14/26 01:15:05] INFO     .................. done             __main__.py:240
+                             ..................                                 
