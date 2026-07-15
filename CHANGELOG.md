@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.1.0] - (unreleased)
+## [1.1.0] - (2026-07-15)
 
 ### Added
 - `--threshold` option for `create-t2pmhc-graphs`: configurable CA-CA distance threshold in Angstroms for contact-map construction (default: 10.0)
