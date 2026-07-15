@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0] - (unreleased)
+
+### Added
+- `--threshold` option for `create-t2pmhc-graphs`: configurable CA-CA distance threshold in Angstroms for contact-map construction (default: 10.0)
+
+### Fixed
+- GPU inference device mismatch in `t2pmhc-predict-binding`: the model is now moved to the selected device, fixing `Expected all tensors to be on the same device` on CUDA systems (fixes #13)
+
 ## [1.0.2] - (2026-03-20)
 
  ### Added
