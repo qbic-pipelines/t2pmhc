@@ -361,7 +361,7 @@ def gat_create_graphs(pdb_files, metadata, threshold, graphs_path, training_mode
     return dataset, len(dataset)
 
 
-def create_graphs(mode, samplesheet, training_mode, out):
+def create_graphs(mode, samplesheet, training_mode, out, threshold=10):
     """
     Main function to create graphs based on the specified mode.
     Args:
@@ -369,6 +369,7 @@ def create_graphs(mode, samplesheet, training_mode, out):
         samplesheet (str): Path to the samplesheet file.
         training_mode (bool): Creation of training or prediction graphs
         out (str): Output path to save the graphs.
+        threshold (float): CA-CA distance threshold in Angstroms (default: 10).
     """
     # read in samplesheet 
     pdb_files = read_in_samplesheet(samplesheet)
@@ -378,11 +379,11 @@ def create_graphs(mode, samplesheet, training_mode, out):
     if mode == "t2pmhc-gat":
         #logging.info("Creating Graphs -- t2pmhc-gat")
         logger.info("Creating Graphs -- t2pmhc-gat")
-        gat_create_graphs(pdb_files=pdb_files, metadata=metadata, threshold=10, graphs_path=out, training_mode=training_mode)
+        gat_create_graphs(pdb_files=pdb_files, metadata=metadata, threshold=threshold, graphs_path=out, training_mode=training_mode)
     elif mode == "t2pmhc-gcn":
         #logging.info("Creating Graphs -- t2pmhc-gcn")
         logger.info("Creating Graphs -- t2pmhc-gcn")
-        gcn_create_graphs(pdb_files=pdb_files, metadata=metadata, threshold=10, graphs_path=out, training_mode=training_mode)
+        gcn_create_graphs(pdb_files=pdb_files, metadata=metadata, threshold=threshold, graphs_path=out, training_mode=training_mode)
 
 
 if __name__ == "__main__":

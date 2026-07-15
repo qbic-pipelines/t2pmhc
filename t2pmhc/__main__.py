@@ -216,7 +216,16 @@ def train_t2pmhc_gat(samplesheet, run_name, hyperparameters, saved_graphs, save_
     help="Path to store the graphs-file"
 )
 
-def create_t2pmhc_graphs(mode, samplesheet, training_mode, out):
+@click.option(
+    '--threshold',
+    type=float,
+    required=False,
+    default=10.0,
+    show_default=True,
+    help="CA-CA distance threshold in Angstroms for contact map construction"
+)
+
+def create_t2pmhc_graphs(mode, samplesheet, training_mode, out, threshold):
     """
     Build t2pmhc graphs from pdb files
     """
@@ -225,7 +234,8 @@ def create_t2pmhc_graphs(mode, samplesheet, training_mode, out):
     create_graphs(mode,
               samplesheet,
               training_mode,
-              out
+              out,
+              threshold
                 )       
 
     logger.info(".................. done ..................")

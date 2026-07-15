@@ -117,6 +117,7 @@ t2pmhc create-t2pmhc-graphs \
     --samplesheet samplesheet.tsv \
     --training-mode / --prediction-mode \
     --out <path/to/graphs.pt> \
+    --threshold <distance in Å> (optional, default: 10.0)
 ```
 
 ## Train t2pmhc models
@@ -171,6 +172,9 @@ t2pmhc t2pmhc-predict-binding \
     --distance_scaler <distance_scaler.pkl> \
     --pae_scaler_edge <pae_edge_FULL.pkl> \
 ```
+
+# Publication
+* you can find the hyperparameter search [here](https://github.com/qbic-pipelines/t2pmhc/tree/hyperparameter_search)
 
 # Citations
 
