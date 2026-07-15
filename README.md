@@ -14,7 +14,7 @@ t2pmhc: A Structure-Informed Graph Neural Network for Predicting TCR–pMHC Bind
 
 You can pull the image here:
 
-``` docker pull ghcr.io/qbic-pipelines/t2pmhc:1.0.2 ```
+``` docker pull ghcr.io/qbic-pipelines/t2pmhc:1.1.0 ```
 
 ## 2. Python
 
