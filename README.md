@@ -1,4 +1,7 @@
 # t2pmhc
+
+[![DOI](https://zenodo.org/badge/1098871676.svg)](https://doi.org/10.5281/zenodo.21410458)
+
 t2pmhc: A Structure-Informed Graph Neural Network for Predicting TCR–pMHC Binding
 
 <h1 align="center">
@@ -181,5 +184,10 @@ t2pmhc t2pmhc-predict-binding \
 If you use t2pmhc, please cite the article as follows:
 
 > **t2pmhc: A Structure-Informed Graph Neural Network to Predict TCR-pMHC Binding**
->
-> Mark Polster, Josua Stadelmaier, Elias Ball, Jonas Scheid, Jens Bauer, Annika Nelde, Manfred Claassen, Marissa Dubbelaar, Juliane S. Walz, Sven Nahnsen. *bioRxiv* (2026): 2026-02. doi: [https://doi.org/10.64898/2026.02.27.708137](https://doi.org/10.64898/2026.02.27.708137).
+> Polster M, Stadelmaier J, De Gottardi R, Ball E, Scheid J, Bauer J, Nelde A, Claassen M,
+> Dubbelaar ML, Walz JS, Nahnsen S. t2pmhc: A Structure-Informed Graph Neural
+> Network to predict TCR-pMHC Binding. bioRxiv 2026.02.27.708137.
+> doi:10.64898/2026.02.27.708137
+
+To cite a specific software version, use the archived release:
+doi:10.5281/zenodo.21410458
