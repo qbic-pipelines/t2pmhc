@@ -184,6 +184,7 @@ t2pmhc t2pmhc-predict-binding \
 If you use t2pmhc, please cite the article as follows:
 
 > **t2pmhc: A Structure-Informed Graph Neural Network to Predict TCR-pMHC Binding**
+> 
 > Polster M, Stadelmaier J, De Gottardi R, Ball E, Scheid J, Bauer J, Nelde A, Claassen M,
 > Dubbelaar ML, Walz JS, Nahnsen S. t2pmhc: A Structure-Informed Graph Neural
 > Network to predict TCR-pMHC Binding. bioRxiv 2026.02.27.708137.
