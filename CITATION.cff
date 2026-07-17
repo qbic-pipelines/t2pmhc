@@ -1,0 +1,42 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite both the software and the paper below."
+title: "t2pmhc: A Structure-Informed Graph Neural Network to predict TCR-pMHC Binding"
+type: software
+authors:
+  - given-names: Mark
+    family-names: Polster
+    orcid: "https://orcid.org/0009-0003-5768-5020"
+  - given-names: Josua
+    family-names: Stadelmaier
+    orcid: "https://orcid.org/0009-0008-0937-1218"
+  - given-names: Raphael
+    family-names: De Gottardi
+    orcid: "https://orcid.org/0009-0007-3067-0565"
+  - given-names: Elias
+    family-names: Ball
+  - given-names: Jonas
+    family-names: Scheid
+    orcid: "https://orcid.org/0000-0002-5923-1343"
+  - given-names: Jens
+    family-names: Bauer
+    orcid: "https://orcid.org/0000-0003-3731-2385"
+  - given-names: Annika
+    family-names: Nelde
+    orcid: "https://orcid.org/0000-0001-8504-8481"
+  - given-names: Manfred
+    family-names: Claassen
+    orcid: "https://orcid.org/0000-0002-4583-9083"
+  - given-names: Marissa L.
+    family-names: Dubbelaar
+    orcid: "https://orcid.org/0000-0002-4930-1467"
+  - given-names: Juliane S.
+    family-names: Walz
+    orcid: "https://orcid.org/0000-0001-6404-7391"
+  - given-names: Sven
+    family-names: Nahnsen
+    orcid: "https://orcid.org/0000-0002-4375-0691"
+repository-code: "https://github.com/qbic-pipelines/t2pmhc"
+url: "https://github.com/qbic-pipelines/t2pmhc"
+license: MIT
+version: 1.1.1
+date-released: 2026-07-17
