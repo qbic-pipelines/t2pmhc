@@ -31,7 +31,7 @@ tested on Linux (Rocky Linux 9.8 & Ubuntu 24.04) with Python 3.11 with the tool 
 
 You can pull the image here:
 
-``` docker pull ghcr.io/qbic-pipelines/t2pmhc:1.1.1 ```
+``` docker pull ghcr.io/qbic-pipelines/t2pmhc:1.1.2 ```
 
 ## 2. Python
 
