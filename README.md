@@ -88,7 +88,7 @@ t2pmhc t2pmhc-predict-binding \
 ```
 
 The output `example/samplesheet_predicted.tsv` contains a **binder_prob**
-column with the binding probability assigned by t2pmhc to each complex.
+column with the binding probability assigned by t2pmhc.
 
 
 # Usage
