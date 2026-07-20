@@ -102,7 +102,7 @@ To predict TCR-pMHC structures with TCRdock you can use our branch of the [nf-co
 
 Clone the repository and checkout to the tcrdock branch
 1.  ``` git clone https://github.com/mapo9/nf-core_proteinfold ```
-2.  ``` cf nf-core_proteinfold ```
+2.  ``` cd nf-core_proteinfold ```
 3. ``` git checkout tcrdock ```
 
 See the [documentation](https://github.com/mapo9/nf-core_proteinfold/tree/tcrdock) to create the docker container and run the pipeline.
