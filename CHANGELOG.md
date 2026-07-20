@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.2] - (2026-07-20)
+
+### Added
+- Quickstart section in the README: a runnable end-to-end example using pre-computed TCRdock structures in the `example/` directory, letting users verify their installation and see the expected input/output format without running structure prediction
+- Prerequisites section in the README documenting the Docker (recommended) and manual conda/pip installation routes and their tested platforms
+- Example data under `example/`: sample structures (`sample01.pdb`, `sample02.pdb`), predicted aligned error files, samplesheets, and pre-computed graphs
+
+### Fixed
+  
 ## [1.1.1] - (2026-07-17)
 
 ### Added
