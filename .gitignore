@@ -2,3 +2,6 @@
 **__pycache__*
 out
 test_graphs*
+*.egg-info/
+dist/
+build/
