@@ -14,15 +14,18 @@ t2pmhc: A Structure-Informed Graph Neural Network for Predicting TCR–pMHC Bind
 
 # Prerequisites
 
-t2pmhc has two installation routes with different requirements.
+t2pmhc has three installation routes with different requirements.
 
 **Docker (recommended).** The only requirement is a working Docker
 installation. Because the container bundles the full software
 environment, t2pmhc is platform-independent and produces identical
 results across operating systems.
 
-**Manual (conda/pip) installation.** The manual installation has been
-tested on Linux (Rocky Linux 9.8 & Ubuntu 24.04) with Python 3.11 with the tool versions in the `requirements.txt`.
+**PyPI.** The quickest way to get the command line tool: `pip install t2pmhc`
+on Python 3.11 or newer.
+
+**From source with pinned dependencies.** Clone the repository and install
+the exact tool versions from `requirements.txt`.
 
 
 # Installation
@@ -33,7 +36,14 @@ You can pull the image here:
 
 ``` docker pull ghcr.io/qbic-pipelines/t2pmhc:1.1.3 ```
 
-## 2. Python
+## 2. PyPI
+
+``` pip install t2pmhc ```
+
+This installs the `t2pmhc` command together with the published default
+models.
+
+## 3. From source (exact dependency versions)
 
 - Clone the repository
 
@@ -45,7 +55,7 @@ You can pull the image here:
 
 ``` conda create -n t2pmhc python=3.11 ```
 
-- Install the requirements.txt
+- Install the pinned dependency versions from requirements.txt
 
 ``` pip install -r requirements.txt ``` 
 
@@ -63,7 +73,6 @@ set of pre-computed TCRdock structures included in the repository, so
 you can skip structure prediction and run t2pmhc end-to-end in a few
 minutes.
 
-All files are located in the `example/` directory.
 
 Run the following two commands from the root of the repository.
 
