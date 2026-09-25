@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "t2pmhc"
+version = "1.1.3"
+description = "A structure-informed graph neural network for predicting TCR-pMHC binding"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Mark Polster" }]
+requires-python = ">=3.11"
+dependencies = [
+    "biopython>=1.85",
+    "joblib>=1.4",
+    "numpy>=1.26,<3",
+    "pandas>=2.1",
+    "rich>=13",
+    "rich-click>=1.9",
+    "scikit-learn>=1.6,<1.8",
+    "torch>=2.6",
+    "torch_geometric>=2.6",
+]
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Repository = "https://github.com/qbic-pipelines/t2pmhc"
+Changelog = "https://github.com/qbic-pipelines/t2pmhc/blob/main/CHANGELOG.md"
+
+[project.scripts]
+t2pmhc = "t2pmhc.__main__:run_t2pmhc"
+
+[tool.setuptools.packages.find]
+include = ["t2pmhc*"]
+
+[tool.setuptools.package-data]
+t2pmhc = ["data/**/*", "utils/*.json"]
