@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.3] - (2026-09-25)
+
+### Added
+- `pyproject.toml` with complete PyPI metadata (dependencies, console entry point, bundled model data); replaces `setup.py`
+- GitHub Actions workflow that publishes releases to PyPI via trusted publishing, making t2pmhc installable with `pip install t2pmhc`
+
+### Changed
+- Packaging only: model code and bundled weights are identical to 1.1.2
+
 ## [1.1.2] - (2026-07-20)
 
 ### Added
