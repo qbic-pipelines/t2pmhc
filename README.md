@@ -252,7 +252,7 @@ averaged across peptides, so that every peptide contributes equally and only the
 within-peptide ranking of TCRs is scored. Pooled AUCs over all TCR-pMHC pairs of a dataset are
 computed alongside the per-peptide values. Cross-validation is used for hyperparameter
 search and the ablation experiments (branches `hyperparameter_search`,
-`pae_ablation_experiment`, `angstrom_threshold_experiment`), not as the benchmark metric.
+`pae_ablation_experiment`, `angstrom_threshold_experiment`).
 
 * you can find the hyperparameter search [here](https://github.com/qbic-pipelines/t2pmhc/tree/hyperparameter_search)
 
