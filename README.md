@@ -236,6 +236,26 @@ t2pmhc t2pmhc-predict-binding \
     --pae_scaler_edge <pae_edge_FULL.pkl> \
 ```
 
+# Evaluation and benchmarking
+
+This repository contains model training and inference. The evaluation and benchmarking code
+is maintained separately in
+[qbic-pipelines/t2pmhc_benchmark](https://github.com/qbic-pipelines/t2pmhc_benchmark),
+a Nextflow (nf-core template) pipeline that runs t2pmhc together with all benchmarked
+competitors. It implements the construction of the leakage-free evaluation subsets,
+inference for every benchmarked predictor, and the per-peptide AUC evaluation and
+statistical tests reported in the paper. The evaluation protocol is documented in full in
+that repository's README.
+
+Reported performance is the mean per-peptide AUC. An AUC is computed within each peptide and
+averaged across peptides, so that every peptide contributes equally and only the
+within-peptide ranking of TCRs is scored. This replaces the peptide-grouped
+cross-validation used earlier in development, which pooled all peptides of a fold into a
+single AUC. Peptide-grouped cross-validation is still used for hyperparameter search and the
+ablation experiments (branches `hyperparameter_search`, `pae_ablation_experiment`,
+`angstrom_threshold_experiment`); all reported benchmark results use the per-peptide
+evaluation. See the benchmark repository for the full comparison of the two.
+
 # Publication
 * you can find the hyperparameter search [here](https://github.com/qbic-pipelines/t2pmhc/tree/hyperparameter_search)
 
