@@ -256,7 +256,6 @@ ablation experiments (branches `hyperparameter_search`, `pae_ablation_experiment
 `angstrom_threshold_experiment`); all reported benchmark results use the per-peptide
 evaluation. See the benchmark repository for the full comparison of the two.
 
-# Publication
 * you can find the hyperparameter search [here](https://github.com/qbic-pipelines/t2pmhc/tree/hyperparameter_search)
 
 # Citations
