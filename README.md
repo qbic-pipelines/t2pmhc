@@ -239,7 +239,7 @@ t2pmhc t2pmhc-predict-binding \
 # Evaluation and benchmarking
 
 This repository contains model training and inference. The evaluation and benchmarking code
-is maintained separately in
+for the t2pmhc publication is maintained separately in
 [qbic-pipelines/t2pmhc_benchmark](https://github.com/qbic-pipelines/t2pmhc_benchmark),
 a Nextflow (nf-core template) pipeline that runs t2pmhc together with all benchmarked
 competitors. It implements the construction of the leakage-free evaluation subsets,
