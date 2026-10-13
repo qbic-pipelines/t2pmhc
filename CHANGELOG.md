@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.1.4] - (2026-10-13)
+
+### Added
+- `Evaluation and benchmarking` section in the README: links the `t2pmhc_benchmark`
+  repository, states that the per-peptide evaluation, the leakage-free subset construction
+  and the statistical testing are implemented there, and summarises how the per-peptide
+  evaluation differs from the peptide-grouped cross-validation used during development
+
+### Changed
+- Documentation only: model code and bundled weights are identical to 1.1.3
+
 ## [1.1.3] - (2026-09-25)
 
 ### Added
