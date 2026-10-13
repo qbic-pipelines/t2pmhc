@@ -249,12 +249,10 @@ that repository's README.
 
 Reported performance is the mean per-peptide AUC. An AUC is computed within each peptide and
 averaged across peptides, so that every peptide contributes equally and only the
-within-peptide ranking of TCRs is scored. This replaces the peptide-grouped
-cross-validation used earlier in development, which pooled all peptides of a fold into a
-single AUC. Peptide-grouped cross-validation is still used for hyperparameter search and the
-ablation experiments (branches `hyperparameter_search`, `pae_ablation_experiment`,
-`angstrom_threshold_experiment`); all reported benchmark results use the per-peptide
-evaluation. See the benchmark repository for the full comparison of the two.
+within-peptide ranking of TCRs is scored. Pooled AUCs over all TCR-pMHC pairs of a dataset are
+computed alongside the per-peptide values. Cross-validation is used for hyperparameter
+search and the ablation experiments (branches `hyperparameter_search`,
+`pae_ablation_experiment`, `angstrom_threshold_experiment`).
 
 * you can find the hyperparameter search [here](https://github.com/qbic-pipelines/t2pmhc/tree/hyperparameter_search)
 
